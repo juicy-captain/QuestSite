@@ -38,7 +38,7 @@ public partial class App_Page_Registration : System.Web.UI.Page
             insertingCommand.CommandType = CommandType.StoredProcedure;
             insertingCommand.CommandText = "InsertUser";
             insertingCommand.Parameters.AddWithValue("@Id", player.ID);
-            insertingCommand.Parameters.AddWithValue("@nick_name", player.Nickname);
+            insertingCommand.Parameters.AddWithValue("@nick_name", player.NickName);
             insertingCommand.Parameters.AddWithValue("@first_name", player.FirstName);
             insertingCommand.Parameters.AddWithValue("@second_name", player.SecondName);
             insertingCommand.Parameters.AddWithValue("@password", player.Password);

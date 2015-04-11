@@ -8,11 +8,14 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
-    
-        <asp:HyperLink ID="Регистрация" runat="server" NavigateUrl="~/App_Page/Registration.aspx">HyperLink</asp:HyperLink>
-    
-    </div>
+        <div id="header">
+            <asp:HyperLink ID="RegistrationLink" runat="server" NavigateUrl="~/App_Page/Registration.aspx">Регистрация</asp:HyperLink>
+            <asp:HyperLink ID="AuthorizationLink" runat="server" NavigateUrl="~/App_Page/Authorization.aspx">Вход</asp:HyperLink>
+        </div>
+        <div id="content">
+        </div>
+        <div id="footer">
+        </div>
     </form>
 </body>
 </html>
