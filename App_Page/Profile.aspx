@@ -1,8 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Profile.aspx.cs" Inherits="App_Page_Profile" %>
 
-<%-- There must be two previous pages: default and authorization --%>
-<%@ PreviousPageType VirtualPath="~/App_Page/Authorization.aspx" %>
-
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
