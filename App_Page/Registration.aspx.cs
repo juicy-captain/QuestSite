@@ -11,8 +11,9 @@ using System.Data.SqlClient;
 
 using Model;
 using Database;
+using Util;
 
-public partial class App_Page_Registration : System.Web.UI.Page
+public partial class AppPageRegistration : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -22,12 +23,11 @@ public partial class App_Page_Registration : System.Web.UI.Page
     protected void RegistrationWizard_FinishButtonClick(object sender, WizardNavigationEventArgs e)
     {
         PlayerModel player = CreatePlayer();
-        string connectionString = WebConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
-        new DatabaseRequest()
+        new DatabaseRequest<Object>()
         {
             RequestType = RequestType.RegisterPlayer,
             PlayerModel = player,
-            ConnectionString = connectionString
+            ConnectionString = ConnectionUtil.GetConnectionString()
         }.Execute();
     }
 

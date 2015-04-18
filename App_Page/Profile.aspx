@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Profile.aspx.cs" Inherits="App_Page_Profile" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Profile.aspx.cs" Inherits="AppPageProfile" %>
 
 <!DOCTYPE html>
 
@@ -14,6 +14,8 @@
             <asp:Label ID="LabelFirstName" runat="server" Text="FirstName"></asp:Label>
             &nbsp;<asp:Label ID="LabelNickName" runat="server" Text="NickName"></asp:Label>
             &nbsp;<asp:Label ID="LabelSecondName" runat="server" Text="SecondName"></asp:Label>
+            <br />
+            <asp:HyperLink ID="QuestsLink" runat="server" NavigateUrl="~/App_Page/Quests.aspx">Просмотреть доступные квесты</asp:HyperLink>
         </div>
         <div id="footer">
         </div>

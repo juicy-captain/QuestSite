@@ -8,6 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 
 using Model;
+using Util;
 
 namespace Database
 {
@@ -16,22 +17,33 @@ namespace Database
     /// </summary>
     public static class DatabaseMethod
     {
-        public static DatabaseResponse Authorize(SqlConnection connection,
+        public static DatabaseResponse<PlayerModel> Authorize(SqlConnection connection,
             SqlParameter[] inputParameters,
-            SqlParameter[] outputParameters,
             string userNickName,
             string password)
         {
-            SqlCommand selectCommand = connection.CreateCommand();
-            selectCommand.CommandType = CommandType.StoredProcedure;
-            selectCommand.CommandText = "AuthorizationQuery";
-            selectCommand.Parameters.AddRange(inputParameters);
-            selectCommand.Parameters.AddRange(outputParameters);
-            selectCommand.ExecuteNonQuery();
+            //SqlConnection con = new SqlConnection(ConnectionUtil.GetConnectionString());
+            //SqlCommand cmd = new SqlCommand()
+            //{
+            //    CommandType = CommandType.StoredProcedure,
+            //    CommandText = "AuthorizeUser",
+            //    Connection = con
+            //};
+            //cmd.Parameters.AddRange(DatabaseConst.AuthOutputParameters);
+            //cmd.Parameters.AddRange(inputParameters);
+            //con.Open();
+            //SqlDataReader dataReader = cmd.ExecuteReader();
 
-            DatabaseResponse databaseResponse = new DatabaseResponse()
+            SqlCommand authCommand = connection.CreateCommand();
+            authCommand.CommandType = CommandType.StoredProcedure;
+            authCommand.CommandText = "AuthorizeUser";
+            authCommand.Parameters.AddRange(inputParameters);
+            authCommand.Parameters.AddRange(DatabaseConst.AuthOutputParameters);
+            SqlDataReader dataReader = authCommand.ExecuteReader(CommandBehavior.SingleRow);
+
+            DatabaseResponse<PlayerModel> databaseResponse = new DatabaseResponse<PlayerModel>()
             {
-                PlayerModel = new PlayerModel(userNickName, password, selectCommand)
+                ResponseModel = new PlayerModel(userNickName, password, authCommand)
             };
             return databaseResponse;
         }
@@ -41,15 +53,30 @@ namespace Database
             SqlCommand insertingCommand = connection.CreateCommand();
             insertingCommand.CommandType = CommandType.StoredProcedure;
             insertingCommand.CommandText = "InsertUser";
-            insertingCommand.Parameters.AddWithValue("@Id", player.ID);
-            insertingCommand.Parameters.AddWithValue("@nick_name", player.NickName);
-            insertingCommand.Parameters.AddWithValue("@first_name", player.FirstName);
-            insertingCommand.Parameters.AddWithValue("@second_name", player.SecondName);
-            insertingCommand.Parameters.AddWithValue("@password", player.Password);
-            insertingCommand.Parameters.AddWithValue("@birth_date", player.BirthDate);
-            insertingCommand.Parameters.AddWithValue("@avatar_path", "cap");
-            insertingCommand.Parameters.AddWithValue("@gender", (int)player.Gender);
+            insertingCommand.Parameters.AddWithValue(DatabaseConst.ParameterId, player.Id);
+            insertingCommand.Parameters.AddWithValue(DatabaseConst.ParameterNickName, player.NickName);
+            insertingCommand.Parameters.AddWithValue(DatabaseConst.ParameterFirstName, player.FirstName);
+            insertingCommand.Parameters.AddWithValue(DatabaseConst.ParameterSecondName, player.SecondName);
+            insertingCommand.Parameters.AddWithValue(DatabaseConst.ParameterPassword, player.Password);
+            insertingCommand.Parameters.AddWithValue(DatabaseConst.ParameterBirthDate, player.BirthDate);
+            insertingCommand.Parameters.AddWithValue(DatabaseConst.ParameterAvatarPath, "cap");
+            insertingCommand.Parameters.AddWithValue(DatabaseConst.ParameterGender, (int)player.Gender);
             insertingCommand.ExecuteNonQuery();
+        }
+
+        public static DatabaseResponse<List<QuestModel>> GetAllQuests(SqlConnection connection)
+        {
+            SqlCommand getCommand = connection.CreateCommand();
+            getCommand.CommandType = CommandType.StoredProcedure;
+            getCommand.CommandText = "GetAllQuests";
+            getCommand.Parameters.AddRange(DatabaseConst.QuestsOutputParameters);
+            SqlDataReader dataReader = getCommand.ExecuteReader();
+
+            DatabaseResponse<List<QuestModel>> databaseResponse = new DatabaseResponse<List<QuestModel>>()
+            {
+                ResponseModel = QuestModel.ProcessBatch(dataReader)
+            };
+            return databaseResponse;
         }
 
     }

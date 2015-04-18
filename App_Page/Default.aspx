@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="App_Page_Default" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="AppPageDefault" %>
 
 <!DOCTYPE html>
 
@@ -11,6 +11,7 @@
         <div id="header">
             <asp:HyperLink ID="RegistrationLink" runat="server" NavigateUrl="~/App_Page/Registration.aspx">Регистрация</asp:HyperLink>
             <asp:HyperLink ID="AuthorizationLink" runat="server" NavigateUrl="~/App_Page/Authorization.aspx">Вход</asp:HyperLink>
+            <asp:HyperLink ID="QuestsLink" runat="server" NavigateUrl="~/App_Page/Quests.aspx">Просмотреть доступные квесты</asp:HyperLink>
         </div>
         <div id="content">
         </div>

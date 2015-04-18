@@ -7,7 +7,6 @@ using System.Web.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 
-
 namespace Model
 {
     /// <summary>
@@ -22,8 +21,8 @@ namespace Model
             string password, long birthDate, string avatarPath, Sex gender)
             : base(nickName, firstName, secondName, password, birthDate, avatarPath, gender) { }
 
-        public PlayerModel(string nickName, string password, SqlCommand selectCommand)
-            : base(nickName, password, selectCommand) { }
+        public PlayerModel(string nickName, string password, SqlCommand authCommand)
+            : base(nickName, password, authCommand) { }
 
     }
 

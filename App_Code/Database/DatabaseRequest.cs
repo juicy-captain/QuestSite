@@ -14,13 +14,14 @@ namespace Database
     public enum RequestType
     {
         RegisterPlayer,
-        AuthorizePlayer
+        AuthorizePlayer,
+        GetAllQuests
     }
 
     /// <summary>
     /// Class which simplifies representation of requests to SQL database
     /// </summary>
-    public class DatabaseRequest
+    public class DatabaseRequest<ResponseType>
     {
 
         public RequestType RequestType { get; set; }
@@ -31,26 +32,27 @@ namespace Database
         public PlayerModel PlayerModel { get; set; }
 
         public SqlParameter[] InputParameters { get; set; }
-        public SqlParameter[] OutputParameters { get; set; }
         public string ConnectionString { get; set; }
 
         public DatabaseRequest() { }
 
-        public DatabaseResponse Execute()
+        public DatabaseResponse<ResponseType> Execute()
         {
-            DatabaseResponse databaseResponse = null;
+            DatabaseResponse<ResponseType> databaseResponse = null;
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 switch (RequestType)
                 {
                     case RequestType.AuthorizePlayer:
-                        databaseResponse = DatabaseMethod.Authorize(connection, InputParameters, OutputParameters, NickName, Password);
+                        databaseResponse = DatabaseMethod.Authorize(connection, InputParameters, NickName, Password) as DatabaseResponse<ResponseType>;
                         break;
                     case RequestType.RegisterPlayer:
                         DatabaseMethod.Register(connection, PlayerModel);
                         break;
-
+                    case RequestType.GetAllQuests:
+                        databaseResponse = DatabaseMethod.GetAllQuests(connection) as DatabaseResponse<ResponseType>;
+                        break;
                 }
             }
             return databaseResponse;
@@ -58,11 +60,11 @@ namespace Database
 
     }
 
-    public class DatabaseResponse
+    public class DatabaseResponse<TResponseType>
     {
         public DatabaseResponse() { }
 
-        public PlayerModel PlayerModel { get; set; }
+        public TResponseType ResponseModel { get; set; }
         public int ScalarResult { get; set; }
 
     }
