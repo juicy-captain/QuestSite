@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+using Model;
+
 public partial class App_Page_Default : System.Web.UI.Page, ICrossPageUserSender
 {
     private PlayerModel mPlayerModel { get; set; }

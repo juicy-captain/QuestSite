@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+using Model;
+
 public partial class App_Page_Profile : System.Web.UI.Page
 {
     private PlayerModel mPlayerModel { get; set; }
