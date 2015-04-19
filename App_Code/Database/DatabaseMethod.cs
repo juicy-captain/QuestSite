@@ -17,29 +17,17 @@ namespace Database
     /// </summary>
     public static class DatabaseMethod
     {
-        public static DatabaseResponse<PlayerModel> Authorize(SqlConnection connection,
-            SqlParameter[] inputParameters,
-            string userNickName,
-            string password)
+        public static DatabaseResponse<PlayerModel> Authorize(SqlConnection connection, string userNickName, string password)
         {
-            //SqlConnection con = new SqlConnection(ConnectionUtil.GetConnectionString());
-            //SqlCommand cmd = new SqlCommand()
-            //{
-            //    CommandType = CommandType.StoredProcedure,
-            //    CommandText = "AuthorizeUser",
-            //    Connection = con
-            //};
-            //cmd.Parameters.AddRange(DatabaseConst.AuthOutputParameters);
-            //cmd.Parameters.AddRange(inputParameters);
-            //con.Open();
-            //SqlDataReader dataReader = cmd.ExecuteReader();
-
             SqlCommand authCommand = connection.CreateCommand();
             authCommand.CommandType = CommandType.StoredProcedure;
             authCommand.CommandText = "AuthorizeUser";
-            authCommand.Parameters.AddRange(inputParameters);
+            authCommand.Parameters.AddRange(new SqlParameter[] {
+                new SqlParameter(DatabaseConst.ParameterNickName, userNickName),
+                new SqlParameter(DatabaseConst.ParameterPassword, password)
+            });
             authCommand.Parameters.AddRange(DatabaseConst.AuthOutputParameters);
-            SqlDataReader dataReader = authCommand.ExecuteReader(CommandBehavior.SingleRow);
+            authCommand.ExecuteNonQuery();
 
             DatabaseResponse<PlayerModel> databaseResponse = new DatabaseResponse<PlayerModel>()
             {
@@ -75,6 +63,21 @@ namespace Database
             DatabaseResponse<List<QuestModel>> databaseResponse = new DatabaseResponse<List<QuestModel>>()
             {
                 ResponseModel = QuestModel.ProcessBatch(dataReader)
+            };
+            return databaseResponse;
+        }
+
+        public static DatabaseResponse<List<StageModel>> GetStages(SqlConnection connection, int questId)
+        {
+            SqlCommand getCommand = connection.CreateCommand();
+            getCommand.CommandType = CommandType.StoredProcedure;
+            getCommand.CommandText = "GetQuestStages";
+            getCommand.Parameters.AddWithValue(DatabaseConst.ParameterRelatedQuestId, questId);
+            SqlDataReader dataReader = getCommand.ExecuteReader();
+
+            DatabaseResponse<List<StageModel>> databaseResponse = new DatabaseResponse<List<StageModel>>()
+            {
+                ResponseModel = StageModel.ProcessBatch(dataReader)
             };
             return databaseResponse;
         }

@@ -6,19 +6,20 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 using Model;
+using Interface;
 
-public partial class AppPageDefault : System.Web.UI.Page, ICrossPageUserSender
+public partial class AppPageDefault : System.Web.UI.Page, ICrossPageSender<PlayerModel>
 {
-    private PlayerModel MPlayerModel { get; set; }
+    private PlayerModel PlayerModel { get; set; }
 
     protected void Page_Load(object sender, EventArgs e)
     {
 
     }
 
-    PlayerModel ICrossPageUserSender.GetPlayerModel()
-    {
-        return MPlayerModel;
-    }
 
+    PlayerModel ICrossPageSender<PlayerModel>.GetModel()
+    {
+        return PlayerModel;
+    }
 }

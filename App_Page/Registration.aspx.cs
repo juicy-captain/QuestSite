@@ -26,8 +26,7 @@ public partial class AppPageRegistration : System.Web.UI.Page
         new DatabaseRequest<Object>()
         {
             RequestType = RequestType.RegisterPlayer,
-            PlayerModel = player,
-            ConnectionString = ConnectionUtil.GetConnectionString()
+            PlayerModel = player
         }.Execute();
     }
 

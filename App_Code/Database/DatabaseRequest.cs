@@ -8,6 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 
 using Model;
+using Util;
 
 namespace Database
 {
@@ -15,7 +16,15 @@ namespace Database
     {
         RegisterPlayer,
         AuthorizePlayer,
-        GetAllQuests
+        GetAllQuests,
+        GetStages
+    }
+
+    public class DatabaseResponse<TResponseType>
+    {
+        public TResponseType ResponseModel { get; set; }
+        public int ScalarResult { get; set; }
+        public DatabaseResponse() { }
     }
 
     /// <summary>
@@ -23,29 +32,24 @@ namespace Database
     /// </summary>
     public class DatabaseRequest<ResponseType>
     {
-
         public RequestType RequestType { get; set; }
-
         public string NickName { get; set; }
         public string Password { get; set; }
-
         public PlayerModel PlayerModel { get; set; }
-
-        public SqlParameter[] InputParameters { get; set; }
-        public string ConnectionString { get; set; }
+        public int QuestId { get; set; }
 
         public DatabaseRequest() { }
 
         public DatabaseResponse<ResponseType> Execute()
         {
             DatabaseResponse<ResponseType> databaseResponse = null;
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (SqlConnection connection = new SqlConnection(DatabaseUtil.GetConnectionString()))
             {
                 connection.Open();
                 switch (RequestType)
                 {
                     case RequestType.AuthorizePlayer:
-                        databaseResponse = DatabaseMethod.Authorize(connection, InputParameters, NickName, Password) as DatabaseResponse<ResponseType>;
+                        databaseResponse = DatabaseMethod.Authorize(connection, NickName, Password) as DatabaseResponse<ResponseType>;
                         break;
                     case RequestType.RegisterPlayer:
                         DatabaseMethod.Register(connection, PlayerModel);
@@ -53,19 +57,13 @@ namespace Database
                     case RequestType.GetAllQuests:
                         databaseResponse = DatabaseMethod.GetAllQuests(connection) as DatabaseResponse<ResponseType>;
                         break;
+                    case Database.RequestType.GetStages:
+                        databaseResponse = DatabaseMethod.GetStages(connection,QuestId) as DatabaseResponse<ResponseType>;
+                        break;
                 }
             }
             return databaseResponse;
         }
-
-    }
-
-    public class DatabaseResponse<TResponseType>
-    {
-        public DatabaseResponse() { }
-
-        public TResponseType ResponseModel { get; set; }
-        public int ScalarResult { get; set; }
 
     }
 

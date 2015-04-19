@@ -13,12 +13,13 @@
             </div>
             <div id="content">
                 <div id="quests container">
-                    <ul id="QuestsList" runat="server">
-                    </ul>
+                    <asp:Panel runat="server" ID="QuestsPanel">
+                        <ul id="QuestsList" runat="server">
+                        </ul>
+                    </asp:Panel>
                 </div>
             </div>
             <div id="footer">
-
             </div>
         </div>
     </form>

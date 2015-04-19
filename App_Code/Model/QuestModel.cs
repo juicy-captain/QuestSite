@@ -81,9 +81,7 @@ namespace Model
                     //TODO replace falseand false
                     questModels.Add(new QuestModel(id, name, description, startDate, expirationDate, false, null, complexityLevel, null));
                 }
-            }
-
-            
+            }    
             return questModels;
         }
     }

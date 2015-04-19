@@ -6,19 +6,20 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 using Model;
+using Interface;
 
 public partial class AppPageProfile : System.Web.UI.Page
 {
-    private PlayerModel MPlayerModel { get; set; }
+    private PlayerModel PlayerModel { get; set; }
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (PreviousPage != null && PreviousPage is ICrossPageUserSender)
+        if (PreviousPage != null && PreviousPage is ICrossPageSender<PlayerModel>)
         {
-            ICrossPageUserSender sourcePage = (ICrossPageUserSender)PreviousPage;
-            MPlayerModel = sourcePage.GetPlayerModel();
-            LabelFirstName.Text = MPlayerModel.FirstName;
-            LabelNickName.Text = MPlayerModel.NickName;
-            LabelSecondName.Text = MPlayerModel.SecondName;
+            ICrossPageSender<PlayerModel> sourcePage = (ICrossPageSender<PlayerModel>)PreviousPage;
+            PlayerModel = sourcePage.GetModel();
+            LabelFirstName.Text = PlayerModel.FirstName;
+            LabelNickName.Text = PlayerModel.NickName;
+            LabelSecondName.Text = PlayerModel.SecondName;
         }
     }
 }

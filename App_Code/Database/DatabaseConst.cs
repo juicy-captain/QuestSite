@@ -25,12 +25,11 @@ namespace Database
                     new SqlParameter(ParameterFirstName, SqlDbType.VarChar, 50) {Direction = ParameterDirection.Output},
                     new SqlParameter(ParameterSecondName, SqlDbType.VarChar, 50) {Direction = ParameterDirection.Output},
                     new SqlParameter(ParameterBirthDate, SqlDbType.BigInt) {Direction = ParameterDirection.Output},
-                    new SqlParameter(ParameterAvatarPath, SqlDbType.Text) {Direction = ParameterDirection.Output},
+                    new SqlParameter(ParameterAvatarPath, SqlDbType.VarChar, 50) {Direction = ParameterDirection.Output},
                     new SqlParameter(ParameterGender, SqlDbType.Bit) {Direction = ParameterDirection.Output}
                 };
             }
         }
-
         public static SqlParameter[] QuestsOutputParameters
         {
             get
@@ -47,10 +46,10 @@ namespace Database
             }
         }
 
-        //Common model const
+        //Common model
         public const string ParameterId = "@Id";
 
-        //PlayerModel const
+        //PlayerModel
         public const string ParameterNickName = "@nick_name";
         public const string ParameterFirstName = "@first_name";
         public const string ParameterSecondName = "@second_name";
@@ -59,13 +58,16 @@ namespace Database
         public const string ParameterAvatarPath = "@avatar_path";
         public const string ParameterGender = "@gender";
 
-        //QuestModel const
+        //QuestModel
         public const string ParameterName = "@name";
         public const string ParameterDescription = "@description";
         public const string ParameterStartDate = "@start_date";
         public const string ParameterExpirationDate = "@expiration_date";
         public const string ParameterOpened = "@opened";
         public const string ParameterComplexityLevel = "@complexity_level";
+
+        //StageModel
+        public const string ParameterRelatedQuestId = "@questId";
     }
 
 }

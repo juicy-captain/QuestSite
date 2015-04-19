@@ -12,8 +12,9 @@ using System.Data.SqlClient;
 using Model;
 using Database;
 using Util;
+using Interface;
 
-public partial class AppPageAuthorization : System.Web.UI.Page, ICrossPageUserSender
+public partial class AppPageAuthorization : System.Web.UI.Page, ICrossPageSender<PlayerModel>
 {
     private PlayerModel PlayerModel { get; set; }
 
@@ -24,26 +25,17 @@ public partial class AppPageAuthorization : System.Web.UI.Page, ICrossPageUserSe
     }
     protected void ButtonAuthorization_Click(object sender, EventArgs e)
     {
-        string nickName = TextBoxUserName.Text;
-        string password = TextBoxPassword.Text;
-        SqlParameter[] inputParameters = {
-                                                new SqlParameter(DatabaseConst.ParameterNickName, nickName),
-                                                new SqlParameter(DatabaseConst.ParameterPassword, password)
-                                            };
-
         DatabaseResponse<PlayerModel> databaseResponse = new DatabaseRequest<PlayerModel>()
         {
             RequestType = Database.RequestType.AuthorizePlayer,
-            InputParameters = inputParameters,
-            ConnectionString = ConnectionUtil.GetConnectionString(),
-            NickName = nickName,
-            Password = password
+            NickName = TextBoxUserName.Text,
+            Password = TextBoxPassword.Text
         }.Execute();
 
         PlayerModel = databaseResponse.ResponseModel;
     }
 
-    PlayerModel ICrossPageUserSender.GetPlayerModel()
+    PlayerModel ICrossPageSender<PlayerModel>.GetModel()
     {
         return PlayerModel;
     }
