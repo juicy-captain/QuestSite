@@ -33,11 +33,11 @@ public class StageModel
         {
             while (dataReader.Read())
             {
-                string title = dataReader.GetString(0);
-                string question = dataReader.GetString(1);
-                string imagePath = DatabaseUtil.GetSyting(dataReader, 2);
-                string answer = dataReader.GetString(3);
-                int ordinal = dataReader.GetInt32(4);
+                string title = DatabaseUtil.GetString(dataReader, 0);
+                string question = DatabaseUtil.GetString(dataReader, 1);
+                string imagePath = DatabaseUtil.GetString(dataReader, 2);
+                string answer = DatabaseUtil.GetString(dataReader, 3);
+                int ordinal = 0;
                 stageModels.Add(new StageModel(title, question, imagePath, answer, ordinal));
             }
         }

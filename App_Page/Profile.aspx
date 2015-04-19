@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>Ваш профиль</title>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -15,7 +15,7 @@
             &nbsp;<asp:Label ID="LabelNickName" runat="server" Text="NickName"></asp:Label>
             &nbsp;<asp:Label ID="LabelSecondName" runat="server" Text="SecondName"></asp:Label>
             <br />
-            <asp:HyperLink ID="QuestsLink" runat="server" NavigateUrl="~/App_Page/Quests.aspx">Просмотреть доступные квесты</asp:HyperLink>
+            <asp:LinkButton ID="QuestsLink" runat="server" PostBackUrl="~/App_Page/Quests.aspx">Просмотреть доступные квесты</asp:LinkButton>
         </div>
         <div id="footer">
         </div>

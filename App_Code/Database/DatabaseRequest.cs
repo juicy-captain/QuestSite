@@ -17,12 +17,13 @@ namespace Database
         RegisterPlayer,
         AuthorizePlayer,
         GetAllQuests,
-        GetStages
+        GetStages,
+        SubscribePlayerForQuest
     }
 
-    public class DatabaseResponse<TResponseType>
+    public class DatabaseResponse<ResponseType>
     {
-        public TResponseType ResponseModel { get; set; }
+        public ResponseType ResponseModel { get; set; }
         public int ScalarResult { get; set; }
         public DatabaseResponse() { }
     }
@@ -36,6 +37,7 @@ namespace Database
         public string NickName { get; set; }
         public string Password { get; set; }
         public PlayerModel PlayerModel { get; set; }
+        public int PlayerId { get; set; }
         public int QuestId { get; set; }
 
         public DatabaseRequest() { }
@@ -59,6 +61,9 @@ namespace Database
                         break;
                     case Database.RequestType.GetStages:
                         databaseResponse = DatabaseMethod.GetStages(connection,QuestId) as DatabaseResponse<ResponseType>;
+                        break;
+                    case Database.RequestType.SubscribePlayerForQuest:
+                        DatabaseMethod.Subscribe(connection, QuestId, PlayerId);
                         break;
                 }
             }

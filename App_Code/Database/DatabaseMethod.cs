@@ -36,22 +36,6 @@ namespace Database
             return databaseResponse;
         }
 
-        public static void Register(SqlConnection connection, PlayerModel player)
-        {
-            SqlCommand insertingCommand = connection.CreateCommand();
-            insertingCommand.CommandType = CommandType.StoredProcedure;
-            insertingCommand.CommandText = "InsertUser";
-            insertingCommand.Parameters.AddWithValue(DatabaseConst.ParameterId, player.Id);
-            insertingCommand.Parameters.AddWithValue(DatabaseConst.ParameterNickName, player.NickName);
-            insertingCommand.Parameters.AddWithValue(DatabaseConst.ParameterFirstName, player.FirstName);
-            insertingCommand.Parameters.AddWithValue(DatabaseConst.ParameterSecondName, player.SecondName);
-            insertingCommand.Parameters.AddWithValue(DatabaseConst.ParameterPassword, player.Password);
-            insertingCommand.Parameters.AddWithValue(DatabaseConst.ParameterBirthDate, player.BirthDate);
-            insertingCommand.Parameters.AddWithValue(DatabaseConst.ParameterAvatarPath, "cap");
-            insertingCommand.Parameters.AddWithValue(DatabaseConst.ParameterGender, (int)player.Gender);
-            insertingCommand.ExecuteNonQuery();
-        }
-
         public static DatabaseResponse<List<QuestModel>> GetAllQuests(SqlConnection connection)
         {
             SqlCommand getCommand = connection.CreateCommand();
@@ -80,6 +64,32 @@ namespace Database
                 ResponseModel = StageModel.ProcessBatch(dataReader)
             };
             return databaseResponse;
+        }
+
+        public static void Register(SqlConnection connection, PlayerModel player)
+        {
+            SqlCommand insertingCommand = connection.CreateCommand();
+            insertingCommand.CommandType = CommandType.StoredProcedure;
+            insertingCommand.CommandText = "InsertUser";
+            insertingCommand.Parameters.AddWithValue(DatabaseConst.ParameterId, player.Id);
+            insertingCommand.Parameters.AddWithValue(DatabaseConst.ParameterNickName, player.NickName);
+            insertingCommand.Parameters.AddWithValue(DatabaseConst.ParameterFirstName, player.FirstName);
+            insertingCommand.Parameters.AddWithValue(DatabaseConst.ParameterSecondName, player.SecondName);
+            insertingCommand.Parameters.AddWithValue(DatabaseConst.ParameterPassword, player.Password);
+            insertingCommand.Parameters.AddWithValue(DatabaseConst.ParameterBirthDate, player.BirthDate);
+            insertingCommand.Parameters.AddWithValue(DatabaseConst.ParameterAvatarPath, "cap");
+            insertingCommand.Parameters.AddWithValue(DatabaseConst.ParameterGender, (int)player.Gender);
+            insertingCommand.ExecuteNonQuery();
+        }
+
+        public static void Subscribe(SqlConnection connection, int questId, int playerId)
+        {
+            SqlCommand insertingCommand = connection.CreateCommand();
+            insertingCommand.CommandType = CommandType.StoredProcedure;
+            insertingCommand.CommandText = "InsertSubscription";
+            insertingCommand.Parameters.AddWithValue(DatabaseConst.ParameterQuestId, questId);
+            insertingCommand.Parameters.AddWithValue(DatabaseConst.ParameterUserId, playerId);
+            insertingCommand.ExecuteNonQuery();
         }
 
     }

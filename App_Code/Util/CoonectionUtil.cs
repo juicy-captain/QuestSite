@@ -17,9 +17,14 @@ namespace Util
             return WebConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
         }
 
-        public static string GetSyting(SqlDataReader dataReader, int i)
+        public static string GetString(SqlDataReader dataReader, int i)
         {
             return dataReader.IsDBNull(i) ? null : dataReader.GetString(i);
+        }
+
+        public static int GetInt32(SqlDataReader dataReader, int i)
+        {
+            return dataReader.IsDBNull(i) ? -1 : dataReader.GetInt32(i);
         }
 
     }

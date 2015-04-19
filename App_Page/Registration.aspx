@@ -11,7 +11,7 @@
     <form id="form1" runat="server">
     <div>
     
-        <asp:Wizard ID="RegistrationWizard" runat="server" Height="247px" Width="519px" DisplaySideBar="False" ActiveStepIndex="0" HeaderText="Регистрационная форма" OnFinishButtonClick="RegistrationWizard_FinishButtonClick">
+        <asp:Wizard ID="RegistrationWizard" runat="server" Height="247px" Width="519px" DisplaySideBar="False" ActiveStepIndex="0" HeaderText="Регистрационная форма" OnFinishButtonClick="RegistrationWizard_FinishButtonClick" FinishDestinationPageUrl="~/App_Page/Profile.aspx">
             <StartNavigationTemplate>
                 <asp:Button ID="StartNextButton" runat="server" CommandName="MoveNext" Text="Next" />
             </StartNavigationTemplate>

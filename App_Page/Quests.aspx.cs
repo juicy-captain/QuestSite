@@ -11,10 +11,11 @@ using Database;
 using Util;
 using Interface;
 
-public partial class AppPageQuests : System.Web.UI.Page, ICrossPageSender<QuestModel>
+public partial class AppPageQuests : System.Web.UI.Page, ICrossPageSender<QuestModel>, ICrossPageSender<PlayerModel>
 {
     private QuestModel SelectedQuestModel { get; set; }
     private List<QuestModel> QuestModels { get; set; }
+    private static PlayerModel PlayerModel { get; set; }
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -24,6 +25,7 @@ public partial class AppPageQuests : System.Web.UI.Page, ICrossPageSender<QuestM
         }.Execute();
 
         PopulateQuestList(QuestModels = databaseResponse.ResponseModel);
+        GetPlayerProfile();
     }
 
     private void PopulateQuestList(List<QuestModel> questModels)
@@ -47,7 +49,24 @@ public partial class AppPageQuests : System.Web.UI.Page, ICrossPageSender<QuestM
         }
     }
 
+    private void GetPlayerProfile()
+    {
+        if (PreviousPage != null && PreviousPage is ICrossPageSender<PlayerModel>)
+        {
+            ICrossPageSender<PlayerModel> sourcePage = PreviousPage as ICrossPageSender<PlayerModel>;
+            PlayerModel = sourcePage.GetModel();
+            HtmlGenericControl playerProfileInfo = FindControl("header") as HtmlGenericControl;
 
+            Label userNickNameDeclaration = new Label() { Text = "Вы вошли как: " };
+            HyperLink linkToProfilePage = new HyperLink()
+            {
+                Text = "Вы вошли как: " + PlayerModel.NickName,
+                NavigateUrl = "~/App_Page/Profile.aspx"
+            };
+            playerProfileInfo.Controls.Add(userNickNameDeclaration);
+            playerProfileInfo.Controls.Add(linkToProfilePage);
+        }
+    }
     QuestModel ICrossPageSender<QuestModel>.GetModel()
     {
         return SelectedQuestModel;
@@ -63,5 +82,11 @@ public partial class AppPageQuests : System.Web.UI.Page, ICrossPageSender<QuestM
                 break;
             }
         }
+    }
+
+
+    PlayerModel ICrossPageSender<PlayerModel>.GetModel()
+    {
+        return PlayerModel;
     }
 }
