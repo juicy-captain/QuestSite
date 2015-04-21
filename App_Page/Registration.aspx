@@ -5,13 +5,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Регистрация</title>
-    <link href="../App_Style/RegistrationStyle.css" rel="stylesheet" type="text/css" />
+    <%--<link href="../App_Style/RegistrationStyle.css" rel="stylesheet" type="text/css" />--%>
+    
 </head>
 <body>
     <form id="form1" runat="server">
+        
+        
+
     <div>
-    
-        <asp:Wizard ID="RegistrationWizard" runat="server" Height="247px" Width="519px" DisplaySideBar="False" ActiveStepIndex="0" HeaderText="Регистрационная форма" OnFinishButtonClick="RegistrationWizard_FinishButtonClick">
+    <asp:Wizard ID="RegistrationWizard" runat="server" Height="247px" Width="519px" DisplaySideBar="False" ActiveStepIndex="0" HeaderText="Регистрационная форма" OnFinishButtonClick="RegistrationWizard_FinishButtonClick">
             <StartNavigationTemplate>
                 <asp:Button ID="StartNextButton" runat="server" CommandName="MoveNext" Text="Next" />
             </StartNavigationTemplate>
@@ -66,8 +69,10 @@
                 </asp:WizardStep>
             </WizardSteps>
         </asp:Wizard>
-    
     </div>
+        
+        
+
     </form>
 </body>
 </html>
