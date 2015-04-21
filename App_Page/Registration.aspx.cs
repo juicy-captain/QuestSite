@@ -11,9 +11,12 @@ using System.Data.SqlClient;
 
 using Model;
 using Database;
+using Util;
+using Interface;
 
-public partial class App_Page_Registration : System.Web.UI.Page
+public partial class AppPageRegistration : System.Web.UI.Page, ICrossPageSender<PlayerModel>
 {
+    private PlayerModel NewlyCreatedPlayer { get; set; }
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -21,13 +24,11 @@ public partial class App_Page_Registration : System.Web.UI.Page
 
     protected void RegistrationWizard_FinishButtonClick(object sender, WizardNavigationEventArgs e)
     {
-        PlayerModel player = CreatePlayer();
-        string connectionString = WebConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
-        new DatabaseRequest()
+        NewlyCreatedPlayer = CreatePlayer();
+        new DatabaseRequest<Object>()
         {
             RequestType = RequestType.RegisterPlayer,
-            PlayerModel = player,
-            ConnectionString = connectionString
+            PlayerModel = NewlyCreatedPlayer
         }.Execute();
     }
 
@@ -48,4 +49,11 @@ public partial class App_Page_Registration : System.Web.UI.Page
         return new PlayerModel(nickName, firstName, secondName, password, birthDate, null, gender);
     }
 
+
+
+
+    PlayerModel ICrossPageSender<PlayerModel>.GetModel()
+    {
+        return NewlyCreatedPlayer;
+    }
 }

@@ -7,6 +7,8 @@ using System.Web.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 
+using Database;
+
 namespace Model
 {
     /// <summary>
@@ -14,16 +16,7 @@ namespace Model
     /// </summary>
     public abstract class UserModel
     {
-        public const string PARAMETER_ID = "@Id";
-        public const string PARAMETER_NICK_NAME = "@nick_name";
-        public const string PARAMETER_FIRST_NAME = "@first_name";
-        public const string PARAMETER_SECOND_NAME = "@second_name";
-        public const string PARAMETER_PASSWORD = "@password";
-        public const string PARAMETER_BIRTH_DATE = "birth_date";
-        public const string PARAMETER_AVATAR_PATH = "@avatar_path";
-        public const string PARAMETER_GENDER = "@gender";
-
-        public int ID { get; private set; }
+        public int Id { get; private set; }
         public string NickName { get; private set; }
         public string FirstName { get; private set; }
         public string SecondName { get; private set; }
@@ -48,19 +41,32 @@ namespace Model
             BirthDate = birthDate;
             AvatarPath = avatarPath;
             Gender = gender;
-            ID = (nickName + firstName + secondName + birthDate.ToString()).GetHashCode();
+            Id = (nickName + firstName + secondName + birthDate.ToString()).GetHashCode();
+        }
+
+        public UserModel(int id, string nickName, string firstName, string secondName,
+            string password, long birthDate, string avatarPath, Sex gender)
+        {
+            Id = id;
+            NickName = nickName;
+            FirstName = firstName;
+            SecondName = secondName;
+            Password = password;
+            BirthDate = birthDate;
+            AvatarPath = avatarPath;
+            Gender = gender;
         }
 
         public UserModel(string nickName, string password, SqlCommand selectCommad)
         {
-            ID = (int)selectCommad.Parameters[PARAMETER_ID].Value;
+            Id = (int)selectCommad.Parameters[DatabaseConst.ParameterId].Value;
             NickName = nickName;
-            FirstName = (string)selectCommad.Parameters[PARAMETER_FIRST_NAME].Value;
-            SecondName = (string)selectCommad.Parameters[PARAMETER_SECOND_NAME].Value;
+            FirstName = (string)selectCommad.Parameters[DatabaseConst.ParameterFirstName].Value;
+            SecondName = (string)selectCommad.Parameters[DatabaseConst.ParameterSecondName].Value;
             Password = password;
-            BirthDate = (long)selectCommad.Parameters[PARAMETER_BIRTH_DATE].Value;
-            AvatarPath = (string)selectCommad.Parameters[PARAMETER_AVATAR_PATH].Value;
-            Gender = (bool)selectCommad.Parameters[PARAMETER_GENDER].Value ? Sex.Female : Sex.Male;
+            BirthDate = (long)selectCommad.Parameters[DatabaseConst.ParameterBirthDate].Value;
+            AvatarPath = (string)selectCommad.Parameters[DatabaseConst.ParameterAvatarPath].Value;
+            Gender = (bool)selectCommad.Parameters[DatabaseConst.ParameterGender].Value ? Sex.Female : Sex.Male;
             //IsLoggedIn = true;
         }
 

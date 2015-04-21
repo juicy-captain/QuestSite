@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Registration.aspx.cs" Inherits="App_Page_Registration" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Registration.aspx.cs" Inherits="AppPageRegistration" %>
 
 <!DOCTYPE html>
 
@@ -14,7 +14,9 @@
         
 
     <div>
-    <asp:Wizard ID="RegistrationWizard" runat="server" Height="247px" Width="519px" DisplaySideBar="False" ActiveStepIndex="0" HeaderText="Регистрационная форма" OnFinishButtonClick="RegistrationWizard_FinishButtonClick">
+
+    
+        <asp:Wizard ID="RegistrationWizard" runat="server" Height="247px" Width="519px" DisplaySideBar="False" ActiveStepIndex="0" HeaderText="Регистрационная форма" OnFinishButtonClick="RegistrationWizard_FinishButtonClick" FinishDestinationPageUrl="~/App_Page/Profile.aspx">
             <StartNavigationTemplate>
                 <asp:Button ID="StartNextButton" runat="server" CommandName="MoveNext" Text="Next" />
             </StartNavigationTemplate>
