@@ -36,7 +36,18 @@ public partial class AppPageQuests : System.Web.UI.Page, ICrossPageSender<QuestM
             HtmlGenericControl listItem = new HtmlGenericControl("li");
 
             LinkButton linkToDetails = new LinkButton() { Text = quest.Name, PostBackUrl = "~/App_Page/QuestDetails.aspx" };
-            linkToDetails.Click += LinkButton_Click;
+            linkToDetails.Click += (sender, args) =>
+                {
+                    string selectedQuestName = (sender as LinkButton).Text;
+                    foreach (QuestModel questModel in QuestModels)
+                    {
+                        if (questModel.Name.Equals(selectedQuestName))
+                        {
+                            SelectedQuestModel = questModel;
+                            break;
+                        }
+                    }
+                };
 
             Label description = new Label()
             {
@@ -67,23 +78,11 @@ public partial class AppPageQuests : System.Web.UI.Page, ICrossPageSender<QuestM
             playerProfileInfo.Controls.Add(linkToProfilePage);
         }
     }
+
     QuestModel ICrossPageSender<QuestModel>.GetModel()
     {
         return SelectedQuestModel;
     }
-    protected void LinkButton_Click(object sender, EventArgs e)
-    {
-        string selectedQuestName = (sender as LinkButton).Text;
-        foreach (QuestModel quest in QuestModels)
-        {
-            if (quest.Name.Equals(selectedQuestName))
-            {
-                SelectedQuestModel = quest;
-                break;
-            }
-        }
-    }
-
 
     PlayerModel ICrossPageSender<PlayerModel>.GetModel()
     {

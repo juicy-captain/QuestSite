@@ -16,6 +16,13 @@
             &nbsp;<asp:Label ID="LabelSecondName" runat="server" Text="SecondName"></asp:Label>
             <br />
             <asp:LinkButton ID="QuestsLink" runat="server" PostBackUrl="~/App_Page/Quests.aspx">Просмотреть доступные квесты</asp:LinkButton>
+
+            <div id="subscriptions"">
+                <asp:Label ID="LabelSubscriptions" runat="server" Text="Вы подписались на следующие кветы:"></asp:Label>
+                <ul id="QuestsList" runat="server">
+
+                </ul>
+            </div>
         </div>
         <div id="footer">
         </div>

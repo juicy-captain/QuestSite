@@ -16,8 +16,6 @@ namespace Model
     /// </summary>
     public abstract class UserModel
     {
-
-
         public int Id { get; private set; }
         public string NickName { get; private set; }
         public string FirstName { get; private set; }
@@ -44,6 +42,19 @@ namespace Model
             AvatarPath = avatarPath;
             Gender = gender;
             Id = (nickName + firstName + secondName + birthDate.ToString()).GetHashCode();
+        }
+
+        public UserModel(int id, string nickName, string firstName, string secondName,
+            string password, long birthDate, string avatarPath, Sex gender)
+        {
+            Id = id;
+            NickName = nickName;
+            FirstName = firstName;
+            SecondName = secondName;
+            Password = password;
+            BirthDate = birthDate;
+            AvatarPath = avatarPath;
+            Gender = gender;
         }
 
         public UserModel(string nickName, string password, SqlCommand selectCommad)

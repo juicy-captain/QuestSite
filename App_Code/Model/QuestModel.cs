@@ -59,8 +59,6 @@ namespace Model
             ExpirationDate = (long)selectCommad.Parameters[DatabaseConst.ParameterExpirationDate].Value;
             //Opened = (string)selectCommad.Parameters[PARAMETER_AVATAR_PATH].Value;
             ComplexityLevel = (QuestComplexityLevel)selectCommad.Parameters[DatabaseConst.ParameterComplexityLevel].Value;
-
-            //SqlDataReader datareader = new SqlDataReader();
         }
 
         public static List<QuestModel> ProcessBatch(SqlDataReader dataReader)
@@ -78,10 +76,10 @@ namespace Model
                     //Opened = (string)selectCommad.Parameters[PARAMETER_AVATAR_PATH].Value;
                     QuestComplexityLevel complexityLevel = (QuestComplexityLevel)dataReader.GetInt32(6);
 
-                    //TODO replace falseand false
+                    //TODO replace null eand false
                     questModels.Add(new QuestModel(id, name, description, startDate, expirationDate, false, null, complexityLevel, null));
                 }
-            }    
+            }
             return questModels;
         }
     }

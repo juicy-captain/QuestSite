@@ -30,21 +30,6 @@ namespace Database
                 };
             }
         }
-        public static SqlParameter[] QuestsOutputParameters
-        {
-            get
-            {
-                return new SqlParameter[] {
-                    new SqlParameter(ParameterId, SqlDbType.Int) {Direction = ParameterDirection.Output},
-                    new SqlParameter(ParameterName, SqlDbType.VarChar, 50) {Direction = ParameterDirection.Output},
-                    new SqlParameter(ParameterDescription, SqlDbType.VarChar, 50) {Direction = ParameterDirection.Output},
-                    new SqlParameter(ParameterStartDate, SqlDbType.BigInt) {Direction = ParameterDirection.Output},
-                    new SqlParameter(ParameterExpirationDate, SqlDbType.BigInt) {Direction = ParameterDirection.Output},
-                    new SqlParameter(ParameterOpened, SqlDbType.Bit) {Direction = ParameterDirection.Output},
-                    new SqlParameter(ParameterComplexityLevel, SqlDbType.Int) {Direction = ParameterDirection.Output}
-                };
-            }
-        }
 
         //Common model
         public const string ParameterId = "@Id";

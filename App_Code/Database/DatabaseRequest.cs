@@ -18,7 +18,9 @@ namespace Database
         AuthorizePlayer,
         GetAllQuests,
         GetStages,
-        SubscribePlayerForQuest
+        SubscribePlayerForQuest,
+        GetPlayerSubscriptions,
+        GetQuestSubscribers
     }
 
     public class DatabaseResponse<ResponseType>
@@ -59,11 +61,17 @@ namespace Database
                     case RequestType.GetAllQuests:
                         databaseResponse = DatabaseMethod.GetAllQuests(connection) as DatabaseResponse<ResponseType>;
                         break;
-                    case Database.RequestType.GetStages:
-                        databaseResponse = DatabaseMethod.GetStages(connection,QuestId) as DatabaseResponse<ResponseType>;
+                    case RequestType.GetStages:
+                        databaseResponse = DatabaseMethod.GetStages(connection, QuestId) as DatabaseResponse<ResponseType>;
                         break;
-                    case Database.RequestType.SubscribePlayerForQuest:
+                    case RequestType.SubscribePlayerForQuest:
                         DatabaseMethod.Subscribe(connection, QuestId, PlayerId);
+                        break;
+                    case RequestType.GetPlayerSubscriptions:
+                        databaseResponse = DatabaseMethod.GetPlayerSubscriptions(connection, PlayerId) as DatabaseResponse<ResponseType>;
+                        break;
+                    case RequestType.GetQuestSubscribers:
+                        databaseResponse = DatabaseMethod.GetQuestSubscribers(connection, QuestId) as DatabaseResponse<ResponseType>;
                         break;
                 }
             }
