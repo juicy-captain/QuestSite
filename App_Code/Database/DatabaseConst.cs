@@ -53,10 +53,12 @@ namespace Database
 
         //StageModel
         public const string ParameterRelatedQuestId = "@questId";
+        public const string ParameterStageOrdinal = "@stage_ordinal";
 
         //Subscription
         public const string ParameterQuestId = ParameterRelatedQuestId;
         public const string ParameterUserId = "@userId";
+        public const string ParameterLastStage = "@last_stage";
     }
 
 }

@@ -33,6 +33,7 @@ namespace Model
         public List<PlayerModel> RegisteredCompetotors { get; private set; }
         public QuestComplexityLevel ComplexityLevel { get; private set; }
         public List<StageModel> Stages { get; private set; }
+        public int LastStage { get; set; }
 
         public QuestModel(int id, string name, string description, long startDate, long expirationDate, bool opened,
             List<PlayerModel> registeredCompetotors, QuestComplexityLevel complexityLevel, List<StageModel> stages)

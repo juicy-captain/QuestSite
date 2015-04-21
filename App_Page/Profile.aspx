@@ -8,7 +8,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div id="header">
+        <div id="header" runat="server">
         </div>
         <div id="content">
             <asp:Label ID="LabelFirstName" runat="server" Text="FirstName"></asp:Label>
@@ -17,7 +17,7 @@
             <br />
             <asp:LinkButton ID="QuestsLink" runat="server" PostBackUrl="~/App_Page/Quests.aspx">Просмотреть доступные квесты</asp:LinkButton>
 
-            <div id="subscriptions"">
+            <div id="subscriptions">
                 <asp:Label ID="LabelSubscriptions" runat="server" Text="Вы подписались на следующие кветы:"></asp:Label>
                 <ul id="QuestsList" runat="server">
 

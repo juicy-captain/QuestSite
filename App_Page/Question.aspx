@@ -8,9 +8,18 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
-    
-    </div>
+        <div id="header">
+        </div>
+        <div id="content">
+            <asp:Label ID="LabelQuestionTitle" runat="server" Text="QuestionTitle"></asp:Label>
+            <br />
+            <asp:Label ID="LabelQuestionBody" runat="server" Text="QuestionBody"></asp:Label>
+            <br />
+            <asp:TextBox ID="TextBoxPlayerAnswer" runat="server" placeholder="Ваш ответ"></asp:TextBox>
+            <asp:Button ID="ButtonSendAnswer" runat="server" Text="Отправить ответ" OnClick="ButtonSendAnswer_Click" />
+        </div>
+        <div id="footer">
+        </div>
     </form>
 </body>
 </html>

@@ -88,6 +88,7 @@ namespace Database
             suscribeCommand.CommandText = "InsertSubscription";
             suscribeCommand.Parameters.AddWithValue(DatabaseConst.ParameterQuestId, questId);
             suscribeCommand.Parameters.AddWithValue(DatabaseConst.ParameterUserId, playerId);
+            suscribeCommand.Parameters.AddWithValue(DatabaseConst.ParameterLastStage, 1);
             suscribeCommand.ExecuteNonQuery();
         }
 
@@ -108,11 +109,11 @@ namespace Database
 
         public static DatabaseResponse<List<PlayerModel>> GetQuestSubscribers(SqlConnection connection, int questId)
         {
-            SqlCommand getSubscriptions = connection.CreateCommand();
-            getSubscriptions.CommandType = CommandType.StoredProcedure;
-            getSubscriptions.CommandText = "GetQuestSubscribers";
-            getSubscriptions.Parameters.AddWithValue(DatabaseConst.ParameterQuestId, questId);
-            SqlDataReader dataReader = getSubscriptions.ExecuteReader();
+            SqlCommand getSubscribers = connection.CreateCommand();
+            getSubscribers.CommandType = CommandType.StoredProcedure;
+            getSubscribers.CommandText = "GetQuestSubscribers";
+            getSubscribers.Parameters.AddWithValue(DatabaseConst.ParameterQuestId, questId);
+            SqlDataReader dataReader = getSubscribers.ExecuteReader();
 
             DatabaseResponse<List<PlayerModel>> databaseResponse = new DatabaseResponse<List<PlayerModel>>()
             {
@@ -121,6 +122,68 @@ namespace Database
             return databaseResponse;
         }
 
+        public static DatabaseResponse<bool> CheckSubscription(SqlConnection connection, int questId, int playerId)
+        {
+            //Is player subscribed for a quest?
+            SqlCommand getSubscriptions = connection.CreateCommand();
+            getSubscriptions.CommandType = CommandType.StoredProcedure;
+            getSubscriptions.CommandText = "CheckSubscription";
+            getSubscriptions.Parameters.AddWithValue(DatabaseConst.ParameterQuestId, questId);
+            getSubscriptions.Parameters.AddWithValue(DatabaseConst.ParameterUserId, playerId);
+            SqlDataReader dataReader = getSubscriptions.ExecuteReader();
+
+
+            DatabaseResponse<bool> databaseResponse = new DatabaseResponse<bool>()
+            {
+                ValueResult = dataReader.HasRows
+            };
+            return databaseResponse;
+        }
+
+        public static DatabaseResponse<int> GetLastStage(SqlConnection connection, int questId, int playerId)
+        {
+            SqlCommand getSubscriptions = connection.CreateCommand();
+            getSubscriptions.CommandType = CommandType.StoredProcedure;
+            getSubscriptions.CommandText = "GetLastStage";
+            getSubscriptions.Parameters.AddWithValue(DatabaseConst.ParameterQuestId, questId);
+            getSubscriptions.Parameters.AddWithValue(DatabaseConst.ParameterUserId, playerId);
+            SqlDataReader dataReader = getSubscriptions.ExecuteReader();
+
+            DatabaseResponse<int> databaseResponse = new DatabaseResponse<int>()
+            {
+                ValueResult = dataReader.GetInt32(0)
+            };
+            return databaseResponse;
+        }
+
+        public static DatabaseResponse<bool> CheckAnswer(SqlConnection connection, int questId, int stageOrdinal, string answer)
+        {
+            //Is player's answer rignt?
+            SqlCommand getSubscriptions = connection.CreateCommand();
+            getSubscriptions.CommandType = CommandType.StoredProcedure;
+            getSubscriptions.CommandText = "GetAnswer";
+            getSubscriptions.Parameters.AddWithValue(DatabaseConst.ParameterQuestId, questId);
+            getSubscriptions.Parameters.AddWithValue(DatabaseConst.ParameterStageOrdinal, stageOrdinal);
+            SqlDataReader dataReader = getSubscriptions.ExecuteReader();
+
+
+            DatabaseResponse<bool> databaseResponse = new DatabaseResponse<bool>()
+            {
+                ValueResult = answer.Equals(dataReader.GetString(0))
+            };
+            return databaseResponse;
+        }
+
+        public static void СonfirmRightAnswer(SqlConnection connection, int questId, int playerId)
+        {
+            SqlCommand registerCommand = connection.CreateCommand();
+            registerCommand.CommandType = CommandType.StoredProcedure;
+            registerCommand.CommandText = "SetNewLastStage";
+            registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterId, questId);
+            registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterNickName, playerId);
+            registerCommand.ExecuteNonQuery();
+        }
+        
     }
 
 }

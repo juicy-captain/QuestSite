@@ -30,7 +30,6 @@ public partial class AppPageQuests : System.Web.UI.Page, ICrossPageSender<QuestM
 
     private void PopulateQuestList(List<QuestModel> questModels)
     {
-        HtmlGenericControl questsList = FindControl("QuestsList") as HtmlGenericControl;
         foreach (QuestModel quest in questModels)
         {
             HtmlGenericControl listItem = new HtmlGenericControl("li");
@@ -56,7 +55,7 @@ public partial class AppPageQuests : System.Web.UI.Page, ICrossPageSender<QuestM
             };
             listItem.Controls.Add(linkToDetails);
             listItem.Controls.Add(description);
-            questsList.Controls.Add(listItem);
+            QuestsList.Controls.Add(listItem);
         }
     }
 
@@ -66,7 +65,6 @@ public partial class AppPageQuests : System.Web.UI.Page, ICrossPageSender<QuestM
         {
             ICrossPageSender<PlayerModel> sourcePage = PreviousPage as ICrossPageSender<PlayerModel>;
             PlayerModel = sourcePage.GetModel();
-            HtmlGenericControl playerProfileInfo = FindControl("header") as HtmlGenericControl;
 
             Label userNickNameDeclaration = new Label() { Text = "Вы вошли как: " };
             HyperLink linkToProfilePage = new HyperLink()
@@ -74,8 +72,8 @@ public partial class AppPageQuests : System.Web.UI.Page, ICrossPageSender<QuestM
                 Text = "Вы вошли как: " + PlayerModel.NickName,
                 NavigateUrl = "~/App_Page/Profile.aspx"
             };
-            playerProfileInfo.Controls.Add(userNickNameDeclaration);
-            playerProfileInfo.Controls.Add(linkToProfilePage);
+            header.Controls.Add(userNickNameDeclaration);
+            header.Controls.Add(linkToProfilePage);
         }
     }
 

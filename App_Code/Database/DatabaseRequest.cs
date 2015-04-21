@@ -20,13 +20,17 @@ namespace Database
         GetStages,
         SubscribePlayerForQuest,
         GetPlayerSubscriptions,
-        GetQuestSubscribers
+        GetQuestSubscribers,
+        CheckSubscription,
+        GetLastStage,
+        CheckAnswer,
+        СonfirmRightAnswer
     }
 
     public class DatabaseResponse<ResponseType>
     {
         public ResponseType ResponseModel { get; set; }
-        public int ScalarResult { get; set; }
+        public ResponseType ValueResult { get; set; }
         public DatabaseResponse() { }
     }
 
@@ -41,6 +45,8 @@ namespace Database
         public PlayerModel PlayerModel { get; set; }
         public int PlayerId { get; set; }
         public int QuestId { get; set; }
+        public int StageOrdinal { get; set; }
+        public string Answer { get; set; }
 
         public DatabaseRequest() { }
 
@@ -72,6 +78,18 @@ namespace Database
                         break;
                     case RequestType.GetQuestSubscribers:
                         databaseResponse = DatabaseMethod.GetQuestSubscribers(connection, QuestId) as DatabaseResponse<ResponseType>;
+                        break;
+                    case RequestType.CheckSubscription:
+                        databaseResponse = DatabaseMethod.CheckSubscription(connection, QuestId, PlayerId) as DatabaseResponse<ResponseType>;
+                        break;
+                    case RequestType.GetLastStage:
+                        databaseResponse = DatabaseMethod.GetLastStage(connection, QuestId, PlayerId) as DatabaseResponse<ResponseType>;
+                        break;
+                    case RequestType.CheckAnswer:
+                        databaseResponse = DatabaseMethod.CheckAnswer(connection, QuestId, StageOrdinal, Answer) as DatabaseResponse<ResponseType>;
+                        break;
+                    case RequestType.СonfirmRightAnswer:
+                        DatabaseMethod.СonfirmRightAnswer(connection, QuestId, PlayerId);
                         break;
                 }
             }

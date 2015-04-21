@@ -10,7 +10,7 @@ using Model;
 using Interface;
 using Database;
 
-public partial class App_Page_QuestDetails : System.Web.UI.Page
+public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSender<PlayerModel>, ICrossPageSender<QuestModel>
 {
     private static PlayerModel PlayerModel { get; set; }
     private static QuestModel QuestModel { get; set; }
@@ -24,6 +24,7 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page
         {
             //Click handler for subscribe button per se
             //WTF?????? IT MUST NOT BE SO!!!!
+            //SEAT OF THE TROUBLE IS HERE, MAN!!!
             new DatabaseRequest<Object>()
             {
                 RequestType = RequestType.SubscribePlayerForQuest,
@@ -33,21 +34,19 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page
         }
     }
 
-    private void PopulateQuestInfo(bool isUserLoggedIn)
+    private void PopulateQuestInfo(bool isPlayerLoggedIn)
     {
         if (PreviousPage is ICrossPageSender<QuestModel>)
         {
             ICrossPageSender<QuestModel> sourcePage = PreviousPage as ICrossPageSender<QuestModel>;
             QuestModel = sourcePage.GetModel();
 
-            HtmlGenericControl questDetails = FindControl("QuestDetails") as HtmlGenericControl;
-            AddQuestDescription(questDetails);
-            PopulateSubscribersList(questDetails);
+            AddQuestDescription();
+            PopulateSubscribersList();
 
-            if (isUserLoggedIn)
+            if (isPlayerLoggedIn)
             {
-                Button subscribeButton = new Button() { Text = "Принять участие", PostBackUrl = "~/App_Page/Profile.aspx" };
-                questDetails.Controls.Add(subscribeButton);
+                SetUpSubscribeStartButton();
             }
         }
     }
@@ -61,23 +60,21 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page
 
             if (PlayerModel != null)
             {
-                HtmlGenericControl playerProfileInfo = FindControl("header") as HtmlGenericControl;
-
                 Label userNickNameDeclaration = new Label() { Text = "Вы вошли как: " };
                 HyperLink linkToProfilePage = new HyperLink()
                 {
                     Text = "Вы вошли как: " + PlayerModel.NickName,
                     NavigateUrl = "~/App_Page/Profile.aspx"
                 };
-                playerProfileInfo.Controls.Add(userNickNameDeclaration);
-                playerProfileInfo.Controls.Add(linkToProfilePage);
+                header.Controls.Add(userNickNameDeclaration);
+                header.Controls.Add(linkToProfilePage);
                 return true;
             }
         }
         return false;
     }
 
-    private void AddQuestDescription(HtmlGenericControl mainControl)
+    private void AddQuestDescription()
     {
         DatabaseResponse<List<StageModel>> stagesResponse = new DatabaseRequest<List<StageModel>>()
         {
@@ -91,10 +88,10 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page
             QuestModel.Name, QuestModel.Description, new DateTime(QuestModel.StartDate), new DateTime(QuestModel.ExpirationDate),
             QuestModel.ComplexityLevel, stagesResponse.ResponseModel.Count)
         };
-        mainControl.Controls.Add(description);
+        QuestDetails.Controls.Add(description);
     }
 
-    private void PopulateSubscribersList(HtmlGenericControl mainControl)
+    private void PopulateSubscribersList()
     {
         DatabaseResponse<List<PlayerModel>> subscribersResponse = new DatabaseRequest<List<PlayerModel>>()
         {
@@ -116,8 +113,34 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page
                 subscribersList.Controls.Add(listItem);
             }
             subscribersDiv.Controls.Add(subscribersList);
-            mainControl.Controls.Add(subscribersDiv);
+            QuestDetails.Controls.Add(subscribersDiv);
         }
     }
 
+    private void SetUpSubscribeStartButton()
+    {
+        DatabaseResponse<bool> databaseResponse = new DatabaseRequest<bool>()
+        {
+            RequestType = RequestType.CheckSubscription,
+            PlayerId = PlayerModel.Id,
+            QuestId = QuestModel.Id
+        }.Execute();
+        bool isPlayerSubscribed = databaseResponse.ValueResult;
+
+        Button subscribeButton = isPlayerSubscribed ?
+            (new Button() { Text = "Начать прохождение", PostBackUrl = "~/App_Page/Question.aspx" }) :
+            (new Button() { Text = "Принять участие", PostBackUrl = "~/App_Page/Profile.aspx" });
+        QuestDetails.Controls.Add(subscribeButton);
+    }
+
+
+    PlayerModel ICrossPageSender<PlayerModel>.GetModel()
+    {
+        return PlayerModel;
+    }
+
+    QuestModel ICrossPageSender<QuestModel>.GetModel()
+    {
+        return QuestModel;
+    }
 }

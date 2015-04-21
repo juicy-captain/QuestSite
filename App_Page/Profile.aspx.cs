@@ -26,6 +26,11 @@ public partial class AppPageProfile : System.Web.UI.Page, ICrossPageSender<Playe
         {
             //dynamically added linkToDetails has been pressed
             //WTF?????? IT MUST NOT BE SO!!!!
+            //WRONG SOLUTION; REWRITE!!!
+            if (QuestModels != null)
+            {
+                SelectedQuestModel = QuestModels[0];
+            }
         }
     }
 
@@ -49,12 +54,13 @@ public partial class AppPageProfile : System.Web.UI.Page, ICrossPageSender<Playe
 
         if (QuestModels.Count != 0)
         {
-            HtmlGenericControl questsList = FindControl("QuestsList") as HtmlGenericControl;
             foreach (QuestModel quest in QuestModels)
             {
                 HtmlGenericControl listItem = new HtmlGenericControl("li");
 
                 LinkButton linkToDetails = new LinkButton() { Text = quest.Name, PostBackUrl = "~/App_Page/QuestDetails.aspx" };
+                linkToDetails.Attributes.Add("runat", "server");
+                linkToDetails.Attributes.Add("onclick", "linkToDetails_Click");
 
                 //IT DOES NOT WORK AT THIS PAGE BUT WORK AT QUESTS
                 linkToDetails.Click += (sender, args) =>
@@ -70,27 +76,15 @@ public partial class AppPageProfile : System.Web.UI.Page, ICrossPageSender<Playe
                         }
                     };
                 listItem.Controls.Add(linkToDetails);
-                questsList.Controls.Add(listItem);
+                QuestsList.Controls.Add(listItem);
             }
         }
         else
         {
-            (FindControl("LabelSubscriptions") as Label).Text = "Вы пока не подписались на на один квест";
+            LabelSubscriptions.Text = "Вы пока не подписались на на один квест";
         }
     }
 
-    protected void LinkButton_Click(object sender, EventArgs e)
-    {
-        string selectedQuestName = (sender as LinkButton).Text;
-        foreach (QuestModel quest in QuestModels)
-        {
-            if (quest.Name.Equals(selectedQuestName))
-            {
-                SelectedQuestModel = quest;
-                break;
-            }
-        }
-    }
 
     PlayerModel ICrossPageSender<PlayerModel>.GetModel()
     {
