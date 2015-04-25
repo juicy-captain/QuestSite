@@ -17,6 +17,10 @@
             <br />
             <asp:TextBox ID="TextBoxPlayerAnswer" runat="server" placeholder="Ваш ответ"></asp:TextBox>
             <asp:Button ID="ButtonSendAnswer" runat="server" Text="Отправить ответ" OnClick="ButtonSendAnswer_Click" />
+            <asp:Button ID="ButtonNextStep" runat="server" Text="Следующий шаг" PostBackUrl="~/App_Page/Question.aspx" Visible="false"/>
+            <asp:Button ID="ButtonQuestionEnd" runat="server" Text="Конец квеста. Перейти в профиль." PostBackUrl="~/App_Page/Profile.aspx" Visible="false"/>
+            <br />
+            <asp:Label ID="LabelWrongAnswer" runat="server" Text="Не правильно!" Visible="false"></asp:Label>
         </div>
         <div id="footer">
         </div>

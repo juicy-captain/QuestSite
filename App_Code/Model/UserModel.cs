@@ -8,6 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 
 using Database;
+using Util;
 
 namespace Model
 {
@@ -65,7 +66,7 @@ namespace Model
             SecondName = (string)selectCommad.Parameters[DatabaseConst.ParameterSecondName].Value;
             Password = password;
             BirthDate = (long)selectCommad.Parameters[DatabaseConst.ParameterBirthDate].Value;
-            AvatarPath = (string)selectCommad.Parameters[DatabaseConst.ParameterAvatarPath].Value;
+            AvatarPath = DatabaseUtil.GetString(selectCommad, DatabaseConst.ParameterAvatarPath);
             Gender = (bool)selectCommad.Parameters[DatabaseConst.ParameterGender].Value ? Sex.Female : Sex.Male;
             //IsLoggedIn = true;
         }

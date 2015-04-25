@@ -24,7 +24,7 @@ public partial class AppPageQuests : System.Web.UI.Page, ICrossPageSender<QuestM
             RequestType = Database.RequestType.GetAllQuests
         }.Execute();
 
-        PopulateQuestList(QuestModels = databaseResponse.ResponseModel);
+        PopulateQuestList(QuestModels = databaseResponse.Result);
         GetPlayerProfile();
     }
 

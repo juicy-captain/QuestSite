@@ -27,6 +27,11 @@ namespace Util
             return dataReader.IsDBNull(i) ? -1 : dataReader.GetInt32(i);
         }
 
+        public static string GetString(SqlCommand sqlCommand, string field)
+        {
+            return Convert.IsDBNull(sqlCommand.Parameters[field].Value) ? null : (string)sqlCommand.Parameters[field].Value;
+        }
+
     }
 
 }

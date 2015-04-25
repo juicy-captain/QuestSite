@@ -31,7 +31,7 @@ namespace Database
 
             DatabaseResponse<PlayerModel> databaseResponse = new DatabaseResponse<PlayerModel>()
             {
-                ResponseModel = new PlayerModel(userNickName, password, authCommand)
+                Result = new PlayerModel(userNickName, password, authCommand)
             };
             return databaseResponse;
         }
@@ -45,7 +45,7 @@ namespace Database
 
             DatabaseResponse<List<QuestModel>> databaseResponse = new DatabaseResponse<List<QuestModel>>()
             {
-                ResponseModel = QuestModel.ProcessBatch(dataReader)
+                Result = QuestModel.ProcessBatch(dataReader)
             };
             return databaseResponse;
         }
@@ -60,7 +60,7 @@ namespace Database
 
             DatabaseResponse<List<StageModel>> databaseResponse = new DatabaseResponse<List<StageModel>>()
             {
-                ResponseModel = StageModel.ProcessBatch(dataReader)
+                Result = StageModel.ProcessBatch(dataReader)
             };
             return databaseResponse;
         }
@@ -89,7 +89,15 @@ namespace Database
             suscribeCommand.Parameters.AddWithValue(DatabaseConst.ParameterQuestId, questId);
             suscribeCommand.Parameters.AddWithValue(DatabaseConst.ParameterUserId, playerId);
             suscribeCommand.Parameters.AddWithValue(DatabaseConst.ParameterLastStage, 1);
-            suscribeCommand.ExecuteNonQuery();
+            try
+            {
+                suscribeCommand.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                //ignored
+            }
+
         }
 
         public static DatabaseResponse<List<QuestModel>> GetPlayerSubscriptions(SqlConnection connection, int playerId)
@@ -102,7 +110,7 @@ namespace Database
 
             DatabaseResponse<List<QuestModel>> databaseResponse = new DatabaseResponse<List<QuestModel>>()
             {
-                ResponseModel = QuestModel.ProcessBatch(dataReader)
+                Result = QuestModel.ProcessBatch(dataReader)
             };
             return databaseResponse;
         }
@@ -117,12 +125,12 @@ namespace Database
 
             DatabaseResponse<List<PlayerModel>> databaseResponse = new DatabaseResponse<List<PlayerModel>>()
             {
-                ResponseModel = PlayerModel.ProcessBatch(dataReader)
+                Result = PlayerModel.ProcessBatch(dataReader)
             };
             return databaseResponse;
         }
 
-        public static DatabaseResponse<bool> CheckSubscription(SqlConnection connection, int questId, int playerId)
+        public static DatabaseResponse<SubscriptionState> CheckSubscription(SqlConnection connection, int questId, int playerId, int numOfStages)
         {
             //Is player subscribed for a quest?
             SqlCommand getSubscriptions = connection.CreateCommand();
@@ -131,11 +139,29 @@ namespace Database
             getSubscriptions.Parameters.AddWithValue(DatabaseConst.ParameterQuestId, questId);
             getSubscriptions.Parameters.AddWithValue(DatabaseConst.ParameterUserId, playerId);
             SqlDataReader dataReader = getSubscriptions.ExecuteReader();
+            dataReader.Read();
 
 
-            DatabaseResponse<bool> databaseResponse = new DatabaseResponse<bool>()
+            SubscriptionState subscriptionState = SubscriptionState.NotSubscribed;
+            if (dataReader.HasRows)
             {
-                ValueResult = dataReader.HasRows
+                int stageNumber = dataReader.GetInt32(2);
+                if (stageNumber == 0)
+                {
+                    subscriptionState = SubscriptionState.NotStarted;
+                }
+                else if (stageNumber == numOfStages)
+                {
+                    subscriptionState = SubscriptionState.Finished;
+                }
+                else
+                {
+                    subscriptionState = SubscriptionState.InProgress;
+                }
+            }
+            DatabaseResponse<SubscriptionState> databaseResponse = new DatabaseResponse<SubscriptionState>()
+            {
+                Result = subscriptionState
             };
             return databaseResponse;
         }
@@ -148,10 +174,11 @@ namespace Database
             getSubscriptions.Parameters.AddWithValue(DatabaseConst.ParameterQuestId, questId);
             getSubscriptions.Parameters.AddWithValue(DatabaseConst.ParameterUserId, playerId);
             SqlDataReader dataReader = getSubscriptions.ExecuteReader();
+            dataReader.Read();
 
             DatabaseResponse<int> databaseResponse = new DatabaseResponse<int>()
             {
-                ValueResult = dataReader.GetInt32(0)
+                Result = dataReader.GetInt32(0)
             };
             return databaseResponse;
         }
@@ -165,11 +192,11 @@ namespace Database
             getSubscriptions.Parameters.AddWithValue(DatabaseConst.ParameterQuestId, questId);
             getSubscriptions.Parameters.AddWithValue(DatabaseConst.ParameterStageOrdinal, stageOrdinal);
             SqlDataReader dataReader = getSubscriptions.ExecuteReader();
-
+            dataReader.Read();
 
             DatabaseResponse<bool> databaseResponse = new DatabaseResponse<bool>()
             {
-                ValueResult = answer.Equals(dataReader.GetString(0))
+                Result = answer.Equals(dataReader.GetString(0))
             };
             return databaseResponse;
         }
@@ -179,8 +206,17 @@ namespace Database
             SqlCommand registerCommand = connection.CreateCommand();
             registerCommand.CommandType = CommandType.StoredProcedure;
             registerCommand.CommandText = "SetNewLastStage";
-            registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterId, questId);
-            registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterNickName, playerId);
+            registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterQuestId, questId);
+            registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterUserId, playerId);
+            registerCommand.ExecuteNonQuery();
+        }
+
+        public static void DeletePlayer(SqlConnection connection, int playerId)
+        {
+            SqlCommand registerCommand = connection.CreateCommand();
+            registerCommand.CommandType = CommandType.StoredProcedure;
+            registerCommand.CommandText = "DeleteUser";
+            registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterUserId, playerId);
             registerCommand.ExecuteNonQuery();
         }
         

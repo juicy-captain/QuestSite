@@ -50,7 +50,7 @@ public partial class AppPageProfile : System.Web.UI.Page, ICrossPageSender<Playe
             RequestType = RequestType.GetPlayerSubscriptions,
             PlayerId = PlayerModel.Id
         }.Execute();
-        QuestModels = databaseResponse.ResponseModel;
+        QuestModels = databaseResponse.Result;
 
         if (QuestModels.Count != 0)
         {
@@ -94,5 +94,18 @@ public partial class AppPageProfile : System.Web.UI.Page, ICrossPageSender<Playe
     QuestModel ICrossPageSender<QuestModel>.GetModel()
     {
         return SelectedQuestModel;
+    }
+
+    protected void ButtonDeleteProfile_Click(object sender, EventArgs e)
+    {
+        new DatabaseRequest<Object>()
+        {
+            RequestType = RequestType.DeletePlayer,
+            PlayerId = PlayerModel.Id
+        }.Execute();
+    }
+    protected void ButtonLogout_Click(object sender, EventArgs e)
+    {
+        PlayerModel = null;
     }
 }

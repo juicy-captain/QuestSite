@@ -46,7 +46,7 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
 
             if (isPlayerLoggedIn)
             {
-                SetUpSubscribeStartButton();
+                SetUpActionButton();
             }
         }
     }
@@ -82,11 +82,13 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
             QuestId = QuestModel.Id
         }.Execute();
 
+        QuestModel.Stages = stagesResponse.Result;
+
         Label description = new Label()
         {
             Text = String.Format("{0}<br>{1}<br>Дата начала: {2}<br>Дата окончания: {3}<br>Уровень сложности: {4}<br>Количество этапов: {5}<br>",
             QuestModel.Name, QuestModel.Description, new DateTime(QuestModel.StartDate), new DateTime(QuestModel.ExpirationDate),
-            QuestModel.ComplexityLevel, stagesResponse.ResponseModel.Count)
+            QuestModel.ComplexityLevel, stagesResponse.Result.Count)
         };
         QuestDetails.Controls.Add(description);
     }
@@ -99,14 +101,14 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
             QuestId = QuestModel.Id
         }.Execute();
 
-        if (subscribersResponse.ResponseModel != null)
+        if (subscribersResponse.Result != null)
         {
             HtmlGenericControl subscribersDiv = new HtmlGenericControl("div");
             Label subscribersHeaderText = new Label() { Text = "Подписчики:" };
             subscribersDiv.Controls.Add(subscribersHeaderText);
 
             HtmlGenericControl subscribersList = new HtmlGenericControl("ul");
-            foreach (PlayerModel player in subscribersResponse.ResponseModel)
+            foreach (PlayerModel player in subscribersResponse.Result)
             {
                 HtmlGenericControl listItem = new HtmlGenericControl("li");
                 listItem.Controls.Add(new Label() { Text = player.ToString() });
@@ -117,20 +119,48 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
         }
     }
 
-    private void SetUpSubscribeStartButton()
+    private void SetUpActionButton()
     {
-        DatabaseResponse<bool> databaseResponse = new DatabaseRequest<bool>()
+        DatabaseResponse<SubscriptionState> databaseResponse = new DatabaseRequest<SubscriptionState>()
         {
             RequestType = RequestType.CheckSubscription,
             PlayerId = PlayerModel.Id,
-            QuestId = QuestModel.Id
+            QuestId = QuestModel.Id,
+            NumberOfStages = QuestModel.Stages.Count
         }.Execute();
-        bool isPlayerSubscribed = databaseResponse.ValueResult;
+        SubscriptionState subscriptionState = databaseResponse.Result;
 
-        Button subscribeButton = isPlayerSubscribed ?
-            (new Button() { Text = "Начать прохождение", PostBackUrl = "~/App_Page/Question.aspx" }) :
-            (new Button() { Text = "Принять участие", PostBackUrl = "~/App_Page/Profile.aspx" });
-        QuestDetails.Controls.Add(subscribeButton);
+        string actionButtonText = null;
+        string actionButtonPostBackUrl = null;
+        switch (subscriptionState)
+        {
+            case SubscriptionState.NotSubscribed:
+                actionButtonText = "Принять участие";
+                actionButtonPostBackUrl = "~/App_Page/Profile.aspx";
+                break;
+            case SubscriptionState.NotStarted:
+                actionButtonText = "Начать прохождение";
+                actionButtonPostBackUrl = "~/App_Page/Question.aspx";
+                break;
+            case SubscriptionState.InProgress:
+                actionButtonText = "Продолжить";
+                actionButtonPostBackUrl = "~/App_Page/Question.aspx";
+                break;
+            case SubscriptionState.Finished:
+                actionButtonText = "Пройти ещё раз";
+                actionButtonPostBackUrl = "~/App_Page/Question.aspx";
+                break;
+        }
+        LinkButton actionButton = new LinkButton() { Text = actionButtonText, PostBackUrl = actionButtonPostBackUrl };
+        actionButton.Click += (sender, args) =>
+            {
+                int i = 0;
+                if (sender is Button)
+                {
+                    ++i;
+                }
+            };
+        QuestDetails.Controls.Add(actionButton);
     }
 
 
@@ -143,4 +173,5 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
     {
         return QuestModel;
     }
+
 }

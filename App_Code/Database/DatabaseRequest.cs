@@ -24,13 +24,13 @@ namespace Database
         CheckSubscription,
         GetLastStage,
         CheckAnswer,
-        СonfirmRightAnswer
+        СonfirmRightAnswer,
+        DeletePlayer
     }
 
     public class DatabaseResponse<ResponseType>
     {
-        public ResponseType ResponseModel { get; set; }
-        public ResponseType ValueResult { get; set; }
+        public ResponseType Result { get; set; }
         public DatabaseResponse() { }
     }
 
@@ -47,6 +47,7 @@ namespace Database
         public int QuestId { get; set; }
         public int StageOrdinal { get; set; }
         public string Answer { get; set; }
+        public int NumberOfStages { get; set; }
 
         public DatabaseRequest() { }
 
@@ -80,7 +81,7 @@ namespace Database
                         databaseResponse = DatabaseMethod.GetQuestSubscribers(connection, QuestId) as DatabaseResponse<ResponseType>;
                         break;
                     case RequestType.CheckSubscription:
-                        databaseResponse = DatabaseMethod.CheckSubscription(connection, QuestId, PlayerId) as DatabaseResponse<ResponseType>;
+                        databaseResponse = DatabaseMethod.CheckSubscription(connection, QuestId, PlayerId, NumberOfStages) as DatabaseResponse<ResponseType>;
                         break;
                     case RequestType.GetLastStage:
                         databaseResponse = DatabaseMethod.GetLastStage(connection, QuestId, PlayerId) as DatabaseResponse<ResponseType>;
@@ -90,6 +91,9 @@ namespace Database
                         break;
                     case RequestType.СonfirmRightAnswer:
                         DatabaseMethod.СonfirmRightAnswer(connection, QuestId, PlayerId);
+                        break;
+                    case RequestType.DeletePlayer:
+                        DatabaseMethod.DeletePlayer(connection, PlayerId);
                         break;
                 }
             }

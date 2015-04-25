@@ -37,7 +37,7 @@ public class StageModel
                 string question = DatabaseUtil.GetString(dataReader, 1);
                 string imagePath = DatabaseUtil.GetString(dataReader, 2);
                 string answer = DatabaseUtil.GetString(dataReader, 3);
-                int ordinal = 0;
+                int ordinal = dataReader.GetInt32(4);
                 stageModels.Add(new StageModel(title, question, imagePath, answer, ordinal));
             }
         }

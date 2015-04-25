@@ -32,7 +32,7 @@ public partial class AppPageAuthorization : System.Web.UI.Page, ICrossPageSender
             Password = TextBoxPassword.Text
         }.Execute();
 
-        PlayerModel = databaseResponse.ResponseModel;
+        PlayerModel = databaseResponse.Result;
     }
 
     PlayerModel ICrossPageSender<PlayerModel>.GetModel()

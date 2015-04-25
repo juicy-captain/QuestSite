@@ -11,6 +11,10 @@
         <div id="header" runat="server">
         </div>
         <div id="content">
+            <asp:Button ID="ButtonDeleteProfile" runat="server" Text="Удалить профиль" PostBackUrl="~/App_Page/Default.aspx" OnClick="ButtonDeleteProfile_Click"/>
+            <br />
+            <asp:Button ID="ButtonLogout" runat="server" Text="Log out" PostBackUrl="~/App_Page/Default.aspx" OnClick="ButtonLogout_Click"/>
+            <br />
             <asp:Label ID="LabelFirstName" runat="server" Text="FirstName"></asp:Label>
             &nbsp;<asp:Label ID="LabelNickName" runat="server" Text="NickName"></asp:Label>
             &nbsp;<asp:Label ID="LabelSecondName" runat="server" Text="SecondName"></asp:Label>
@@ -20,7 +24,6 @@
             <div id="subscriptions">
                 <asp:Label ID="LabelSubscriptions" runat="server" Text="Вы подписались на следующие кветы:"></asp:Label>
                 <ul id="QuestsList" runat="server">
-
                 </ul>
             </div>
         </div>

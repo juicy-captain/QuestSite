@@ -61,4 +61,12 @@ namespace Database
         public const string ParameterLastStage = "@last_stage";
     }
 
+    public enum SubscriptionState
+    {
+        NotStarted,
+        NotSubscribed,
+        InProgress,
+        Finished
+    }
+
 }
