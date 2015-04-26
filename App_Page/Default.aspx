@@ -1,55 +1,9 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="AppPageDefault" %>
+﻿<%@ Page Title="Main" Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="AppPageDefault" MasterPageFile="MasterPage.master"  %>
 
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title>Main</title>
-
-    <link rel="shortcut icon" href="../App_Style/images/gt_favicon.png">
-    <link href="../App_Style/css/CustomStyleSheet.css" rel="stylesheet" media="screen" />
-    <%--   <link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">--%>
-    <link href="../App_Style/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="../App_Style/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="../App_Style/css/bootstrap-theme.css" rel="stylesheet" />
-    <link href="../App_Style/css/main.css" rel="stylesheet" />
-
-    <script src="../App_Style/js/html5shiv.js"></script>
-    <script src="../App_Style/js/respond.min.js"></script>
-
-</head>
-<body>
-    <form id="form1" runat="server">
-        <body class="home">
-            <!-- Fixed navbar -->
-            <div class="navbar navbar-inverse navbar-fixed-top headroom">
-                <div class="container">
-                    <div class="navbar-header">
-                        <!-- Button for smallest screens -->
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-                        <a class="navbar-brand" href="index.html">QuestHunter</a>
-                    </div>
-                    <div class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav pull-right">
-                            <li class="active"><a href="#">Home</a></li>
-                            <li><a href="about.html">About</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">More Pages <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="sidebar-left.html">Left Sidebar</a></li>
-                                    <li class="active"><a href="sidebar-right.html">Right Sidebar</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="contact.html">Contact</a></li>
-                            <li><a class="btn" href="signin.html">SIGN IN</a></li>
-                            <li><a class="btn" href="signup.html">SIGN UP</a></li>
-                        </ul>
-                    </div>
-                    <!--/.nav-collapse -->
-                </div>
-            </div>
-            <!-- /.navbar -->
-
+<asp:Content runat="server" ContentPlaceHolderID="head">
+   
+       
+            
             <!-- Header -->
             <header id="head">
                 <div class="container">
@@ -190,92 +144,8 @@ Eu mei graeci patrioque, ius ad primis quaestio similique, mentitum legendos te 
             <!-- /social links -->
 
 
-            <footer id="footer" class="top-space">
-
-                <div class="footer1">
-                    <div class="container">
-                        <div class="row">
-
-                            <div class="col-md-3 widget">
-                                <h3 class="widget-title">Contact</h3>
-                                <div class="widget-body">
-                                    <p>
-                                        +375291111111<br>
-                                        <a href="mailto:#">some.email@somewhere.com</a><br>
-                                        <br>
-                                        adress
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3 widget">
-                                <h3 class="widget-title">Follow us</h3>
-                                <div class="widget-body">
-                                    <p class="follow-me-icons">
-                                        <a href=""><i class="fa fa-twitter fa-2"></i></a>
-                                        <a href=""><i class="fa fa-dribbble fa-2"></i></a>
-                                        <a href=""><i class="fa fa-github fa-2"></i></a>
-                                        <a href=""><i class="fa fa-facebook fa-2"></i></a>
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 widget">
-                                <h3 class="widget-title">Maybe some text</h3>
-                                <div class="widget-body">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, dolores, quibusdam architecto voluptatem amet fugiat nesciunt placeat provident cumque accusamus itaque voluptate modi quidem dolore optio velit hic iusto vero praesentium repellat commodi ad id expedita cupiditate repellendus possimus unde?</p>
-                                    <p>Eius consequatur nihil quibusdam! Laborum, rerum, quis, inventore ipsa autem repellat provident assumenda labore soluta minima alias temporibus facere distinctio quas adipisci nam sunt explicabo officia tenetur at ea quos doloribus dolorum voluptate reprehenderit architecto sint libero illo et hic.</p>
-                                </div>
-                            </div>
-
-                        </div>
-                        <!-- /row of widgets -->
-                    </div>
-                </div>
-
-                <div class="footer2">
-                    <div class="container">
-                        <div class="row">
-
-                            <div class="col-md-6 widget">
-                                <div class="widget-body">
-                                    <p class="simplenav">
-                                        <a href="#">Home</a> | 
-								<a href="about.html">About</a> |
-								<a href="contact.html">Contact</a> |
-								<b><a href="signup.html">Sign up</a></b>
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 widget">
-                                <div class="widget-body">
-                                    <p class="text-right">
-                                        Copyright &copy; 2015, King. Designed by King
-                                    </p>
-                                </div>
-                            </div>
-
-                        </div>
-                        <!-- /row of widgets -->
-                    </div>
-                </div>
-
-            </footer>
-
-
-
-
-
-
-            <script src="../App_Style/js/jquery-2.1.3.min.js"></script>
-            <script src="../App_Style/js/bootstrap.min.js"></script>
-            <script src="../App_Style/js/headroom.min.js"></script>
-            <script src="../App_Style/js/jQuery.headroom.min.js"></script>
-            <script src="../App_Style/js/template.js"></script>
-    </form>
-</body>
-</html>
+         
+            </asp:Content>
 
 <%-- <div id="header">
             <asp:HyperLink ID="RegistrationLink" runat="server" NavigateUrl="~/App_Page/Registration.aspx">Регистрация</asp:HyperLink>

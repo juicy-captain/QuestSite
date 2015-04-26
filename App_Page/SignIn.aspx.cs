@@ -23,17 +23,17 @@ public partial class AppPageAuthorization : System.Web.UI.Page, ICrossPageSender
     {
 
     }
-    protected void ButtonAuthorization_Click(object sender, EventArgs e)
-    {
-        DatabaseResponse<PlayerModel> databaseResponse = new DatabaseRequest<PlayerModel>()
-        {
-            RequestType = Database.RequestType.AuthorizePlayer,
-            NickName = TextBoxUserName.Text,
-            Password = TextBoxPassword.Text
-        }.Execute();
+    //protected void ButtonAuthorization_Click(object sender, EventArgs e)
+    //{
+    //    DatabaseResponse<PlayerModel> databaseResponse = new DatabaseRequest<PlayerModel>()
+    //    {
+    //        RequestType = Database.RequestType.AuthorizePlayer,
+    //        NickName = TextBoxUserName.Text,
+    //        Password = TextBoxPassword.Text
+    //    }.Execute();
 
-        PlayerModel = databaseResponse.ResponseModel;
-    }
+    //    PlayerModel = databaseResponse.ResponseModel;
+    //}
 
     PlayerModel ICrossPageSender<PlayerModel>.GetModel()
     {
