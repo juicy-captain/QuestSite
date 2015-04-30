@@ -26,7 +26,7 @@
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<h3 class="thin text-center">Register a new account</h3>
-							<p class="text-center text-muted">Lorem ipsum dolor sit amet, <a href="SingIn.aspx">Login</a> adipisicing elit. Quo nulla quibusdam cum doloremque incidunt nemo sunt a tenetur omnis odio. </p>
+							<p class="text-center text-muted">Lorem ipsum dolor sit amet, <a href="SignIn.aspx">Login</a> adipisicing elit. Quo nulla quibusdam cum doloremque incidunt nemo sunt a tenetur omnis odio. </p>
 							<hr>
 
 							<form>
@@ -187,7 +187,7 @@
 									<div class="col-lg-8">
 										<label class="checkbox">
 											<input type="checkbox"> 
-											I've read the <a href="page_terms.html">Terms and Conditions</a>
+											I've read the <a href="">Terms and Conditions</a>
 										</label>                        
 									</div>
 									<div class="col-lg-4 text-right">
