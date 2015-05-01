@@ -98,7 +98,6 @@ public partial class App_Page_ProfileEdit : System.Web.UI.Page, ICrossPageSender
         catch (FileFormatException)
         {
             LabelIncompatibleImageType.Visible = true;
-            ButtonSaveChanges.PostBackUrl = "";
         }
     }
 

@@ -66,6 +66,7 @@
                 <asp:RadioButton ID="RadioButtonFemale" runat="server" GroupName="GenderGroup" Text="Женский" />
                 <br />
                 <asp:FileUpload ID="AvatarUpload" runat="server" />
+                <br />
                 <asp:Label ID="LabelIncompatibleImageType" runat="server" Text="Несовместимый формат изображения" Visible="false"></asp:Label>
             </div>
             <asp:Button ID="ButtonSaveChanges" runat="server" Text="Сохранить изменения" OnClick="ButtonSaveChanges_Click" />

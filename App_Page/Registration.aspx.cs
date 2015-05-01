@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.IO;
 
 using System.Web.Configuration;
 using System.Data;
@@ -13,6 +14,7 @@ using Model;
 using Database;
 using Util;
 using Interface;
+using Const;
 
 public partial class AppPageRegistration : System.Web.UI.Page, ICrossPageSender<PlayerModel>
 {
@@ -24,12 +26,20 @@ public partial class AppPageRegistration : System.Web.UI.Page, ICrossPageSender<
 
     protected void RegistrationWizard_FinishButtonClick(object sender, WizardNavigationEventArgs e)
     {
-        NewlyCreatedPlayer = CreatePlayer();
-        new DatabaseRequest<Object>()
+        try
         {
-            RequestType = RequestType.RegisterPlayer,
-            PlayerModel = NewlyCreatedPlayer
-        }.Execute();
+            NewlyCreatedPlayer = CreatePlayer();
+            new DatabaseRequest<Object>()
+            {
+                RequestType = RequestType.RegisterPlayer,
+                PlayerModel = NewlyCreatedPlayer
+            }.Execute();
+            Server.Transfer("~/App_Page/Profile.aspx", true);
+        }
+        catch (FileFormatException)
+        {
+            LabelIncompatibleImageType.Visible = true;
+        }
     }
 
     private PlayerModel CreatePlayer()
@@ -46,10 +56,32 @@ public partial class AppPageRegistration : System.Web.UI.Page, ICrossPageSender<
 
         UserModel.Sex gender = (RegistrationWizard.WizardSteps[1].FindControl("RadioButtonMale") as RadioButton).Checked ? UserModel.Sex.Male : UserModel.Sex.Female;
 
-        return new PlayerModel(nickName, firstName, secondName, password, birthDate, null, gender);
+        string avatarPath = SaveAvatar();
+
+        return new PlayerModel(nickName, firstName, secondName, password, birthDate, avatarPath, gender);
     }
 
-
+    private string SaveAvatar()
+    {
+        if (AvatarUpload.HasFile)
+        {
+            string fileExtension = FileUtil.GetFileExtension(AvatarUpload);
+            if (ServerConst.AvatarFormats.Contains(fileExtension))
+            {
+                string fileName = Server.MapPath(ServerConst.BaseAvatarPath) + AvatarUpload.FileName;
+                AvatarUpload.SaveAs(fileName);
+                return ServerConst.BaseAvatarPath + AvatarUpload.FileName;
+            }
+            else
+            {
+                throw new FileFormatException();
+            }
+        }
+        else
+        {
+            return ServerConst.DefaultAvatarPath;
+        }
+    }
 
 
     PlayerModel ICrossPageSender<PlayerModel>.GetModel()
