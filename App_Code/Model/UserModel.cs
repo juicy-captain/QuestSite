@@ -17,7 +17,7 @@ namespace Model
     /// </summary>
     public abstract class UserModel
     {
-        public int Id { get; private set; }
+        public int Id { get; set; }
         public string NickName { get; private set; }
         public string FirstName { get; private set; }
         public string SecondName { get; private set; }

@@ -15,9 +15,13 @@
             <br />
             <asp:Button ID="ButtonLogout" runat="server" Text="Log out" PostBackUrl="~/App_Page/Default.aspx" OnClick="ButtonLogout_Click"/>
             <br />
+            <asp:Button ID="ButtonEditProfile" runat="server" Text="Редактировать профиль" PostBackUrl="~/App_Page/ProfileEdit.aspx"/>
+            <br />
             <asp:Label ID="LabelFirstName" runat="server" Text="FirstName"></asp:Label>
             &nbsp;<asp:Label ID="LabelNickName" runat="server" Text="NickName"></asp:Label>
             &nbsp;<asp:Label ID="LabelSecondName" runat="server" Text="SecondName"></asp:Label>
+            <br />
+            <asp:Image ID="Avatar" runat="server"/>
             <br />
             <asp:LinkButton ID="QuestsLink" runat="server" PostBackUrl="~/App_Page/Quests.aspx">Просмотреть доступные квесты</asp:LinkButton>
 

@@ -41,6 +41,7 @@ public partial class AppPageProfile : System.Web.UI.Page, ICrossPageSender<Playe
         LabelFirstName.Text = PlayerModel.FirstName;
         LabelNickName.Text = PlayerModel.NickName;
         LabelSecondName.Text = PlayerModel.SecondName;
+        Avatar.ImageUrl = PlayerModel.AvatarPath;
     }
 
     private void GetAndPopulateQuestList()

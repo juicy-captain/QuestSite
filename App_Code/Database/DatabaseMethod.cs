@@ -76,7 +76,7 @@ namespace Database
             registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterSecondName, player.SecondName);
             registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterPassword, player.Password);
             registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterBirthDate, player.BirthDate);
-            registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterAvatarPath, "cap");
+            registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterAvatarPath, player.AvatarPath);
             registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterGender, (int)player.Gender);
             registerCommand.ExecuteNonQuery();
         }
@@ -217,6 +217,22 @@ namespace Database
             registerCommand.CommandType = CommandType.StoredProcedure;
             registerCommand.CommandText = "DeleteUser";
             registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterUserId, playerId);
+            registerCommand.ExecuteNonQuery();
+        }
+
+        public static void EditProfile(SqlConnection connection, PlayerModel player)
+        {
+            SqlCommand registerCommand = connection.CreateCommand();
+            registerCommand.CommandType = CommandType.StoredProcedure;
+            registerCommand.CommandText = "EditUser";
+            registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterId, player.Id);
+            registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterNickName, player.NickName);
+            registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterFirstName, player.FirstName);
+            registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterSecondName, player.SecondName);
+            registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterPassword, player.Password);
+            registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterBirthDate, player.BirthDate);
+            registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterAvatarPath, player.AvatarPath);
+            registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterGender, (int)player.Gender);
             registerCommand.ExecuteNonQuery();
         }
         

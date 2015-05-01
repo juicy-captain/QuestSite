@@ -25,7 +25,8 @@ namespace Database
         GetLastStage,
         CheckAnswer,
         СonfirmRightAnswer,
-        DeletePlayer
+        DeletePlayer,
+        UpdateProfile
     }
 
     public class DatabaseResponse<ResponseType>
@@ -43,6 +44,7 @@ namespace Database
         public string NickName { get; set; }
         public string Password { get; set; }
         public PlayerModel PlayerModel { get; set; }
+        public PlayerModel EditedPlayerModel { get; set; }
         public int PlayerId { get; set; }
         public int QuestId { get; set; }
         public int StageOrdinal { get; set; }
@@ -94,6 +96,9 @@ namespace Database
                         break;
                     case RequestType.DeletePlayer:
                         DatabaseMethod.DeletePlayer(connection, PlayerId);
+                        break;
+                    case RequestType.UpdateProfile:
+                        DatabaseMethod.EditProfile(connection, PlayerModel);
                         break;
                 }
             }
