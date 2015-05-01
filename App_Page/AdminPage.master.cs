@@ -6,20 +6,15 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 using Model;
+using Database;
 using Interface;
 
-public partial class AppPageDefault : System.Web.UI.Page, ICrossPageSender<UserModel>
+public partial class App_Page_AdminPage : System.Web.UI.MasterPage
 {
     private UserModel UserModel { get; set; }
-
     protected void Page_Load(object sender, EventArgs e)
     {
 
     }
 
-
-    UserModel ICrossPageSender<UserModel>.GetModel()
-    {
-        return UserModel;
-    }
 }

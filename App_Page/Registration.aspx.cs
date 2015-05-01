@@ -16,9 +16,9 @@ using Util;
 using Interface;
 using Const;
 
-public partial class AppPageRegistration : System.Web.UI.Page, ICrossPageSender<PlayerModel>
+public partial class AppPageRegistration : System.Web.UI.Page, ICrossPageSender<UserModel>
 {
-    private PlayerModel NewlyCreatedPlayer { get; set; }
+    private UserModel NewlyCreatedPlayer { get; set; }
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -31,8 +31,8 @@ public partial class AppPageRegistration : System.Web.UI.Page, ICrossPageSender<
             NewlyCreatedPlayer = CreatePlayer();
             new DatabaseRequest<Object>()
             {
-                RequestType = RequestType.RegisterPlayer,
-                PlayerModel = NewlyCreatedPlayer
+                RequestType = RequestType.RegisterUser,
+                UserModel = NewlyCreatedPlayer
             }.Execute();
             Server.Transfer("~/App_Page/Profile.aspx", true);
         }
@@ -42,7 +42,7 @@ public partial class AppPageRegistration : System.Web.UI.Page, ICrossPageSender<
         }
     }
 
-    private PlayerModel CreatePlayer()
+    private UserModel CreatePlayer()
     {
         string nickName = (RegistrationWizard.WizardSteps[0].FindControl("TextBoxNickName") as TextBox).Text;
         string firstName = (RegistrationWizard.WizardSteps[0].FindControl("TextBoxFirstName") as TextBox).Text;
@@ -58,7 +58,7 @@ public partial class AppPageRegistration : System.Web.UI.Page, ICrossPageSender<
 
         string avatarPath = SaveAvatar();
 
-        return new PlayerModel(nickName, firstName, secondName, password, birthDate, avatarPath, gender);
+        return new UserModel(nickName, firstName, secondName, password, birthDate, avatarPath, gender);
     }
 
     private string SaveAvatar()
@@ -84,7 +84,7 @@ public partial class AppPageRegistration : System.Web.UI.Page, ICrossPageSender<
     }
 
 
-    PlayerModel ICrossPageSender<PlayerModel>.GetModel()
+    UserModel ICrossPageSender<UserModel>.GetModel()
     {
         return NewlyCreatedPlayer;
     }

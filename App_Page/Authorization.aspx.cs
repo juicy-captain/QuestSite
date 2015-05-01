@@ -14,29 +14,38 @@ using Database;
 using Util;
 using Interface;
 
-public partial class AppPageAuthorization : System.Web.UI.Page, ICrossPageSender<PlayerModel>
+public partial class AppPageAuthorization : System.Web.UI.Page, ICrossPageSender<UserModel>
 {
-    private PlayerModel PlayerModel { get; set; }
-
+    private UserModel UserModel { get; set; }
 
     protected void Page_Load(object sender, EventArgs e)
     {
 
     }
+
     protected void ButtonAuthorization_Click(object sender, EventArgs e)
     {
-        DatabaseResponse<PlayerModel> databaseResponse = new DatabaseRequest<PlayerModel>()
+        DatabaseResponse<UserModel> databaseResponse = new DatabaseRequest<UserModel>()
         {
-            RequestType = Database.RequestType.AuthorizePlayer,
-            NickName = TextBoxUserName.Text,
-            Password = TextBoxPassword.Text
+                RequestType = Database.RequestType.AuthorizeUser,
+                NickName = TextBoxUserName.Text,
+                Password = TextBoxPassword.Text
         }.Execute();
+        UserModel = databaseResponse.Result;
 
-        PlayerModel = databaseResponse.Result;
+        if (CheckBoxAdministrator.Checked)
+        {
+            Server.Transfer("~/App_Page/AdminUsers.aspx", true);
+        }
+        else
+        {
+            Server.Transfer("~/App_Page/Profile.aspx", true);
+        }
     }
 
-    PlayerModel ICrossPageSender<PlayerModel>.GetModel()
+    UserModel ICrossPageSender<UserModel>.GetModel()
     {
-        return PlayerModel;
+        return UserModel;
     }
+
 }

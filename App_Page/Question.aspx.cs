@@ -9,24 +9,24 @@ using Model;
 using Database;
 using Interface;
 
-public partial class AppPageQuestion : System.Web.UI.Page, ICrossPageSender<PlayerModel>, ICrossPageSender<QuestModel>
+public partial class AppPageQuestion : System.Web.UI.Page, ICrossPageSender<UserModel>, ICrossPageSender<QuestModel>
 {
-    private static PlayerModel PlayerModel { get; set; }
+    private static UserModel UserModel { get; set; }
     private static QuestModel QuestModel { get; set; }
     private static StageModel StageModel { get; set; }
     private static int LastStage { get; set; }
     private static bool isPreviousAnswerRight { get; set; }
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (PreviousPage != null && PreviousPage is ICrossPageSender<PlayerModel> && PreviousPage is ICrossPageSender<QuestModel>)
+        if (PreviousPage != null && PreviousPage is ICrossPageSender<UserModel> && PreviousPage is ICrossPageSender<QuestModel>)
         {
-            PlayerModel = (PreviousPage as ICrossPageSender<PlayerModel>).GetModel();
+            UserModel = (PreviousPage as ICrossPageSender<UserModel>).GetModel();
             QuestModel = (PreviousPage as ICrossPageSender<QuestModel>).GetModel();
 
             DatabaseResponse<int> lastStageResponse = new DatabaseRequest<int>()
             {
                 RequestType = RequestType.GetLastStage,
-                PlayerId = PlayerModel.Id,
+                PlayerId = UserModel.Id,
                 QuestId = QuestModel.Id
             }.Execute();
             LastStage = lastStageResponse.Result;
@@ -66,7 +66,7 @@ public partial class AppPageQuestion : System.Web.UI.Page, ICrossPageSender<Play
                     RequestType = RequestType.СonfirmRightAnswer,
                     StageOrdinal = StageModel.Ordinal,
                     QuestId = QuestModel.Id,
-                    PlayerId = PlayerModel.Id
+                    PlayerId = UserModel.Id
                 }.Execute();
                 LastStage++;
                 ControlsAfterRightAnswer();
@@ -128,9 +128,9 @@ public partial class AppPageQuestion : System.Web.UI.Page, ICrossPageSender<Play
         LabelQuestionBody.Text = StageModel.Question;
     }
 
-    PlayerModel ICrossPageSender<PlayerModel>.GetModel()
+    UserModel ICrossPageSender<UserModel>.GetModel()
     {
-        return PlayerModel;
+        return UserModel;
     }
 
     QuestModel ICrossPageSender<QuestModel>.GetModel()

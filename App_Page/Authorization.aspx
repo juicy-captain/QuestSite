@@ -21,7 +21,9 @@
             <br />
             <asp:TextBox ID="TextBoxPassword" runat="server"></asp:TextBox>
             <br />
-            <asp:Button ID="ButtonAuthorization" runat="server" Text="Вход" OnClick="ButtonAuthorization_Click" PostBackUrl="~/App_Page/Profile.aspx"/>
+            <asp:CheckBox ID="CheckBoxAdministrator" runat="server" />
+            <br />
+            <asp:Button ID="ButtonAuthorization" runat="server" Text="Вход" OnClick="ButtonAuthorization_Click"/>
         </div>
         <div id="footer">
         </div>

@@ -34,7 +34,7 @@ namespace Database
         //Common model
         public const string ParameterId = "@Id";
 
-        //PlayerModel
+        //UserModel
         public const string ParameterNickName = "@nick_name";
         public const string ParameterFirstName = "@first_name";
         public const string ParameterSecondName = "@second_name";

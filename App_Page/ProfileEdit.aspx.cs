@@ -12,22 +12,22 @@ using Interface;
 using Const;
 using Util;
 
-public partial class App_Page_ProfileEdit : System.Web.UI.Page, ICrossPageSender<PlayerModel>
+public partial class App_Page_ProfileEdit : System.Web.UI.Page, ICrossPageSender<UserModel>
 {
-    private static PlayerModel PlayerModel { get; set; }
+    private static UserModel UserModel { get; set; }
     protected void Page_Load(object sender, EventArgs e)
     {
         if (PreviousPage != null)
         {
-            ICrossPageSender<PlayerModel> sourcePage = PreviousPage as ICrossPageSender<PlayerModel>;
-            PlayerModel = sourcePage.GetModel();
-            TextBoxNickName.Text = PlayerModel.NickName;
-            TextBoxFirstName.Text = PlayerModel.FirstName;
-            TextBoxSecondName.Text = PlayerModel.SecondName;
-            BirthDay.SelectedIndex = new DateTime(PlayerModel.BirthDate).Day;
-            BirthMonth.SelectedIndex = new DateTime(PlayerModel.BirthDate).Month;
-            BirthYear.SelectedIndex = new DateTime(PlayerModel.BirthDate).Year;
-            if (PlayerModel.Gender == UserModel.Sex.Male)
+            ICrossPageSender<UserModel> sourcePage = PreviousPage as ICrossPageSender<UserModel>;
+            UserModel = sourcePage.GetModel();
+            TextBoxNickName.Text = UserModel.NickName;
+            TextBoxFirstName.Text = UserModel.FirstName;
+            TextBoxSecondName.Text = UserModel.SecondName;
+            BirthDay.SelectedIndex = new DateTime(UserModel.BirthDate).Day;
+            BirthMonth.SelectedIndex = new DateTime(UserModel.BirthDate).Month;
+            BirthYear.SelectedIndex = new DateTime(UserModel.BirthDate).Year;
+            if (UserModel.Gender == UserModel.Sex.Male)
             {
                 RadioButtonMale.Checked = true;
             }
@@ -38,7 +38,7 @@ public partial class App_Page_ProfileEdit : System.Web.UI.Page, ICrossPageSender
         }
     }
 
-    private PlayerModel CreatePlayer()
+    private UserModel CreatePlayer()
     {
         string nickName = TextBoxNickName.Text;
         string firstName = TextBoxFirstName.Text;
@@ -54,11 +54,11 @@ public partial class App_Page_ProfileEdit : System.Web.UI.Page, ICrossPageSender
 
         string avatarPath = SaveAvatar();
 
-        PlayerModel editedPlayerModel = new PlayerModel(nickName, firstName, secondName, password, birthDate, avatarPath, gender)
+        UserModel editedUserModel = new UserModel(nickName, firstName, secondName, password, birthDate, avatarPath, gender)
         {
-            Id = PlayerModel.Id
+            Id = UserModel.Id
         };
-        return editedPlayerModel;
+        return editedUserModel;
     }
 
     private string SaveAvatar()
@@ -87,11 +87,11 @@ public partial class App_Page_ProfileEdit : System.Web.UI.Page, ICrossPageSender
     {
         try
         {
-            PlayerModel = CreatePlayer();
+            UserModel = CreatePlayer();
             new DatabaseRequest<Object>()
             {
                 RequestType = RequestType.UpdateProfile,
-                PlayerModel = PlayerModel
+                UserModel = UserModel
             }.Execute();
             Server.Transfer("~/App_Page/Profile.aspx", true);
         }
@@ -101,8 +101,8 @@ public partial class App_Page_ProfileEdit : System.Web.UI.Page, ICrossPageSender
         }
     }
 
-    PlayerModel ICrossPageSender<PlayerModel>.GetModel()
+    UserModel ICrossPageSender<UserModel>.GetModel()
     {
-        return PlayerModel;
+        return UserModel;
     }
 }
