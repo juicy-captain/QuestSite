@@ -30,7 +30,8 @@ namespace Database
         GetAllUsers,
         UnsubscribeUserForQuest,
         DeleteQuest,
-        EditQuest
+        EditQuest,
+        DeleteStage
     }
 
     public class DatabaseResponse<ResponseType>
@@ -116,6 +117,9 @@ namespace Database
                         break;
                     case RequestType.EditQuest:
                         DatabaseMethod.EditQuest(connection, QuestModel);
+                        break;
+                    case RequestType.DeleteStage:
+                        DatabaseMethod.DeleteStage(connection, QuestId, StageOrdinal);
                         break;
                 }
             }

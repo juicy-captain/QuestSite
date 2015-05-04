@@ -283,6 +283,16 @@ namespace Database
             registerCommand.ExecuteNonQuery();
         }
 
+        public static void DeleteStage(SqlConnection connection, int questId, int stageOrdinal)
+        {
+            SqlCommand deleteCommand = connection.CreateCommand();
+            deleteCommand.CommandType = CommandType.StoredProcedure;
+            deleteCommand.CommandText = "DeleteStage";
+            deleteCommand.Parameters.AddWithValue(DatabaseConst.ParameterQuestId, questId);
+            deleteCommand.Parameters.AddWithValue(DatabaseConst.ParameterStageOrdinal, stageOrdinal);
+            deleteCommand.ExecuteNonQuery();
+        }
+
     }
 
 }
