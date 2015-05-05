@@ -13,14 +13,56 @@ public partial class App_Page_AdminStageEdit : System.Web.UI.Page, ICrossPageSen
 {
     private static QuestModel QuestModel { get; set; }
     private static StageModel StageModel { get; set; }
-    private static UserModel UserModel { get; set; }   
+    private static UserModel UserModel { get; set; }
+    private static bool isNewStage { get; set; }
     protected void Page_Load(object sender, EventArgs e)
     {
         GetModelsAndSetFileds();
     }
     protected void ButtonSaveChanges_Click(object sender, EventArgs e)
     {
-        CreateStageAndMakeRequest();
+        string title = TextBoxTitle.Text;
+        string question = TextBoxQuestion.Text;
+        string answer = TextBoxAnswer.Text;
+        int ordinal = int.Parse(TextBoxOrdinal.Text);
+        int previousStageOrdinal = 0;
+        if (!isNewStage)
+        {
+            previousStageOrdinal = StageModel.Ordinal;
+        }
+
+
+        StageModel = new StageModel(title, question, null, answer, ordinal);
+
+        if (isNewStage)
+        {
+            new DatabaseRequest<object>()
+            {
+                RequestType = RequestType.AddStage,
+                QuestId = QuestModel.Id,
+                StageModel = StageModel
+            }.Execute();
+            isNewStage = false;
+        }
+        else
+        {
+            new DatabaseRequest<object>()
+            {
+                RequestType = RequestType.EditStage,
+                QuestId = QuestModel.Id,
+                PreviousStageOrdinal = previousStageOrdinal,
+                StageModel = StageModel
+            }.Execute();
+        }
+    }
+    protected void ButtonDelete_Click(object sender, EventArgs e)
+    {
+        new DatabaseRequest<object>()
+        {
+            RequestType = RequestType.DeleteStage,
+            QuestId = QuestModel.Id,
+            StageOrdinal = StageModel.Ordinal
+        }.Execute();
     }
 
     private void GetModelsAndSetFileds()
@@ -34,39 +76,17 @@ public partial class App_Page_AdminStageEdit : System.Web.UI.Page, ICrossPageSen
             ICrossPageSender<UserModel> sourceUserPage = PreviousPage as ICrossPageSender<UserModel>;
             UserModel = sourceUserPage.GetModel();
 
+            if (StageModel == null)
+            {
+                isNewStage = true;
+                ButtonDelete.Visible = false;
+                return;
+            }
             TextBoxTitle.Text = StageModel.Title;
             TextBoxQuestion.Text = StageModel.Question;
             TextBoxAnswer.Text = StageModel.Answer;
             TextBoxOrdinal.Text = StageModel.Ordinal.ToString();
         }
-    }
-    private void CreateStageAndMakeRequest()
-    {
-        string title = TextBoxTitle.Text;
-        string question = TextBoxQuestion.Text;
-        string answer = TextBoxAnswer.Text;
-        int ordinal = int.Parse(TextBoxOrdinal.Text);
-        int previousStageOrdinal = StageModel.Ordinal;
-
-        StageModel = new StageModel(title, question, null, answer, ordinal);
-
-        new DatabaseRequest<object>()
-        {
-            RequestType = RequestType.EditStage,
-            QuestId = QuestModel.Id,
-            PreviousStageOrdinal = previousStageOrdinal,
-            StageModel = StageModel
-        }.Execute();
-    }
-
-    protected void ButtonDelete_Click(object sender, EventArgs e)
-    {
-        new DatabaseRequest<object>()
-        {
-            RequestType = RequestType.DeleteStage,
-            QuestId = QuestModel.Id,
-            StageOrdinal = int.Parse((sender as Button).ID)
-        }.Execute();
     }
 
     UserModel ICrossPageSender<UserModel>.GetModel()

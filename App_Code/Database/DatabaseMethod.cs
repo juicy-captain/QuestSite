@@ -308,6 +308,20 @@ namespace Database
             registerCommand.ExecuteNonQuery();
         }
 
+        public static void AddStage(SqlConnection connection, StageModel stage, int relatedQuestId)
+        {
+            SqlCommand addCommand = connection.CreateCommand();
+            addCommand.CommandType = CommandType.StoredProcedure;
+            addCommand.CommandText = "InsertStage";
+            addCommand.Parameters.AddWithValue(DatabaseConst.ParameterStageRelatedQuestId, relatedQuestId);
+            addCommand.Parameters.AddWithValue(DatabaseConst.ParameterStageTitle, stage.Title);
+            addCommand.Parameters.AddWithValue(DatabaseConst.ParameterStageQuestion, stage.Question);
+            addCommand.Parameters.AddWithValue(DatabaseConst.ParameterStageImage, "cap");
+            addCommand.Parameters.AddWithValue(DatabaseConst.ParameterStageAnswer, stage.Answer);
+            addCommand.Parameters.AddWithValue(DatabaseConst.ParameterStageOrdinal, stage.Ordinal);
+            addCommand.ExecuteNonQuery();
+        }
+        
     }
 
 }

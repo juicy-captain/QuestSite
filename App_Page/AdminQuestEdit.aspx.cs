@@ -182,4 +182,8 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
     {
         return QuestModel;
     }
+    protected void ButtonAddNewStage_Click(object sender, EventArgs e)
+    {
+        SelectedStageModel = null;
+    }
 }

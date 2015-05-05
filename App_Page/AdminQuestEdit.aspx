@@ -5,6 +5,7 @@
         <div id="questInfo">
             <asp:Button ID="ButtonSaveChanges" runat="server" Text="Сохранить" OnClick="ButtonSaveChanges_Click" PostBackUrl="~/App_Page/AdminQuests.aspx" />
             <asp:Button ID="ButtonDelete" runat="server" Text="Удалить" PostBackUrl="~/App_Page/AdminQuests.aspx" OnClick="ButtonDelete_Click" />
+            <asp:Button ID="ButtonAddNewStage" runat="server" Text="Добавиьт новый этап" PostBackUrl="~/App_Page/AdminStageEdit.aspx" OnClick="ButtonAddNewStage_Click"/>
             <div id="descriptionArea" class="descriptionArea">
                 <asp:Label ID="LabelName" runat="server" Text="Название:"></asp:Label>
                 <br />
