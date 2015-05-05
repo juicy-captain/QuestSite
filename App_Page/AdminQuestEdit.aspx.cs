@@ -10,7 +10,10 @@ using Database;
 using Model;
 using Interface;
 
-public partial class App_Page_AdminQuestEdit : System.Web.UI.Page, ICrossPageSender<UserModel>, ICrossPageSender<StageModel>
+public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
+    ICrossPageSender<UserModel>,
+    ICrossPageSender<StageModel>,
+    ICrossPageSender<QuestModel>
 {
     private static UserModel UserModel { get; set; }
     private static QuestModel QuestModel { get; set; }
@@ -122,28 +125,28 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page, ICrossPageSen
             QuestId = QuestModel.Id
         }.Execute();
 
-        Stages = databaseResponse.Result;
+        QuestModel.Stages = databaseResponse.Result;
 
-        foreach (StageModel stage in Stages)
+        foreach (StageModel stage in QuestModel.Stages)
         {
             HtmlGenericControl listItem = new HtmlGenericControl("li");
             Label title = new Label() { Text = "Название этапа: " + stage.Title };
             Label question = new Label() { Text = "Вопрос: " + stage.Question };
             Label answer = new Label() { Text = "Ответ: " + stage.Answer };
             Label ordinal = new Label() { Text = "Порядковый номер: " + stage.Ordinal };
-
-            Button deleteButton = new Button() { Text = "Удалить", ID = stage.Ordinal.ToString(), PostBackUrl = "~/App_Page/AdminQuestEdit.aspx" };
-            deleteButton.Click += (sender, args) =>
-            {
-                new DatabaseRequest<object>()
+            Button editButton = new Button() { Text = "Редактировать", ID = stage.Ordinal.ToString(),  PostBackUrl = "~/App_Page/AdminStageEdit.aspx" };
+            editButton.Click += (sender, args) =>
                 {
-                    RequestType = RequestType.DeleteStage,
-                    QuestId = QuestModel.Id,
-                    StageOrdinal = int.Parse((sender as Button).ID)
-                }.Execute();
-                stagesList.Controls.Remove(listItem);
-            };
-
+                    int selectedStageOrdinal = int.Parse((sender as Button).ID);
+                    foreach (StageModel stageModel in QuestModel.Stages)
+                    {
+                        if (stageModel.Ordinal == selectedStageOrdinal)
+                        {
+                            SelectedStageModel = stageModel;
+                            break;
+                        }
+                    }
+                };
 
             HtmlGenericControl br = new HtmlGenericControl("<br>");
 
@@ -156,7 +159,7 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page, ICrossPageSen
             listItem.Controls.Add(br);
             listItem.Controls.Add(ordinal);
             listItem.Controls.Add(br);
-            listItem.Controls.Add(deleteButton);
+            listItem.Controls.Add(editButton);
             listItem.Controls.Add(br);
             //listItem.Controls.Add(editButton);
             listItem.Controls.Add(br);
@@ -174,4 +177,9 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page, ICrossPageSen
         return SelectedStageModel;
     }
 
+
+    QuestModel ICrossPageSender<QuestModel>.GetModel()
+    {
+        return QuestModel;
+    }
 }

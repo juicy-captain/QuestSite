@@ -31,7 +31,8 @@ namespace Database
         UnsubscribeUserForQuest,
         DeleteQuest,
         EditQuest,
-        DeleteStage
+        DeleteStage,
+        EditStage
     }
 
     public class DatabaseResponse<ResponseType>
@@ -56,6 +57,8 @@ namespace Database
         public string Answer { get; set; }
         public int NumberOfStages { get; set; }
         public QuestModel QuestModel { get; set; }
+        public StageModel StageModel { get; set; }
+        public int PreviousStageOrdinal { get; set; }
 
         public DatabaseRequest() { }
 
@@ -120,6 +123,9 @@ namespace Database
                         break;
                     case RequestType.DeleteStage:
                         DatabaseMethod.DeleteStage(connection, QuestId, StageOrdinal);
+                        break;
+                    case RequestType.EditStage:
+                        DatabaseMethod.EditStage(connection, StageModel, QuestId, PreviousStageOrdinal);
                         break;
                 }
             }

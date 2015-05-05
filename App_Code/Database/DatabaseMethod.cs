@@ -55,7 +55,7 @@ namespace Database
             SqlCommand getStagesCommand = connection.CreateCommand();
             getStagesCommand.CommandType = CommandType.StoredProcedure;
             getStagesCommand.CommandText = "GetQuestStages";
-            getStagesCommand.Parameters.AddWithValue(DatabaseConst.ParameterRelatedQuestId, questId);
+            getStagesCommand.Parameters.AddWithValue(DatabaseConst.ParameterStageRelatedQuestId, questId);
             SqlDataReader dataReader = getStagesCommand.ExecuteReader();
 
             DatabaseResponse<List<StageModel>> databaseResponse = new DatabaseResponse<List<StageModel>>()
@@ -288,9 +288,24 @@ namespace Database
             SqlCommand deleteCommand = connection.CreateCommand();
             deleteCommand.CommandType = CommandType.StoredProcedure;
             deleteCommand.CommandText = "DeleteStage";
-            deleteCommand.Parameters.AddWithValue(DatabaseConst.ParameterQuestId, questId);
+            deleteCommand.Parameters.AddWithValue(DatabaseConst.ParameterStageRelatedQuestId, questId);
             deleteCommand.Parameters.AddWithValue(DatabaseConst.ParameterStageOrdinal, stageOrdinal);
             deleteCommand.ExecuteNonQuery();
+        }
+
+        public static void EditStage(SqlConnection connection, StageModel stage, int relatedQuestId, int previousStageOrdinal)
+        {
+            SqlCommand registerCommand = connection.CreateCommand();
+            registerCommand.CommandType = CommandType.StoredProcedure;
+            registerCommand.CommandText = "EditStage";
+            registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterStageRelatedQuestId, relatedQuestId);
+            registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterStageTitle, stage.Title);
+            registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterStageQuestion, stage.Question);
+            registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterStageImage, "cap");
+            registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterStageAnswer, stage.Answer);
+            registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterStageOrdinal, stage.Ordinal);
+            registerCommand.Parameters.AddWithValue(DatabaseConst.ParameterStageOrdinalPrevious, previousStageOrdinal);
+            registerCommand.ExecuteNonQuery();
         }
 
     }

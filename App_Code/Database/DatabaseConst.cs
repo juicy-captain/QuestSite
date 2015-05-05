@@ -52,11 +52,16 @@ namespace Database
         public const string ParameterComplexityLevel = "@complexity_level";
 
         //StageModel
-        public const string ParameterRelatedQuestId = "@questId";
+        public const string ParameterStageRelatedQuestId = "@related_quest";
+        public const string ParameterStageTitle = "@title";
+        public const string ParameterStageQuestion = "@question";
+        public const string ParameterStageImage = "@image_path";
+        public const string ParameterStageAnswer = "@answer";
         public const string ParameterStageOrdinal = "@ordinal";
+        public const string ParameterStageOrdinalPrevious = "@ordinal_previous";
 
         //Subscription
-        public const string ParameterQuestId = ParameterRelatedQuestId;
+        public const string ParameterQuestId = "@questId";
         public const string ParameterUserId = "@userId";
         public const string ParameterLastStage = "@last_stage";
     }
