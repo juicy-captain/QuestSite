@@ -27,7 +27,7 @@ public partial class App_Page_ProfileEdit : System.Web.UI.Page, ICrossPageSender
             BirthDay.SelectedIndex = new DateTime(UserModel.BirthDate).Day;
             BirthMonth.SelectedIndex = new DateTime(UserModel.BirthDate).Month;
             BirthYear.SelectedIndex = new DateTime(UserModel.BirthDate).Year;
-            if (UserModel.Gender == UserModel.Sex.Male)
+            if (UserModel.Gender == Sex.Male)
             {
                 RadioButtonMale.Checked = true;
             }
@@ -50,7 +50,7 @@ public partial class App_Page_ProfileEdit : System.Web.UI.Page, ICrossPageSender
         int year = int.Parse(BirthYear.SelectedValue);
         long birthDate = new DateTime(year, month, day).Ticks;
 
-        UserModel.Sex gender = RadioButtonMale.Checked ? UserModel.Sex.Male : UserModel.Sex.Female;
+        Sex gender = RadioButtonMale.Checked ? Sex.Male : Sex.Female;
 
         string avatarPath = SaveAvatar();
 

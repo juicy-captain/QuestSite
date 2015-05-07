@@ -12,16 +12,15 @@ using Util;
 
 namespace Model
 {
+    public enum Sex
+    {
+        Male, Female
+    }
     /// <summary>
     /// Summary description for Class1
     /// </summary>
     public class UserModel
     {
-        public enum Sex
-        {
-            Male, Female
-        }
-
         public int Id { get; set; }
         public string NickName { get; private set; }
         public string FirstName { get; private set; }

@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 
 using Model;
 using Util;
+using Interface;
 
 namespace Database
 {
@@ -35,6 +36,12 @@ namespace Database
         EditStage,
         AddStage,
         AddQuest
+    }
+
+    public enum RequestType1
+    {
+        Insert,
+        Query
     }
 
     public class DatabaseResponse<ResponseType>
@@ -111,9 +118,6 @@ namespace Database
                     case RequestType.UpdateProfile:
                         DatabaseMethod.EditProfile(connection, UserModel);
                         break;
-                    case RequestType.GetAllUsers:
-                        databaseResponse = DatabaseMethod.GetAllUsers(connection) as DatabaseResponse<ResponseType>;
-                        break;
                     case RequestType.UnsubscribeUserForQuest:
                         DatabaseMethod.Unsubscribe(connection, QuestId, PlayerId);
                         break;
@@ -136,6 +140,46 @@ namespace Database
                         DatabaseMethod.AddQuest(connection, QuestModel);
                         break;
                         
+                }
+            }
+            return databaseResponse;
+        }
+
+    }
+
+    public class DatabaseRequest1<ResponseType>
+    {
+        public IProcessor<ResponseType> Processor { get; set; }
+        public Dictionary<string, string> Parameters { get; set; }
+        public RequestType1 RequestType { get; set; }
+        public string StoredProcedure { get; set; }
+
+        public DatabaseResponse<ResponseType> Execute()
+        {
+            DatabaseResponse<ResponseType> databaseResponse = new DatabaseResponse<ResponseType>();
+            using (SqlConnection connection = new SqlConnection(DatabaseUtil.GetConnectionString()))
+            {
+                SqlCommand command = connection.CreateCommand();
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = StoredProcedure;
+
+                if (Parameters != null)
+                {
+                    foreach (KeyValuePair<string, string> parameterPair in Parameters)
+                    {
+                        command.Parameters.AddWithValue(parameterPair.Key, parameterPair.Value);
+                    }
+                }
+
+                connection.Open();
+                switch (RequestType)
+                {
+                    case RequestType1.Insert:
+                        command.ExecuteNonQuery();
+                        break;
+                    case RequestType1.Query:
+                        databaseResponse.Result = Processor.Process(command.ExecuteReader());
+                        break;
                 }
             }
             return databaseResponse;

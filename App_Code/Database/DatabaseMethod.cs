@@ -235,20 +235,6 @@ namespace Database
             registerCommand.ExecuteNonQuery();
         }
 
-        public static DatabaseResponse<List<UserModel>> GetAllUsers(SqlConnection connection)
-        {
-            SqlCommand getQuestsCommand = connection.CreateCommand();
-            getQuestsCommand.CommandType = CommandType.StoredProcedure;
-            getQuestsCommand.CommandText = "GetAllUsers";
-            SqlDataReader dataReader = getQuestsCommand.ExecuteReader();
-
-            DatabaseResponse<List<UserModel>> databaseResponse = new DatabaseResponse<List<UserModel>>()
-            {
-                Result = UserModel.ProcessBatch(dataReader)
-            };
-            return databaseResponse;
-        }
-
         public static void Unsubscribe(SqlConnection connection, int questId, int userId)
         {
             SqlCommand suscribeCommand = connection.CreateCommand();

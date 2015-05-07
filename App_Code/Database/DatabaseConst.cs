@@ -64,6 +64,9 @@ namespace Database
         public const string ParameterQuestId = "@questId";
         public const string ParameterUserId = "@userId";
         public const string ParameterLastStage = "@last_stage";
+
+        //Stored Procedures
+        public const string SPGetAllUsers = "GetAllUsers";
     }
 
     public enum SubscriptionState

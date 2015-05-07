@@ -9,9 +9,16 @@ using System.Web.UI.HtmlControls;
 using Model;
 using Database;
 using Interface;
+using Processor;
 public partial class App_Page_AdminUsers : System.Web.UI.Page, ICrossPageSender<UserModel>
 {
+    private static IProcessor<List<UserModel>> Processor { get; set; }
     private UserModel UserModel { get; set; }
+
+    static App_Page_AdminUsers()
+    {
+        Processor = new UserBatchProcessor();
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         if (PreviousPage != null)
@@ -22,19 +29,17 @@ public partial class App_Page_AdminUsers : System.Web.UI.Page, ICrossPageSender<
         PopulateUsers();
     }
 
-    void PopulateUsers()
+    //methods for simplification logic understanding
+    private void PopulateUsers()
     {
-        DatabaseResponse<List<UserModel>> databaseResponse = new DatabaseRequest<List<UserModel>>()
-        {
-            RequestType = RequestType.GetAllUsers
-        }.Execute();
+        List<UserModel> userModels = PerformGetAllUsersRequest();
 
-        foreach (UserModel player in databaseResponse.Result)
+        foreach (UserModel player in userModels)
         {
             HtmlGenericControl div = new HtmlGenericControl("div");
             Label names = new Label() { Text = player.ToString() };
             Label bithDate = new Label() { Text = String.Format("{0:dd.MM.yyyy}", new DateTime(player.BirthDate)) };
-            string genderString = "Пол: " + (player.Gender == UserModel.Sex.Male ? "муж" : "мен") + ".";
+            string genderString = "Пол: " + (player.Gender == Sex.Male ? "муж" : "мен") + ".";
             Label gender = new Label() { Text = genderString };
             Image avatar = new Image() { ImageUrl = player.AvatarPath };
 
@@ -62,6 +67,16 @@ public partial class App_Page_AdminUsers : System.Web.UI.Page, ICrossPageSender<
             div.Controls.Add(br);
             content.Controls.Add(div);
         }
+    }
+    private List<UserModel> PerformGetAllUsersRequest()
+    {
+        DatabaseResponse<List<UserModel>> response = new DatabaseRequest1<List<UserModel>>()
+        {
+            Processor = Processor,
+            RequestType = RequestType1.Query,
+            StoredProcedure = DatabaseConst.SPGetAllUsers
+        }.Execute();
+        return response.Result;
     }
 
     UserModel ICrossPageSender<UserModel>.GetModel()

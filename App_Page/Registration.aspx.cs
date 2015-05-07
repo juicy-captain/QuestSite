@@ -54,7 +54,7 @@ public partial class AppPageRegistration : System.Web.UI.Page, ICrossPageSender<
         int year = int.Parse((RegistrationWizard.WizardSteps[1].FindControl("BirthYear") as DropDownList).SelectedValue);
         long birthDate = new DateTime(year, month, day).Ticks;
 
-        UserModel.Sex gender = (RegistrationWizard.WizardSteps[1].FindControl("RadioButtonMale") as RadioButton).Checked ? UserModel.Sex.Male : UserModel.Sex.Female;
+        Sex gender = (RegistrationWizard.WizardSteps[1].FindControl("RadioButtonMale") as RadioButton).Checked ? Sex.Male : Sex.Female;
 
         string avatarPath = SaveAvatar();
 

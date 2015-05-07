@@ -9,6 +9,7 @@ using System.Web.UI.HtmlControls;
 using Model;
 using Interface;
 using Database;
+using Processor;
 
 public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSender<UserModel>, ICrossPageSender<QuestModel>
 {
@@ -47,7 +48,7 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
         {
             ICrossPageSender<UserModel> sourcePage = PreviousPage as ICrossPageSender<UserModel>;
             UserModel = sourcePage.GetModel();
-                        isUserLoggedIn = true;
+            isUserLoggedIn = true;
 
             Label userNickNameDeclaration = new Label() { Text = "Вы вошли как: " };
             HyperLink linkToProfilePage = new HyperLink()
@@ -174,7 +175,6 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
             QuestDetails.Controls.Add(unsubscribeButton);
         }
     }
-
 
     UserModel ICrossPageSender<UserModel>.GetModel()
     {
