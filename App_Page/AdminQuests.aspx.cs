@@ -102,4 +102,9 @@ public partial class App_Page_AdminQuests : System.Web.UI.Page, ICrossPageSender
     {
         return SelectedQuestModel;
     }
+
+    protected void ButtonAddNewQuest_Click(object sender, EventArgs e)
+    {
+        SelectedQuestModel = null;
+    }
 }

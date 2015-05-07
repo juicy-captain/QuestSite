@@ -9,6 +9,7 @@ using System.Web.UI.HtmlControls;
 using Database;
 using Model;
 using Interface;
+using Const;
 
 public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
     ICrossPageSender<UserModel>,
@@ -19,6 +20,7 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
     private static QuestModel QuestModel { get; set; }
     private static StageModel SelectedStageModel { get; set; }
     private static List<StageModel> Stages { get; set; }
+    private static bool isNewStage { get; set; }
     protected void Page_Load(object sender, EventArgs e)
     {
         PopulateQuestInfo();
@@ -28,11 +30,22 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
     protected void ButtonSaveChanges_Click(object sender, EventArgs e)
     {
         CreateUpdatedQuest();
-        new DatabaseRequest<object>()
+        if (isNewStage)
         {
-            RequestType = RequestType.EditQuest,
-            QuestModel = QuestModel
-        }.Execute();
+            new DatabaseRequest<object>()
+            {
+                RequestType = RequestType.AddQuest,
+                QuestModel = QuestModel
+            }.Execute();
+        }
+        else
+        {
+            new DatabaseRequest<object>()
+            {
+                RequestType = RequestType.EditQuest,
+                QuestModel = QuestModel
+            }.Execute();
+        }
     }
     protected void ButtonDelete_Click(object sender, EventArgs e)
     {
@@ -76,7 +89,12 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
             complexity = QuestComplexityLevel.AreYoyCrazy;
         }
 
-        QuestModel = new QuestModel(QuestModel.Id, name, description, startDate, expirationDate, complexity);
+        int id = ServerConst.DefaultId;
+        if (QuestModel != null)
+        {
+            id = QuestModel.Id;
+        }
+        QuestModel = new QuestModel(id, name, description, startDate, expirationDate, complexity);
     }
     private void PopulateQuestInfo()
     {
@@ -88,82 +106,95 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
             UserModel = sourcePageUser.GetModel();
         }
 
-        TextBoxName.Text = QuestModel.Name;
-        TextBoxDescription.Text = QuestModel.Description;
-
-        DateTime startDate = new DateTime(QuestModel.StartDate);
-        StartDay.SelectedIndex = startDate.Day;
-        StartMonth.SelectedIndex = startDate.Month;
-        StartYear.SelectedIndex = startDate.Year;
-
-        DateTime expirationDate = new DateTime(QuestModel.ExpirationDate);
-        ExpirationDay.SelectedIndex = expirationDate.Day;
-        ExpirationMonth.SelectedIndex = expirationDate.Month;
-        ExpirationYear.SelectedIndex = expirationDate.Year;
-
-        switch (QuestModel.ComplexityLevel)
+        if (QuestModel != null)
         {
-            case QuestComplexityLevel.Easy:
-                LevelEasy.Checked = true;
-                break;
-            case QuestComplexityLevel.Medium:
-                LevelMedium.Checked = true;
-                break;
-            case QuestComplexityLevel.Hard:
-                LevelHard.Checked = true;
-                break;
-            case QuestComplexityLevel.AreYoyCrazy:
-                LevelCrazy.Checked = true;
-                break;
+            TextBoxName.Text = QuestModel.Name;
+            TextBoxDescription.Text = QuestModel.Description;
+
+            DateTime startDate = new DateTime(QuestModel.StartDate);
+            StartDay.SelectedIndex = startDate.Day;
+            StartMonth.SelectedIndex = startDate.Month;
+            StartYear.SelectedIndex = startDate.Year;
+
+            DateTime expirationDate = new DateTime(QuestModel.ExpirationDate);
+            ExpirationDay.SelectedIndex = expirationDate.Day;
+            ExpirationMonth.SelectedIndex = expirationDate.Month;
+            ExpirationYear.SelectedIndex = expirationDate.Year;
+
+            switch (QuestModel.ComplexityLevel)
+            {
+                case QuestComplexityLevel.Easy:
+                    LevelEasy.Checked = true;
+                    break;
+                case QuestComplexityLevel.Medium:
+                    LevelMedium.Checked = true;
+                    break;
+                case QuestComplexityLevel.Hard:
+                    LevelHard.Checked = true;
+                    break;
+                case QuestComplexityLevel.AreYoyCrazy:
+                    LevelCrazy.Checked = true;
+                    break;
+            }
         }
+        else
+        {
+            isNewStage = true;
+            ButtonDelete.Visible = false;
+            ButtonAddNewStage.Visible = false;
+        }
+
     }
     private void PopulateStagesInfo()
     {
-        DatabaseResponse<List<StageModel>> databaseResponse = new DatabaseRequest<List<StageModel>>()
+        if (QuestModel != null)
         {
-            RequestType = Database.RequestType.GetStages,
-            QuestId = QuestModel.Id
-        }.Execute();
+            DatabaseResponse<List<StageModel>> databaseResponse = new DatabaseRequest<List<StageModel>>()
+            {
+                RequestType = Database.RequestType.GetStages,
+                QuestId = QuestModel.Id
+            }.Execute();
 
-        QuestModel.Stages = databaseResponse.Result;
+            QuestModel.Stages = databaseResponse.Result;
 
-        foreach (StageModel stage in QuestModel.Stages)
-        {
-            HtmlGenericControl listItem = new HtmlGenericControl("li");
-            Label title = new Label() { Text = "Название этапа: " + stage.Title };
-            Label question = new Label() { Text = "Вопрос: " + stage.Question };
-            Label answer = new Label() { Text = "Ответ: " + stage.Answer };
-            Label ordinal = new Label() { Text = "Порядковый номер: " + stage.Ordinal };
-            Button editButton = new Button() { Text = "Редактировать", ID = stage.Ordinal.ToString(),  PostBackUrl = "~/App_Page/AdminStageEdit.aspx" };
-            editButton.Click += (sender, args) =>
-                {
-                    int selectedStageOrdinal = int.Parse((sender as Button).ID);
-                    foreach (StageModel stageModel in QuestModel.Stages)
+            foreach (StageModel stage in QuestModel.Stages)
+            {
+                HtmlGenericControl listItem = new HtmlGenericControl("li");
+                Label title = new Label() { Text = "Название этапа: " + stage.Title };
+                Label question = new Label() { Text = "Вопрос: " + stage.Question };
+                Label answer = new Label() { Text = "Ответ: " + stage.Answer };
+                Label ordinal = new Label() { Text = "Порядковый номер: " + stage.Ordinal };
+                Button editButton = new Button() { Text = "Редактировать", ID = stage.Ordinal.ToString(), PostBackUrl = "~/App_Page/AdminStageEdit.aspx" };
+                editButton.Click += (sender, args) =>
                     {
-                        if (stageModel.Ordinal == selectedStageOrdinal)
+                        int selectedStageOrdinal = int.Parse((sender as Button).ID);
+                        foreach (StageModel stageModel in QuestModel.Stages)
                         {
-                            SelectedStageModel = stageModel;
-                            break;
+                            if (stageModel.Ordinal == selectedStageOrdinal)
+                            {
+                                SelectedStageModel = stageModel;
+                                break;
+                            }
                         }
-                    }
-                };
+                    };
 
-            HtmlGenericControl br = new HtmlGenericControl("<br>");
+                HtmlGenericControl br = new HtmlGenericControl("<br>");
 
-            //TODO remove this crappy code before course project vindication
-            listItem.Controls.Add(title);
-            listItem.Controls.Add(br);
-            listItem.Controls.Add(question);
-            listItem.Controls.Add(br);
-            listItem.Controls.Add(answer);
-            listItem.Controls.Add(br);
-            listItem.Controls.Add(ordinal);
-            listItem.Controls.Add(br);
-            listItem.Controls.Add(editButton);
-            listItem.Controls.Add(br);
-            //listItem.Controls.Add(editButton);
-            listItem.Controls.Add(br);
-            stagesList.Controls.Add(listItem);
+                //TODO remove this crappy code before course project vindication
+                listItem.Controls.Add(title);
+                listItem.Controls.Add(br);
+                listItem.Controls.Add(question);
+                listItem.Controls.Add(br);
+                listItem.Controls.Add(answer);
+                listItem.Controls.Add(br);
+                listItem.Controls.Add(ordinal);
+                listItem.Controls.Add(br);
+                listItem.Controls.Add(editButton);
+                listItem.Controls.Add(br);
+                //listItem.Controls.Add(editButton);
+                listItem.Controls.Add(br);
+                stagesList.Controls.Add(listItem);
+            }
         }
     }
 
@@ -186,4 +217,5 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
     {
         SelectedStageModel = null;
     }
+
 }

@@ -33,7 +33,8 @@ namespace Database
         EditQuest,
         DeleteStage,
         EditStage,
-        AddStage
+        AddStage,
+        AddQuest
     }
 
     public class DatabaseResponse<ResponseType>
@@ -131,6 +132,10 @@ namespace Database
                     case RequestType.AddStage:
                         DatabaseMethod.AddStage(connection, StageModel, QuestId);
                         break;
+                    case RequestType.AddQuest:
+                        DatabaseMethod.AddQuest(connection, QuestModel);
+                        break;
+                        
                 }
             }
             return databaseResponse;

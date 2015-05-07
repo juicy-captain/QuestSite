@@ -321,6 +321,19 @@ namespace Database
             addCommand.Parameters.AddWithValue(DatabaseConst.ParameterStageOrdinal, stage.Ordinal);
             addCommand.ExecuteNonQuery();
         }
+
+        public static void AddQuest(SqlConnection connection, QuestModel quest)
+        {
+            SqlCommand addCommand = connection.CreateCommand();
+            addCommand.CommandType = CommandType.StoredProcedure;
+            addCommand.CommandText = "InsertQuest";
+            addCommand.Parameters.AddWithValue(DatabaseConst.ParameterName, quest.Name);
+            addCommand.Parameters.AddWithValue(DatabaseConst.ParameterDescription, quest.Description);
+            addCommand.Parameters.AddWithValue(DatabaseConst.ParameterStartDate, quest.StartDate);
+            addCommand.Parameters.AddWithValue(DatabaseConst.ParameterExpirationDate, quest.ExpirationDate);
+            addCommand.Parameters.AddWithValue(DatabaseConst.ParameterComplexityLevel, quest.ComplexityLevel);
+            addCommand.ExecuteNonQuery();
+        }
         
     }
 
