@@ -123,11 +123,7 @@ namespace Database
                         break;
                     case RequestType.AddStage:
                         DatabaseMethod.AddStage(connection, StageModel, QuestId);
-                        break;
-                    case RequestType.AddQuest:
-                        DatabaseMethod.AddQuest(connection, QuestModel);
-                        break;
-                        
+                        break;                       
                 }
             }
             return databaseResponse;
@@ -138,7 +134,7 @@ namespace Database
     public class DatabaseRequest1<ResponseType>
     {
         public IProcessor<ResponseType> Processor { get; set; }
-        public Dictionary<string, string> Parameters { get; set; }
+        public Dictionary<string, object> Parameters { get; set; }
         public RequestType1 RequestType { get; set; }
         public string StoredProcedure { get; set; }
 
@@ -153,7 +149,7 @@ namespace Database
 
                 if (Parameters != null)
                 {
-                    foreach (KeyValuePair<string, string> parameterPair in Parameters)
+                    foreach (KeyValuePair<string, object> parameterPair in Parameters)
                     {
                         command.Parameters.AddWithValue(parameterPair.Key, parameterPair.Value);
                     }

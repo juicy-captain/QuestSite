@@ -21,8 +21,8 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
     private static bool isLoggedIn = false;
     private static IProcessor<List<StageModel>> ProcessorStages { get; set; }
     private static IProcessor<List<UserModel>> ProcessorSubscribers { get; set; }
-    private static Dictionary<string, string> ParametersStages { get; set; }
-    private static Dictionary<string, string> ParametersSubscribers { get; set; }
+    private static Dictionary<string, object> ParametersStages { get; set; }
+    private static Dictionary<string, object> ParametersSubscribers { get; set; }
 
     static App_Page_QuestDetails()
     {
@@ -171,9 +171,9 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
     }
     private void PerformGetStagesRequest()
     {
-        ParametersStages = new Dictionary<string, string>()
+        ParametersStages = new Dictionary<string, object>()
         {
-            {DatabaseConst.ParameterStageRelatedQuestId, QuestModel.Id.ToString()}
+            {DatabaseConst.ParameterStageRelatedQuestId, QuestModel.Id}
         };
         DatabaseResponse<List<StageModel>> databaseResponse = new DatabaseRequest1<List<StageModel>>()
         {
@@ -187,9 +187,9 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
     }
     private void PerformGetQuestSubscribersRequest()
     {
-        ParametersSubscribers = new Dictionary<string, string>()
+        ParametersSubscribers = new Dictionary<string, object>()
         {
-            {DatabaseConst.ParameterQuestId, QuestModel.Id.ToString()}
+            {DatabaseConst.ParameterQuestId, QuestModel.Id}
         };
         DatabaseResponse<List<UserModel>> subscribersResponse = new DatabaseRequest1<List<UserModel>>()
         {

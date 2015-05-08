@@ -17,7 +17,7 @@ public partial class AppPageProfile : System.Web.UI.Page, ICrossPageSender<UserM
     private static List<QuestModel> QuestModels { get; set; }
     private static QuestModel SelectedQuestModel { get; set; }
     private static IProcessor<List<QuestModel>> Processor { get; set; }
-    private static Dictionary<string, string> Parameters { get; set; }
+    private static Dictionary<string, object> Parameters { get; set; }
 
     static AppPageProfile()
     {
@@ -95,9 +95,9 @@ public partial class AppPageProfile : System.Web.UI.Page, ICrossPageSender<UserM
     }
     private void PerformGetUserSubscriptionsRequest()
     {
-        Parameters = new Dictionary<string,string>()
+        Parameters = new Dictionary<string,object>()
         {
-            {DatabaseConst.ParameterUserId, UserModel.Id.ToString()}
+            {DatabaseConst.ParameterUserId, UserModel.Id}
         };
         DatabaseResponse<List<QuestModel>> databaseResponse = new DatabaseRequest1<List<QuestModel>>()
         {

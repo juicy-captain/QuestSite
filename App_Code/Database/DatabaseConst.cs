@@ -71,6 +71,7 @@ namespace Database
         public const string SPGetQuestStages = "GetQuestStages";
         public const string SPGetUserSubscriptions = "GetUserSubscriptions";
         public const string SPGetQuestSubscribers = "GetQuestSubscribers";
+        public const string SPInsertQuest = "InsertQuest";    
     }
 
     public enum SubscriptionState

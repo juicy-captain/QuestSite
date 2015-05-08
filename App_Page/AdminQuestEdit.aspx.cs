@@ -23,7 +23,8 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
     private static List<StageModel> Stages { get; set; }
     private static bool isNewStage { get; set; }
     private static IProcessor<List<StageModel>> Processor { get; set; }
-    private static Dictionary<string, string> Parameters { get; set; }
+    private static Dictionary<string, object> ParametersStages { get; set; }
+    private static Dictionary<string, object> ParametersAddQuest { get; set; }
 
     static App_Page_AdminQuestEdit()
     {
@@ -40,11 +41,7 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
         CreateUpdatedQuest();
         if (isNewStage)
         {
-            new DatabaseRequest<object>()
-            {
-                RequestType = RequestType.AddQuest,
-                QuestModel = QuestModel
-            }.Execute();
+            PerformAddQuestRequest();
         }
         else
         {
@@ -205,19 +202,36 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
     }
     private void PerformGetStagesRequest()
     {
-        Parameters = new Dictionary<string, string>()
+        ParametersStages = new Dictionary<string, object>()
         {
-            {DatabaseConst.ParameterStageRelatedQuestId, QuestModel.Id.ToString()}
+            {DatabaseConst.ParameterStageRelatedQuestId, QuestModel.Id}
         };
         DatabaseResponse<List<StageModel>> databaseResponse = new DatabaseRequest1<List<StageModel>>()
         {
-            Parameters = Parameters,
+            Parameters = ParametersStages,
             Processor = Processor,
             RequestType = RequestType1.Query,
             StoredProcedure = DatabaseConst.SPGetQuestStages
         }.Execute();
 
         QuestModel.Stages = databaseResponse.Result;
+    }
+    private void PerformAddQuestRequest()
+    {
+        ParametersAddQuest = new Dictionary<string, object>()
+        {
+            {DatabaseConst.ParameterName, QuestModel.Name},
+            {DatabaseConst.ParameterDescription, QuestModel.Description},
+            {DatabaseConst.ParameterStartDate, QuestModel.StartDate},
+            {DatabaseConst.ParameterExpirationDate, QuestModel.ExpirationDate},
+            {DatabaseConst.ParameterComplexityLevel, QuestModel.ComplexityLevel},
+        };
+        new DatabaseRequest1<object>()
+        {
+            Parameters = ParametersAddQuest,
+            RequestType = RequestType1.Insert,
+            StoredProcedure = DatabaseConst.SPInsertQuest
+        }.Execute();
     }
 
     UserModel ICrossPageSender<UserModel>.GetModel()
