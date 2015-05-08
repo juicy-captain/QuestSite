@@ -23,8 +23,6 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
     private static List<StageModel> Stages { get; set; }
     private static bool isNewStage { get; set; }
     private static IProcessor<List<StageModel>> Processor { get; set; }
-    private static Dictionary<string, object> ParametersStages { get; set; }
-    private static Dictionary<string, object> ParametersAddQuest { get; set; }
 
     static App_Page_AdminQuestEdit()
     {
@@ -45,20 +43,12 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
         }
         else
         {
-            new DatabaseRequest<object>()
-            {
-                RequestType = RequestType.EditQuest,
-                QuestModel = QuestModel
-            }.Execute();
+            PerformEditQuestRequest();
         }
     }
     protected void ButtonDelete_Click(object sender, EventArgs e)
     {
-        new DatabaseRequest<object>()
-        {
-            RequestType = RequestType.DeleteQuest,
-            QuestId = QuestModel.Id
-        }.Execute();
+        PerformDeleteQuestRequest();
     }
     protected void ButtonAddNewStage_Click(object sender, EventArgs e)
     {
@@ -202,7 +192,7 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
     }
     private void PerformGetStagesRequest()
     {
-        ParametersStages = new Dictionary<string, object>()
+        Dictionary<string, object> ParametersStages = new Dictionary<string, object>()
         {
             {DatabaseConst.ParameterStageRelatedQuestId, QuestModel.Id}
         };
@@ -218,7 +208,7 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
     }
     private void PerformAddQuestRequest()
     {
-        ParametersAddQuest = new Dictionary<string, object>()
+        Dictionary<string, object> ParametersAddQuest = new Dictionary<string, object>()
         {
             {DatabaseConst.ParameterName, QuestModel.Name},
             {DatabaseConst.ParameterDescription, QuestModel.Description},
@@ -231,6 +221,37 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
             Parameters = ParametersAddQuest,
             RequestType = RequestType1.Insert,
             StoredProcedure = DatabaseConst.SPInsertQuest
+        }.Execute();
+    }
+    private void PerformEditQuestRequest()
+    {
+        Dictionary<string, object> Parameters = new Dictionary<string, object>()
+        {
+            {DatabaseConst.ParameterQuestId, QuestModel.Id},
+            {DatabaseConst.ParameterName, QuestModel.Name},
+            {DatabaseConst.ParameterDescription, QuestModel.Description},
+            {DatabaseConst.ParameterStartDate, QuestModel.StartDate},
+            {DatabaseConst.ParameterExpirationDate, QuestModel.ExpirationDate},
+            {DatabaseConst.ParameterComplexityLevel, QuestModel.ComplexityLevel},
+        };
+        new DatabaseRequest1<object>()
+        {
+            Parameters = Parameters,
+            RequestType = RequestType1.Insert,
+            StoredProcedure = DatabaseConst.SPEditQuest
+        }.Execute();
+    }
+    private void PerformDeleteQuestRequest()
+    {
+        Dictionary<string, object> Parameters = new Dictionary<string, object>()
+        {
+            {DatabaseConst.ParameterQuestId, QuestModel.Id}
+        };
+        new DatabaseRequest1<object>()
+        {
+            Parameters = Parameters,
+            RequestType = RequestType1.Insert,
+            StoredProcedure = DatabaseConst.SPDeleteQuest
         }.Execute();
     }
 

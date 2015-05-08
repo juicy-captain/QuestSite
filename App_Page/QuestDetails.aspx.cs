@@ -21,8 +21,6 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
     private static bool isLoggedIn = false;
     private static IProcessor<List<StageModel>> ProcessorStages { get; set; }
     private static IProcessor<List<UserModel>> ProcessorSubscribers { get; set; }
-    private static Dictionary<string, object> ParametersStages { get; set; }
-    private static Dictionary<string, object> ParametersSubscribers { get; set; }
 
     static App_Page_QuestDetails()
     {
@@ -159,19 +157,14 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
             LinkButton unsubscribeButton = new LinkButton() { Text = "Отписаться", PostBackUrl = "~/App_Page/Profile.aspx" };
             unsubscribeButton.Click += (sender, args) =>
             {
-                new DatabaseRequest<Object>()
-                {
-                    RequestType = RequestType.UnsubscribeUserForQuest,
-                    PlayerId = UserModel.Id,
-                    QuestId = QuestModel.Id
-                }.Execute();
+                PerformUnsubscribeUserRequest();
             };
             QuestDetails.Controls.Add(unsubscribeButton);
         }
     }
     private void PerformGetStagesRequest()
     {
-        ParametersStages = new Dictionary<string, object>()
+        Dictionary<string, object> ParametersStages = new Dictionary<string, object>()
         {
             {DatabaseConst.ParameterStageRelatedQuestId, QuestModel.Id}
         };
@@ -187,7 +180,7 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
     }
     private void PerformGetQuestSubscribersRequest()
     {
-        ParametersSubscribers = new Dictionary<string, object>()
+        Dictionary<string, object> ParametersSubscribers = new Dictionary<string, object>()
         {
             {DatabaseConst.ParameterQuestId, QuestModel.Id}
         };
@@ -200,6 +193,20 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
         }.Execute();
 
         Subscribers = subscribersResponse.Result;
+    }
+    private void PerformUnsubscribeUserRequest()
+    {
+        Dictionary<string, object> Parameters = new Dictionary<string, object>()
+        {
+            {DatabaseConst.ParameterQuestId, QuestModel.Id},
+            {DatabaseConst.ParameterUserId, UserModel.Id},
+        };
+        new DatabaseRequest1<object>()
+        {
+            Parameters = Parameters,
+            RequestType = RequestType1.Insert,
+            StoredProcedure = DatabaseConst.SPDeleteSubscription
+        }.Execute();
     }
 
     UserModel ICrossPageSender<UserModel>.GetModel()

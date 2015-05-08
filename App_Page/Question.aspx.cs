@@ -16,6 +16,7 @@ public partial class AppPageQuestion : System.Web.UI.Page, ICrossPageSender<User
     private static StageModel StageModel { get; set; }
     private static int LastStage { get; set; }
     private static bool isPreviousAnswerRight { get; set; }
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (PreviousPage != null && PreviousPage is ICrossPageSender<UserModel> && PreviousPage is ICrossPageSender<QuestModel>)
@@ -61,13 +62,7 @@ public partial class AppPageQuestion : System.Web.UI.Page, ICrossPageSender<User
 
             if (isPreviousAnswerRight)
             {
-                new DatabaseRequest<int>()
-                {
-                    RequestType = RequestType.СonfirmRightAnswer,
-                    StageOrdinal = StageModel.Ordinal,
-                    QuestId = QuestModel.Id,
-                    PlayerId = UserModel.Id
-                }.Execute();
+                PerformСonfirmRightAnswerRequest();
                 LastStage++;
                 ControlsAfterRightAnswer();
             }
@@ -97,7 +92,6 @@ public partial class AppPageQuestion : System.Web.UI.Page, ICrossPageSender<User
         }
 
     }
-
     void ControlsBeforeNewQuestion()
     {
         TextBoxPlayerAnswer.Text = String.Empty;
@@ -109,7 +103,6 @@ public partial class AppPageQuestion : System.Web.UI.Page, ICrossPageSender<User
         LabelWrongAnswer.Visible = false;
         ButtonNextStep.Visible = false;
     }
-
     void ControlsQuestEnd()
     {
         LabelQuestionTitle.Visible = false;
@@ -120,12 +113,25 @@ public partial class AppPageQuestion : System.Web.UI.Page, ICrossPageSender<User
         LabelWrongAnswer.Visible = false;
         ButtonQuestionEnd.Visible = true;
     }
-
     void SetQuest()
     {
         StageModel = QuestModel.Stages[LastStage];
         LabelQuestionTitle.Text = StageModel.Title;
         LabelQuestionBody.Text = StageModel.Question;
+    }
+    private void PerformСonfirmRightAnswerRequest()
+    {
+        Dictionary<string, object> Parameters = new Dictionary<string, object>()
+        {
+            {DatabaseConst.ParameterQuestId, QuestModel.Id},
+            {DatabaseConst.ParameterUserId, UserModel.Id},
+        };
+        new DatabaseRequest1<object>()
+        {
+            Parameters = Parameters,
+            RequestType = RequestType1.Insert,
+            StoredProcedure = DatabaseConst.SPSetNewLastStage
+        }.Execute();
     }
 
     UserModel ICrossPageSender<UserModel>.GetModel()

@@ -15,6 +15,11 @@ public partial class App_Page_AdminStageEdit : System.Web.UI.Page, ICrossPageSen
     private static StageModel StageModel { get; set; }
     private static UserModel UserModel { get; set; }
     private static bool isNewStage { get; set; }
+
+    static App_Page_AdminStageEdit()
+    {
+
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         GetModelsAndSetFileds();
@@ -36,23 +41,12 @@ public partial class App_Page_AdminStageEdit : System.Web.UI.Page, ICrossPageSen
 
         if (isNewStage)
         {
-            new DatabaseRequest<object>()
-            {
-                RequestType = RequestType.AddStage,
-                QuestId = QuestModel.Id,
-                StageModel = StageModel
-            }.Execute();
+            PerformAddStageRequest();
             isNewStage = false;
         }
         else
         {
-            new DatabaseRequest<object>()
-            {
-                RequestType = RequestType.EditStage,
-                QuestId = QuestModel.Id,
-                PreviousStageOrdinal = previousStageOrdinal,
-                StageModel = StageModel
-            }.Execute();
+            PerformEditStageRequest(previousStageOrdinal);
         }
     }
     protected void ButtonDelete_Click(object sender, EventArgs e)
@@ -87,6 +81,57 @@ public partial class App_Page_AdminStageEdit : System.Web.UI.Page, ICrossPageSen
             TextBoxAnswer.Text = StageModel.Answer;
             TextBoxOrdinal.Text = StageModel.Ordinal.ToString();
         }
+    }
+    private void PerformAddStageRequest()
+    {
+        Dictionary<string, object> Parameters = new Dictionary<string, object>()
+        {
+            {DatabaseConst.ParameterStageRelatedQuestId, QuestModel.Id},
+            {DatabaseConst.ParameterStageTitle, StageModel.Title},
+            {DatabaseConst.ParameterStageQuestion, StageModel.Question},
+            {DatabaseConst.ParameterStageImage, "cap"},
+            {DatabaseConst.ParameterStageAnswer, StageModel.Answer},
+            {DatabaseConst.ParameterStageOrdinal, StageModel.Ordinal},
+        };
+        new DatabaseRequest1<object>()
+        {
+            Parameters = Parameters,
+            RequestType = RequestType1.Insert,
+            StoredProcedure = DatabaseConst.SPInsertStage
+        }.Execute();
+    }
+    private void PerformEditStageRequest(int previousStageOrdinal)
+    {
+        Dictionary<string, object> Parameters = new Dictionary<string, object>()
+        {
+            {DatabaseConst.ParameterStageRelatedQuestId, QuestModel.Id},
+            {DatabaseConst.ParameterStageTitle, StageModel.Title},
+            {DatabaseConst.ParameterStageQuestion, StageModel.Question},
+            {DatabaseConst.ParameterStageImage, "cap"},
+            {DatabaseConst.ParameterStageAnswer, StageModel.Answer},
+            {DatabaseConst.ParameterStageOrdinal, StageModel.Ordinal},
+            {DatabaseConst.ParameterStageOrdinalPrevious, previousStageOrdinal},
+        };
+        new DatabaseRequest1<object>()
+        {
+            Parameters = Parameters,
+            RequestType = RequestType1.Insert,
+            StoredProcedure = DatabaseConst.SPEditStage
+        }.Execute();
+    }
+    private void PerformDeleteStageRequest()
+    {
+        Dictionary<string, object> Parameters = new Dictionary<string, object>()
+        {
+            {DatabaseConst.ParameterStageRelatedQuestId, QuestModel.Id},
+            {DatabaseConst.ParameterStageOrdinal, StageModel.Ordinal},
+        };
+        new DatabaseRequest1<object>()
+        {
+            Parameters = Parameters,
+            RequestType = RequestType1.Insert,
+            StoredProcedure = DatabaseConst.SPDeleteStage
+        }.Execute();
     }
 
     UserModel ICrossPageSender<UserModel>.GetModel()

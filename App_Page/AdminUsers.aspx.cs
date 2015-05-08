@@ -46,11 +46,7 @@ public partial class App_Page_AdminUsers : System.Web.UI.Page, ICrossPageSender<
             Button deleteButton = new Button() { Text = "Удалить", ID = player.Id.ToString(), PostBackUrl = "~/App_Page/AdminUsers.aspx" };
             deleteButton.Click += (sender, args) =>
                 {
-                    new DatabaseRequest<object>()
-                    {
-                        RequestType = RequestType.DeleteUser,
-                        PlayerId = int.Parse((sender as Button).ID)
-                    }.Execute();
+                    PerformDeleteUserRequest();
                 };
             HtmlGenericControl br = new HtmlGenericControl("<br>");
 
@@ -77,6 +73,19 @@ public partial class App_Page_AdminUsers : System.Web.UI.Page, ICrossPageSender<
             StoredProcedure = DatabaseConst.SPGetAllUsers
         }.Execute();
         return response.Result;
+    }
+    private void PerformDeleteUserRequest()
+    {
+        Dictionary<string, object> Parameters = new Dictionary<string, object>()
+        {
+            {DatabaseConst.ParameterUserId, UserModel.Id}
+        };
+        new DatabaseRequest1<object>()
+        {
+            Parameters = Parameters,
+            RequestType = RequestType1.Insert,
+            StoredProcedure = DatabaseConst.SPDeleteUser
+        }.Execute();
     }
 
     UserModel ICrossPageSender<UserModel>.GetModel()

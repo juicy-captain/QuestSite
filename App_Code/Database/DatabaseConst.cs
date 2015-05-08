@@ -71,7 +71,17 @@ namespace Database
         public const string SPGetQuestStages = "GetQuestStages";
         public const string SPGetUserSubscriptions = "GetUserSubscriptions";
         public const string SPGetQuestSubscribers = "GetQuestSubscribers";
-        public const string SPInsertQuest = "InsertQuest";    
+        public const string SPInsertQuest = "InsertQuest";
+        public const string SPInsertStage = "InsertStage";
+        public const string SPEditStage = "EditStage";
+        public const string SPDeleteStage = "DeleteStage";
+        public const string SPEditQuest = "EditQuest";
+        public const string SPDeleteQuest = "DeleteQuest";
+        public const string SPDeleteSubscription = "DeleteSubscription";
+        public const string SPEditUser = "EditUser";
+        public const string SPDeleteUser = "DeleteUser";
+        public const string SPSetNewLastStage = "SetNewLastStage";
+ 
     }
 
     public enum SubscriptionState

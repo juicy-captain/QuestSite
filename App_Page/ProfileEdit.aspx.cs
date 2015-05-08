@@ -37,6 +37,18 @@ public partial class App_Page_ProfileEdit : System.Web.UI.Page, ICrossPageSender
             }
         }
     }
+    protected void ButtonSaveChanges_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            UserModel = CreatePlayer();
+            PerformProfileUpdateRequest();
+        }
+        catch (FileFormatException)
+        {
+            LabelIncompatibleImageType.Visible = true;
+        }
+    }
 
     private UserModel CreatePlayer()
     {
@@ -60,7 +72,6 @@ public partial class App_Page_ProfileEdit : System.Web.UI.Page, ICrossPageSender
         };
         return editedUserModel;
     }
-
     private string SaveAvatar()
     {
         if (AvatarUpload.HasFile)
@@ -82,24 +93,27 @@ public partial class App_Page_ProfileEdit : System.Web.UI.Page, ICrossPageSender
             return ServerConst.DefaultAvatarPath;
         }
     }
-
-    protected void ButtonSaveChanges_Click(object sender, EventArgs e)
+    private void PerformProfileUpdateRequest()
     {
-        try
+        Dictionary<string, object> Parameters = new Dictionary<string, object>()
         {
-            UserModel = CreatePlayer();
-            new DatabaseRequest<Object>()
-            {
-                RequestType = RequestType.UpdateProfile,
-                UserModel = UserModel
-            }.Execute();
-            Server.Transfer("~/App_Page/Profile.aspx", true);
-        }
-        catch (FileFormatException)
+            {DatabaseConst.ParameterId, UserModel.Id},
+            {DatabaseConst.ParameterNickName, UserModel.NickName},
+            {DatabaseConst.ParameterFirstName, UserModel.FirstName},
+            {DatabaseConst.ParameterSecondName, UserModel.SecondName},
+            {DatabaseConst.ParameterPassword, UserModel.Password},
+            {DatabaseConst.ParameterBirthDate, UserModel.BirthDate},
+            {DatabaseConst.ParameterAvatarPath, UserModel.AvatarPath},
+            {DatabaseConst.ParameterGender, (int)UserModel.Gender},
+        };
+        new DatabaseRequest1<object>()
         {
-            LabelIncompatibleImageType.Visible = true;
-        }
+            Parameters = Parameters,
+            RequestType = RequestType1.Insert,
+            StoredProcedure = DatabaseConst.SPEditUser
+        }.Execute();
     }
+
 
     UserModel ICrossPageSender<UserModel>.GetModel()
     {

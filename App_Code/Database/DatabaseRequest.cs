@@ -99,31 +99,7 @@ namespace Database
                         break;
                     case RequestType.СonfirmRightAnswer:
                         DatabaseMethod.СonfirmRightAnswer(connection, QuestId, PlayerId);
-                        break;
-                    case RequestType.DeleteUser:
-                        DatabaseMethod.DeleteUser(connection, PlayerId);
-                        break;
-                    case RequestType.UpdateProfile:
-                        DatabaseMethod.EditProfile(connection, UserModel);
-                        break;
-                    case RequestType.UnsubscribeUserForQuest:
-                        DatabaseMethod.Unsubscribe(connection, QuestId, PlayerId);
-                        break;
-                    case RequestType.DeleteQuest:
-                        DatabaseMethod.DeleteQuest(connection, QuestId);
-                        break;
-                    case RequestType.EditQuest:
-                        DatabaseMethod.EditQuest(connection, QuestModel);
-                        break;
-                    case RequestType.DeleteStage:
-                        DatabaseMethod.DeleteStage(connection, QuestId, StageOrdinal);
-                        break;
-                    case RequestType.EditStage:
-                        DatabaseMethod.EditStage(connection, StageModel, QuestId, PreviousStageOrdinal);
-                        break;
-                    case RequestType.AddStage:
-                        DatabaseMethod.AddStage(connection, StageModel, QuestId);
-                        break;                       
+                        break;     
                 }
             }
             return databaseResponse;
