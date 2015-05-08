@@ -36,35 +36,6 @@ namespace Database
             return databaseResponse;
         }
 
-        public static DatabaseResponse<List<QuestModel>> GetAllQuests(SqlConnection connection)
-        {
-            SqlCommand getQuestsCommand = connection.CreateCommand();
-            getQuestsCommand.CommandType = CommandType.StoredProcedure;
-            getQuestsCommand.CommandText = "GetAllQuests";
-            SqlDataReader dataReader = getQuestsCommand.ExecuteReader();
-
-            DatabaseResponse<List<QuestModel>> databaseResponse = new DatabaseResponse<List<QuestModel>>()
-            {
-                Result = QuestModel.ProcessBatch(dataReader)
-            };
-            return databaseResponse;
-        }
-
-        public static DatabaseResponse<List<StageModel>> GetStages(SqlConnection connection, int questId)
-        {
-            SqlCommand getStagesCommand = connection.CreateCommand();
-            getStagesCommand.CommandType = CommandType.StoredProcedure;
-            getStagesCommand.CommandText = "GetQuestStages";
-            getStagesCommand.Parameters.AddWithValue(DatabaseConst.ParameterStageRelatedQuestId, questId);
-            SqlDataReader dataReader = getStagesCommand.ExecuteReader();
-
-            DatabaseResponse<List<StageModel>> databaseResponse = new DatabaseResponse<List<StageModel>>()
-            {
-                Result = StageModel.ProcessBatch(dataReader)
-            };
-            return databaseResponse;
-        }
-
         public static void Register(SqlConnection connection, UserModel user)
         {
             SqlCommand registerCommand = connection.CreateCommand();
@@ -97,36 +68,6 @@ namespace Database
                 //ignored
             }
 
-        }
-
-        public static DatabaseResponse<List<QuestModel>> GetUserSubscriptions(SqlConnection connection, int userId)
-        {
-            SqlCommand getSubscriptions = connection.CreateCommand();
-            getSubscriptions.CommandType = CommandType.StoredProcedure;
-            getSubscriptions.CommandText = "GetUserSubscriptions";
-            getSubscriptions.Parameters.AddWithValue(DatabaseConst.ParameterUserId, userId);
-            SqlDataReader dataReader = getSubscriptions.ExecuteReader();
-
-            DatabaseResponse<List<QuestModel>> databaseResponse = new DatabaseResponse<List<QuestModel>>()
-            {
-                Result = QuestModel.ProcessBatch(dataReader)
-            };
-            return databaseResponse;
-        }
-
-        public static DatabaseResponse<List<UserModel>> GetQuestSubscribers(SqlConnection connection, int questId)
-        {
-            SqlCommand getSubscribers = connection.CreateCommand();
-            getSubscribers.CommandType = CommandType.StoredProcedure;
-            getSubscribers.CommandText = "GetQuestSubscribers";
-            getSubscribers.Parameters.AddWithValue(DatabaseConst.ParameterQuestId, questId);
-            SqlDataReader dataReader = getSubscribers.ExecuteReader();
-
-            DatabaseResponse<List<UserModel>> databaseResponse = new DatabaseResponse<List<UserModel>>()
-            {
-                Result = UserModel.ProcessBatch(dataReader)
-            };
-            return databaseResponse;
         }
 
         public static DatabaseResponse<SubscriptionState> CheckSubscription(SqlConnection connection, int questId, int userId, int numOfStages)

@@ -15,10 +15,20 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
 {
     private static UserModel UserModel { get; set; }
     private static QuestModel QuestModel { get; set; }
+    private static List<UserModel> Subscribers { get; set; }
     private static bool isUserLoggedIn { get { return isLoggedIn; } set { isLoggedIn = value; } }
 
     private static bool isLoggedIn = false;
+    private static IProcessor<List<StageModel>> ProcessorStages { get; set; }
+    private static IProcessor<List<UserModel>> ProcessorSubscribers { get; set; }
+    private static Dictionary<string, string> ParametersStages { get; set; }
+    private static Dictionary<string, string> ParametersSubscribers { get; set; }
 
+    static App_Page_QuestDetails()
+    {
+        ProcessorStages = new StageBatchProcessor();
+        ProcessorSubscribers = new SubscribersBatchProcessor();
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         GetPlyaerInfo();
@@ -40,8 +50,6 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
             SetUpActionButton();
         }
     }
-
-
     private void GetPlayerProfile()
     {
         if (PreviousPage != null && PreviousPage is ICrossPageSender<UserModel>)
@@ -60,7 +68,6 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
             header.Controls.Add(linkToProfilePage);
         }
     }
-
     private void GetPlyaerInfo()
     {
         if (PreviousPage is ICrossPageSender<UserModel>)
@@ -70,42 +77,30 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
             isUserLoggedIn = true;
         }
     }
-
     private void AddQuestDescription()
     {
-        DatabaseResponse<List<StageModel>> stagesResponse = new DatabaseRequest<List<StageModel>>()
-        {
-            RequestType = RequestType.GetStages,
-            QuestId = QuestModel.Id
-        }.Execute();
-
-        QuestModel.Stages = stagesResponse.Result;
+        PerformGetStagesRequest();
 
         Label description = new Label()
         {
             Text = String.Format("{0}<br>{1}<br>Дата начала: {2}<br>Дата окончания: {3}<br>Уровень сложности: {4}<br>Количество этапов: {5}<br>",
             QuestModel.Name, QuestModel.Description, new DateTime(QuestModel.StartDate), new DateTime(QuestModel.ExpirationDate),
-            QuestModel.ComplexityLevel, stagesResponse.Result.Count)
+            QuestModel.ComplexityLevel, QuestModel.Stages.Count)
         };
         QuestDetails.Controls.Add(description);
     }
-
     private void PopulateSubscribersList()
     {
-        DatabaseResponse<List<UserModel>> subscribersResponse = new DatabaseRequest<List<UserModel>>()
-        {
-            RequestType = Database.RequestType.GetQuestSubscribers,
-            QuestId = QuestModel.Id
-        }.Execute();
+        PerformGetQuestSubscribersRequest();
 
-        if (subscribersResponse.Result != null)
+        if (Subscribers != null)
         {
             HtmlGenericControl subscribersDiv = new HtmlGenericControl("div");
             Label subscribersHeaderText = new Label() { Text = "Подписчики:" };
             subscribersDiv.Controls.Add(subscribersHeaderText);
 
             HtmlGenericControl subscribersList = new HtmlGenericControl("ul");
-            foreach (UserModel player in subscribersResponse.Result)
+            foreach (UserModel player in Subscribers)
             {
                 HtmlGenericControl listItem = new HtmlGenericControl("li");
                 listItem.Controls.Add(new Label() { Text = player.ToString() });
@@ -115,7 +110,6 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
             QuestDetails.Controls.Add(subscribersDiv);
         }
     }
-
     private void SetUpActionButton()
     {
         DatabaseResponse<SubscriptionState> databaseResponse = new DatabaseRequest<SubscriptionState>()
@@ -174,6 +168,38 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
             };
             QuestDetails.Controls.Add(unsubscribeButton);
         }
+    }
+    private void PerformGetStagesRequest()
+    {
+        ParametersStages = new Dictionary<string, string>()
+        {
+            {DatabaseConst.ParameterStageRelatedQuestId, QuestModel.Id.ToString()}
+        };
+        DatabaseResponse<List<StageModel>> databaseResponse = new DatabaseRequest1<List<StageModel>>()
+        {
+            Parameters = ParametersStages,
+            Processor = ProcessorStages,
+            RequestType = RequestType1.Query,
+            StoredProcedure = DatabaseConst.SPGetQuestStages
+        }.Execute();
+
+        QuestModel.Stages = databaseResponse.Result;
+    }
+    private void PerformGetQuestSubscribersRequest()
+    {
+        ParametersSubscribers = new Dictionary<string, string>()
+        {
+            {DatabaseConst.ParameterQuestId, QuestModel.Id.ToString()}
+        };
+        DatabaseResponse<List<UserModel>> subscribersResponse = new DatabaseRequest1<List<UserModel>>()
+        {
+            Parameters = ParametersSubscribers,
+            Processor = ProcessorSubscribers,
+            RequestType = RequestType1.Query,
+            StoredProcedure = DatabaseConst.SPGetQuestSubscribers
+        }.Execute();
+
+        Subscribers = subscribersResponse.Result;
     }
 
     UserModel ICrossPageSender<UserModel>.GetModel()

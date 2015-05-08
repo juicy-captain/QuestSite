@@ -26,22 +26,4 @@ public class StageModel
         Ordinal = ordinal;
 	}
 
-    public static List<StageModel> ProcessBatch(SqlDataReader dataReader)
-    {
-        List<StageModel> stageModels = new List<StageModel>();
-        if (dataReader.HasRows)
-        {
-            while (dataReader.Read())
-            {
-                string title = DatabaseUtil.GetString(dataReader, 0);
-                string question = DatabaseUtil.GetString(dataReader, 1);
-                string imagePath = DatabaseUtil.GetString(dataReader, 2);
-                string answer = DatabaseUtil.GetString(dataReader, 3);
-                int ordinal = dataReader.GetInt32(4);
-                stageModels.Add(new StageModel(title, question, imagePath, answer, ordinal));
-            }
-        }
-        return stageModels;
-    }
-
 }

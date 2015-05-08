@@ -67,6 +67,10 @@ namespace Database
 
         //Stored Procedures
         public const string SPGetAllUsers = "GetAllUsers";
+        public const string SPGetAllQuests = "GetAllQuests";
+        public const string SPGetQuestStages = "GetQuestStages";
+        public const string SPGetUserSubscriptions = "GetUserSubscriptions";
+        public const string SPGetQuestSubscribers = "GetQuestSubscribers";
     }
 
     public enum SubscriptionState

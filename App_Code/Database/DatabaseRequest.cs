@@ -85,20 +85,8 @@ namespace Database
                     case RequestType.RegisterUser:
                         DatabaseMethod.Register(connection, UserModel);
                         break;
-                    case RequestType.GetAllQuests:
-                        databaseResponse = DatabaseMethod.GetAllQuests(connection) as DatabaseResponse<ResponseType>;
-                        break;
-                    case RequestType.GetStages:
-                        databaseResponse = DatabaseMethod.GetStages(connection, QuestId) as DatabaseResponse<ResponseType>;
-                        break;
                     case RequestType.SubscribeUserForQuest:
                         DatabaseMethod.Subscribe(connection, QuestId, PlayerId);
-                        break;
-                    case RequestType.GetUserSubscriptions:
-                        databaseResponse = DatabaseMethod.GetUserSubscriptions(connection, PlayerId) as DatabaseResponse<ResponseType>;
-                        break;
-                    case RequestType.GetQuestSubscribers:
-                        databaseResponse = DatabaseMethod.GetQuestSubscribers(connection, QuestId) as DatabaseResponse<ResponseType>;
                         break;
                     case RequestType.CheckSubscription:
                         databaseResponse = DatabaseMethod.CheckSubscription(connection, QuestId, PlayerId, NumberOfStages) as DatabaseResponse<ResponseType>;

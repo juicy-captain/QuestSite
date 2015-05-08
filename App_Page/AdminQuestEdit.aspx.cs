@@ -10,6 +10,7 @@ using Database;
 using Model;
 using Interface;
 using Const;
+using Processor;
 
 public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
     ICrossPageSender<UserModel>,
@@ -21,6 +22,13 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
     private static StageModel SelectedStageModel { get; set; }
     private static List<StageModel> Stages { get; set; }
     private static bool isNewStage { get; set; }
+    private static IProcessor<List<StageModel>> Processor { get; set; }
+    private static Dictionary<string, string> Parameters { get; set; }
+
+    static App_Page_AdminQuestEdit()
+    {
+        Processor = new StageBatchProcessor();
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         PopulateQuestInfo();
@@ -54,6 +62,10 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
             RequestType = RequestType.DeleteQuest,
             QuestId = QuestModel.Id
         }.Execute();
+    }
+    protected void ButtonAddNewStage_Click(object sender, EventArgs e)
+    {
+        SelectedStageModel = null;
     }
 
     private void CreateUpdatedQuest()
@@ -149,13 +161,7 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
     {
         if (QuestModel != null)
         {
-            DatabaseResponse<List<StageModel>> databaseResponse = new DatabaseRequest<List<StageModel>>()
-            {
-                RequestType = Database.RequestType.GetStages,
-                QuestId = QuestModel.Id
-            }.Execute();
-
-            QuestModel.Stages = databaseResponse.Result;
+            PerformGetStagesRequest();
 
             foreach (StageModel stage in QuestModel.Stages)
             {
@@ -197,25 +203,34 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
             }
         }
     }
+    private void PerformGetStagesRequest()
+    {
+        Parameters = new Dictionary<string, string>()
+        {
+            {DatabaseConst.ParameterStageRelatedQuestId, QuestModel.Id.ToString()}
+        };
+        DatabaseResponse<List<StageModel>> databaseResponse = new DatabaseRequest1<List<StageModel>>()
+        {
+            Parameters = Parameters,
+            Processor = Processor,
+            RequestType = RequestType1.Query,
+            StoredProcedure = DatabaseConst.SPGetQuestStages
+        }.Execute();
+
+        QuestModel.Stages = databaseResponse.Result;
+    }
 
     UserModel ICrossPageSender<UserModel>.GetModel()
     {
         return UserModel;
     }
-
     StageModel ICrossPageSender<StageModel>.GetModel()
     {
         return SelectedStageModel;
     }
-
-
     QuestModel ICrossPageSender<QuestModel>.GetModel()
     {
         return QuestModel;
-    }
-    protected void ButtonAddNewStage_Click(object sender, EventArgs e)
-    {
-        SelectedStageModel = null;
     }
 
 }
