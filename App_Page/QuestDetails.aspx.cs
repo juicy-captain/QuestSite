@@ -21,11 +21,13 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
     private static bool isLoggedIn = false;
     private static IProcessor<List<StageModel>> ProcessorStages { get; set; }
     private static IProcessor<List<UserModel>> ProcessorSubscribers { get; set; }
+    private static IProcessor<int> ProcessorSubscriptionState { get; set; }
 
     static App_Page_QuestDetails()
     {
         ProcessorStages = new StageBatchProcessor();
         ProcessorSubscribers = new SubscribersBatchProcessor();
+        ProcessorSubscriptionState = new SubscriptionStateProcessor();
     }
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -45,7 +47,7 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
         PopulateSubscribersList();
         if (isUserLoggedIn)
         {
-            SetUpActionButton();
+            SetUpActionButtons();
         }
     }
     private void GetPlayerProfile()
@@ -108,16 +110,9 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
             QuestDetails.Controls.Add(subscribersDiv);
         }
     }
-    private void SetUpActionButton()
+    private void SetUpActionButtons()
     {
-        DatabaseResponse<SubscriptionState> databaseResponse = new DatabaseRequest<SubscriptionState>()
-        {
-            RequestType = RequestType.CheckSubscription,
-            PlayerId = UserModel.Id,
-            QuestId = QuestModel.Id,
-            NumberOfStages = QuestModel.Stages.Count
-        }.Execute();
-        SubscriptionState subscriptionState = databaseResponse.Result;
+        SubscriptionState subscriptionState = PerformSubscriptionStateRequest();
 
         string actionButtonText = null;
         string actionButtonPostBackUrl = null;
@@ -143,14 +138,17 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
         LinkButton actionButton = new LinkButton() { Text = actionButtonText, PostBackUrl = actionButtonPostBackUrl };
         actionButton.Click += (sender, args) =>
             {
-                new DatabaseRequest<Object>()
-                {
-                    RequestType = RequestType.SubscribeUserForQuest,
-                    PlayerId = UserModel.Id,
-                    QuestId = QuestModel.Id
-                }.Execute();
+                PerformSubscribeForQuestRequest();
             };
-        QuestDetails.Controls.Add(actionButton);
+
+        //if there is no stages in quest but user subscribed, he/she isn't able to start a quest
+        if (subscriptionState == SubscriptionState.NotStarted)
+        {
+            if (QuestModel.Stages.Count != 0)
+            {
+                QuestDetails.Controls.Add(actionButton);
+            }
+        }
 
         if (subscriptionState != SubscriptionState.NotSubscribed)
         {
@@ -168,11 +166,11 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
         {
             {DatabaseConst.ParameterStageRelatedQuestId, QuestModel.Id}
         };
-        DatabaseResponse<List<StageModel>> databaseResponse = new DatabaseRequest1<List<StageModel>>()
+        DatabaseResponse<List<StageModel>> databaseResponse = new DatabaseRequest<List<StageModel>>()
         {
             Parameters = ParametersStages,
             Processor = ProcessorStages,
-            RequestType = RequestType1.Query,
+            RequestType = RequestType.Query,
             StoredProcedure = DatabaseConst.SPGetQuestStages
         }.Execute();
 
@@ -184,11 +182,11 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
         {
             {DatabaseConst.ParameterQuestId, QuestModel.Id}
         };
-        DatabaseResponse<List<UserModel>> subscribersResponse = new DatabaseRequest1<List<UserModel>>()
+        DatabaseResponse<List<UserModel>> subscribersResponse = new DatabaseRequest<List<UserModel>>()
         {
             Parameters = ParametersSubscribers,
             Processor = ProcessorSubscribers,
-            RequestType = RequestType1.Query,
+            RequestType = RequestType.Query,
             StoredProcedure = DatabaseConst.SPGetQuestSubscribers
         }.Execute();
 
@@ -201,11 +199,59 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
             {DatabaseConst.ParameterQuestId, QuestModel.Id},
             {DatabaseConst.ParameterUserId, UserModel.Id},
         };
-        new DatabaseRequest1<object>()
+        new DatabaseRequest<object>()
         {
             Parameters = Parameters,
-            RequestType = RequestType1.Insert,
+            RequestType = RequestType.Insert,
             StoredProcedure = DatabaseConst.SPDeleteSubscription
+        }.Execute();
+    }
+    private SubscriptionState PerformSubscriptionStateRequest()
+    {
+        Dictionary<string, object> Parameters = new Dictionary<string, object>()
+        {
+            {DatabaseConst.ParameterQuestId, QuestModel.Id},
+            {DatabaseConst.ParameterUserId, UserModel.Id},
+        };
+        DatabaseResponse<int> databaseResponse = new DatabaseRequest<int>()
+        {
+            Parameters = Parameters,
+            Processor = ProcessorSubscriptionState,
+            RequestType = RequestType.Query,
+            StoredProcedure = DatabaseConst.SPCheckSubscription
+        }.Execute();
+
+        int stageNumber = databaseResponse.Result;
+        SubscriptionState subscriptionState = SubscriptionState.NotSubscribed;
+        if (stageNumber != DatabaseConst.EmptyData)
+        {
+            if (stageNumber == 0)
+            {
+                subscriptionState = SubscriptionState.NotStarted;
+            }
+            else if (stageNumber == QuestModel.Stages.Count)
+            {
+                subscriptionState = SubscriptionState.Finished;
+            }
+            else
+            {
+                subscriptionState = SubscriptionState.InProgress;
+            }
+        }
+        return subscriptionState;
+    }
+    private void PerformSubscribeForQuestRequest()
+    {
+        Dictionary<string, object> Parameters = new Dictionary<string, object>()
+        {
+            {DatabaseConst.ParameterQuestId, QuestModel.Id},
+            {DatabaseConst.ParameterUserId, UserModel.Id},
+        };
+        new DatabaseRequest<object>()
+        {
+            Parameters = Parameters,
+            RequestType = RequestType.Query,
+            StoredProcedure = DatabaseConst.SPInsertSubscription
         }.Execute();
     }
 

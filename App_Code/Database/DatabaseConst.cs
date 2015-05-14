@@ -81,7 +81,14 @@ namespace Database
         public const string SPEditUser = "EditUser";
         public const string SPDeleteUser = "DeleteUser";
         public const string SPSetNewLastStage = "SetNewLastStage";
- 
+        public const string SPGetAnswer = "GetAnswer";
+        public const string SPGetLastStage = "GetLastStage";
+        public const string SPCheckSubscription = "CheckSubscription";
+        public const string SPInsertSubscription = "InsertSubscription";
+        public const string SPInsertUser = "InsertUser";
+        public const string SPAuthorizeUser = "AuthorizeUser";
+
+        public const int EmptyData = -1;
     }
 
     public enum SubscriptionState

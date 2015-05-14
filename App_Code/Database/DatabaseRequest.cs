@@ -15,31 +15,6 @@ namespace Database
 {
     public enum RequestType
     {
-        RegisterUser,
-        AuthorizeUser,
-        GetAllQuests,
-        GetStages,
-        SubscribeUserForQuest,
-        GetUserSubscriptions,
-        GetQuestSubscribers,
-        CheckSubscription,
-        GetLastStage,
-        CheckAnswer,
-        СonfirmRightAnswer,
-        DeleteUser,
-        UpdateProfile,
-        GetAllUsers,
-        UnsubscribeUserForQuest,
-        DeleteQuest,
-        EditQuest,
-        DeleteStage,
-        EditStage,
-        AddStage,
-        AddQuest
-    }
-
-    public enum RequestType1
-    {
         Insert,
         Query
     }
@@ -55,63 +30,9 @@ namespace Database
     /// </summary>
     public class DatabaseRequest<ResponseType>
     {
-        public RequestType RequestType { get; set; }
-        public string NickName { get; set; }
-        public string Password { get; set; }
-        public UserModel UserModel { get; set; }
-        public UserModel EditedUserModel { get; set; }
-        public int PlayerId { get; set; }
-        public int QuestId { get; set; }
-        public int StageOrdinal { get; set; }
-        public string Answer { get; set; }
-        public int NumberOfStages { get; set; }
-        public QuestModel QuestModel { get; set; }
-        public StageModel StageModel { get; set; }
-        public int PreviousStageOrdinal { get; set; }
-
-        public DatabaseRequest() { }
-
-        public DatabaseResponse<ResponseType> Execute()
-        {
-            DatabaseResponse<ResponseType> databaseResponse = null;
-            using (SqlConnection connection = new SqlConnection(DatabaseUtil.GetConnectionString()))
-            {
-                connection.Open();
-                switch (RequestType)
-                {
-                    case RequestType.AuthorizeUser:
-                        databaseResponse = DatabaseMethod.Authorize(connection, NickName, Password) as DatabaseResponse<ResponseType>;
-                        break;
-                    case RequestType.RegisterUser:
-                        DatabaseMethod.Register(connection, UserModel);
-                        break;
-                    case RequestType.SubscribeUserForQuest:
-                        DatabaseMethod.Subscribe(connection, QuestId, PlayerId);
-                        break;
-                    case RequestType.CheckSubscription:
-                        databaseResponse = DatabaseMethod.CheckSubscription(connection, QuestId, PlayerId, NumberOfStages) as DatabaseResponse<ResponseType>;
-                        break;
-                    case RequestType.GetLastStage:
-                        databaseResponse = DatabaseMethod.GetLastStage(connection, QuestId, PlayerId) as DatabaseResponse<ResponseType>;
-                        break;
-                    case RequestType.CheckAnswer:
-                        databaseResponse = DatabaseMethod.CheckAnswer(connection, QuestId, StageOrdinal, Answer) as DatabaseResponse<ResponseType>;
-                        break;
-                    case RequestType.СonfirmRightAnswer:
-                        DatabaseMethod.СonfirmRightAnswer(connection, QuestId, PlayerId);
-                        break;     
-                }
-            }
-            return databaseResponse;
-        }
-
-    }
-
-    public class DatabaseRequest1<ResponseType>
-    {
         public IProcessor<ResponseType> Processor { get; set; }
         public Dictionary<string, object> Parameters { get; set; }
-        public RequestType1 RequestType { get; set; }
+        public RequestType RequestType { get; set; }
         public string StoredProcedure { get; set; }
 
         public DatabaseResponse<ResponseType> Execute()
@@ -132,14 +53,22 @@ namespace Database
                 }
 
                 connection.Open();
-                switch (RequestType)
+                try
                 {
-                    case RequestType1.Insert:
-                        command.ExecuteNonQuery();
-                        break;
-                    case RequestType1.Query:
-                        databaseResponse.Result = Processor.Process(command.ExecuteReader());
-                        break;
+                    switch (RequestType)
+                    {
+                        case RequestType.Insert:
+                            command.ExecuteNonQuery();
+                            break;
+                        case RequestType.Query:
+                            databaseResponse.Result = Processor.Process(command.ExecuteReader());
+                            break;
+                    }
+                }
+                catch (Exception)
+                {
+                    //ignored
+                    //primarily for InsertSubscription request, exception will be thrown in case user already subscribed for request
                 }
             }
             return databaseResponse;

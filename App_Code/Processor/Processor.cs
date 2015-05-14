@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using Model;
 using Interface;
 using Util;
+using Database;
 
 namespace Processor
 {
@@ -135,6 +136,58 @@ namespace Processor
             return models;
         }
 
+    }
+
+    public class GetAnswerProcessor : IProcessor<string>
+    {
+        public string Process(SqlDataReader dataReader)
+        {
+            return dataReader.GetString(0);
+        }
+    }
+
+    public class GetLastStageOrdinalProcessor : IProcessor<int>
+    {
+        public int Process(SqlDataReader dataReader)
+        {
+            return dataReader.GetInt32(0);
+        }
+    }
+
+    public class SubscriptionStateProcessor : IProcessor<int>
+    {
+        public int Process(SqlDataReader dataReader)
+        {
+            if (dataReader.HasRows)
+            {
+                return dataReader.GetInt32(2);
+            }
+            else
+            {
+                return DatabaseConst.EmptyData;
+            }
+        }
+    }
+
+    public class UserAuthProcessor : IProcessor<UserModel>
+    {
+        public UserModel Process(SqlDataReader dataReader)
+        {
+            UserModel user = null;
+            while (dataReader.Read())
+            {
+                int id = dataReader.GetInt32(0);
+                string nickName = dataReader.GetString(1);
+                string firstName = dataReader.GetString(2);
+                string secondName = dataReader.GetString(3);
+                string password = dataReader.GetString(4);
+                long birthDate = dataReader.GetInt64(5);
+                string avatarPath = dataReader.GetString(6);
+                Sex gender = dataReader.GetBoolean(7) ? Sex.Male : Sex.Female;
+                user = new UserModel(id, nickName,firstName,secondName,password,birthDate,avatarPath,gender);
+            }
+            return user;
+        }
     }
 
 }

@@ -29,11 +29,7 @@ public partial class AppPageRegistration : System.Web.UI.Page, ICrossPageSender<
         try
         {
             NewlyCreatedPlayer = CreatePlayer();
-            new DatabaseRequest<Object>()
-            {
-                RequestType = RequestType.RegisterUser,
-                UserModel = NewlyCreatedPlayer
-            }.Execute();
+            PerformRegisterRequest();
             Server.Transfer("~/App_Page/Profile.aspx", true);
         }
         catch (FileFormatException)
@@ -60,7 +56,6 @@ public partial class AppPageRegistration : System.Web.UI.Page, ICrossPageSender<
 
         return new UserModel(nickName, firstName, secondName, password, birthDate, avatarPath, gender);
     }
-
     private string SaveAvatar()
     {
         if (AvatarUpload.HasFile)
@@ -81,6 +76,26 @@ public partial class AppPageRegistration : System.Web.UI.Page, ICrossPageSender<
         {
             return ServerConst.DefaultAvatarPath;
         }
+    }
+    private void PerformRegisterRequest()
+    {
+        Dictionary<string,object> Parameters = new Dictionary<string,object>()
+        {
+            {DatabaseConst.ParameterId, NewlyCreatedPlayer.Id},
+            {DatabaseConst.ParameterNickName, NewlyCreatedPlayer.NickName},
+            {DatabaseConst.ParameterFirstName, NewlyCreatedPlayer.FirstName},
+            {DatabaseConst.ParameterSecondName, NewlyCreatedPlayer.SecondName},
+            {DatabaseConst.ParameterPassword, NewlyCreatedPlayer.Password},
+            {DatabaseConst.ParameterBirthDate, NewlyCreatedPlayer.BirthDate},
+            {DatabaseConst.ParameterAvatarPath, NewlyCreatedPlayer.AvatarPath},
+            {DatabaseConst.ParameterGender, (int)NewlyCreatedPlayer.Gender},
+        };
+        new DatabaseRequest<object>()
+        {
+            Parameters = Parameters,
+            RequestType = RequestType.Insert,
+            StoredProcedure = DatabaseConst.SPInsertUser
+        }.Execute();
     }
 
 

@@ -100,10 +100,10 @@ public partial class App_Page_AdminQuests : System.Web.UI.Page, ICrossPageSender
     }
     private void PerformGetAllQuestsRequest()
     {
-        DatabaseResponse<List<QuestModel>> databaseResponse = new DatabaseRequest1<List<QuestModel>>()
+        DatabaseResponse<List<QuestModel>> databaseResponse = new DatabaseRequest<List<QuestModel>>()
         {
             Processor = Processor,
-            RequestType = RequestType1.Query,
+            RequestType = RequestType.Query,
             StoredProcedure = DatabaseConst.SPGetAllQuests
         }.Execute();
         QuestModels = databaseResponse.Result;

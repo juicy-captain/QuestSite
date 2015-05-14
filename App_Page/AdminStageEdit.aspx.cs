@@ -51,12 +51,7 @@ public partial class App_Page_AdminStageEdit : System.Web.UI.Page, ICrossPageSen
     }
     protected void ButtonDelete_Click(object sender, EventArgs e)
     {
-        new DatabaseRequest<object>()
-        {
-            RequestType = RequestType.DeleteStage,
-            QuestId = QuestModel.Id,
-            StageOrdinal = StageModel.Ordinal
-        }.Execute();
+        PerformDeleteStageRequest();
     }
 
     private void GetModelsAndSetFileds()
@@ -93,10 +88,10 @@ public partial class App_Page_AdminStageEdit : System.Web.UI.Page, ICrossPageSen
             {DatabaseConst.ParameterStageAnswer, StageModel.Answer},
             {DatabaseConst.ParameterStageOrdinal, StageModel.Ordinal},
         };
-        new DatabaseRequest1<object>()
+        new DatabaseRequest<object>()
         {
             Parameters = Parameters,
-            RequestType = RequestType1.Insert,
+            RequestType = RequestType.Insert,
             StoredProcedure = DatabaseConst.SPInsertStage
         }.Execute();
     }
@@ -112,10 +107,10 @@ public partial class App_Page_AdminStageEdit : System.Web.UI.Page, ICrossPageSen
             {DatabaseConst.ParameterStageOrdinal, StageModel.Ordinal},
             {DatabaseConst.ParameterStageOrdinalPrevious, previousStageOrdinal},
         };
-        new DatabaseRequest1<object>()
+        new DatabaseRequest<object>()
         {
             Parameters = Parameters,
-            RequestType = RequestType1.Insert,
+            RequestType = RequestType.Insert,
             StoredProcedure = DatabaseConst.SPEditStage
         }.Execute();
     }
@@ -126,10 +121,10 @@ public partial class App_Page_AdminStageEdit : System.Web.UI.Page, ICrossPageSen
             {DatabaseConst.ParameterStageRelatedQuestId, QuestModel.Id},
             {DatabaseConst.ParameterStageOrdinal, StageModel.Ordinal},
         };
-        new DatabaseRequest1<object>()
+        new DatabaseRequest<object>()
         {
             Parameters = Parameters,
-            RequestType = RequestType1.Insert,
+            RequestType = RequestType.Insert,
             StoredProcedure = DatabaseConst.SPDeleteStage
         }.Execute();
     }

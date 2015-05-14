@@ -66,10 +66,10 @@ public partial class App_Page_AdminUsers : System.Web.UI.Page, ICrossPageSender<
     }
     private List<UserModel> PerformGetAllUsersRequest()
     {
-        DatabaseResponse<List<UserModel>> response = new DatabaseRequest1<List<UserModel>>()
+        DatabaseResponse<List<UserModel>> response = new DatabaseRequest<List<UserModel>>()
         {
             Processor = Processor,
-            RequestType = RequestType1.Query,
+            RequestType = RequestType.Query,
             StoredProcedure = DatabaseConst.SPGetAllUsers
         }.Execute();
         return response.Result;
@@ -80,10 +80,10 @@ public partial class App_Page_AdminUsers : System.Web.UI.Page, ICrossPageSender<
         {
             {DatabaseConst.ParameterUserId, UserModel.Id}
         };
-        new DatabaseRequest1<object>()
+        new DatabaseRequest<object>()
         {
             Parameters = Parameters,
-            RequestType = RequestType1.Insert,
+            RequestType = RequestType.Insert,
             StoredProcedure = DatabaseConst.SPDeleteUser
         }.Execute();
     }

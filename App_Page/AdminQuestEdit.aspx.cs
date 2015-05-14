@@ -196,11 +196,11 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
         {
             {DatabaseConst.ParameterStageRelatedQuestId, QuestModel.Id}
         };
-        DatabaseResponse<List<StageModel>> databaseResponse = new DatabaseRequest1<List<StageModel>>()
+        DatabaseResponse<List<StageModel>> databaseResponse = new DatabaseRequest<List<StageModel>>()
         {
             Parameters = ParametersStages,
             Processor = Processor,
-            RequestType = RequestType1.Query,
+            RequestType = RequestType.Query,
             StoredProcedure = DatabaseConst.SPGetQuestStages
         }.Execute();
 
@@ -216,10 +216,10 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
             {DatabaseConst.ParameterExpirationDate, QuestModel.ExpirationDate},
             {DatabaseConst.ParameterComplexityLevel, QuestModel.ComplexityLevel},
         };
-        new DatabaseRequest1<object>()
+        new DatabaseRequest<object>()
         {
             Parameters = ParametersAddQuest,
-            RequestType = RequestType1.Insert,
+            RequestType = RequestType.Insert,
             StoredProcedure = DatabaseConst.SPInsertQuest
         }.Execute();
     }
@@ -234,10 +234,10 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
             {DatabaseConst.ParameterExpirationDate, QuestModel.ExpirationDate},
             {DatabaseConst.ParameterComplexityLevel, QuestModel.ComplexityLevel},
         };
-        new DatabaseRequest1<object>()
+        new DatabaseRequest<object>()
         {
             Parameters = Parameters,
-            RequestType = RequestType1.Insert,
+            RequestType = RequestType.Insert,
             StoredProcedure = DatabaseConst.SPEditQuest
         }.Execute();
     }
@@ -247,10 +247,10 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
         {
             {DatabaseConst.ParameterQuestId, QuestModel.Id}
         };
-        new DatabaseRequest1<object>()
+        new DatabaseRequest<object>()
         {
             Parameters = Parameters,
-            RequestType = RequestType1.Insert,
+            RequestType = RequestType.Insert,
             StoredProcedure = DatabaseConst.SPDeleteQuest
         }.Execute();
     }

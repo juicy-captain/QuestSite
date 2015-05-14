@@ -32,11 +32,8 @@ public partial class AppPageProfile : System.Web.UI.Page, ICrossPageSender<UserM
     }
     protected void ButtonDeleteProfile_Click(object sender, EventArgs e)
     {
-        new DatabaseRequest<Object>()
-        {
-            RequestType = RequestType.DeleteUser,
-            PlayerId = UserModel.Id
-        }.Execute();
+        PerformDeleteUserRequest();
+        Server.Transfer("~/App_Page/Default.aspx", true);
     }
     protected void ButtonLogout_Click(object sender, EventArgs e)
     {
@@ -98,14 +95,27 @@ public partial class AppPageProfile : System.Web.UI.Page, ICrossPageSender<UserM
         {
             {DatabaseConst.ParameterUserId, UserModel.Id}
         };
-        DatabaseResponse<List<QuestModel>> databaseResponse = new DatabaseRequest1<List<QuestModel>>()
+        DatabaseResponse<List<QuestModel>> databaseResponse = new DatabaseRequest<List<QuestModel>>()
         {
             Parameters = Parameters,
             Processor = Processor,
-            RequestType = RequestType1.Query,
+            RequestType = RequestType.Query,
             StoredProcedure = DatabaseConst.SPGetUserSubscriptions
         }.Execute();
         QuestModels = databaseResponse.Result;
+    }
+    private void PerformDeleteUserRequest()
+    {
+        Dictionary<string, object> Parameters = new Dictionary<string, object>()
+        {
+            {DatabaseConst.ParameterUserId, UserModel.Id}
+        };
+        new DatabaseRequest<object>()
+        {
+            Parameters = Parameters,
+            RequestType = RequestType.Insert,
+            StoredProcedure = DatabaseConst.SPDeleteUser
+        }.Execute();
     }
 
     UserModel ICrossPageSender<UserModel>.GetModel()

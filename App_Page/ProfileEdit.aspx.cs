@@ -106,10 +106,10 @@ public partial class App_Page_ProfileEdit : System.Web.UI.Page, ICrossPageSender
             {DatabaseConst.ParameterAvatarPath, UserModel.AvatarPath},
             {DatabaseConst.ParameterGender, (int)UserModel.Gender},
         };
-        new DatabaseRequest1<object>()
+        new DatabaseRequest<object>()
         {
             Parameters = Parameters,
-            RequestType = RequestType1.Insert,
+            RequestType = RequestType.Insert,
             StoredProcedure = DatabaseConst.SPEditUser
         }.Execute();
     }
