@@ -14,6 +14,7 @@
         <div id="header">
             <asp:Button ID="ButtonUsers" runat="server" Text="Пользователи" PostBackUrl="~/App_Page/AdminUsers.aspx" />
             <asp:Button ID="ButtonQuests" runat="server" Text="Квесты" PostBackUrl="~/App_Page/AdminQuests.aspx"/>
+            <asp:Button ID="ButtonLogout" runat="server" Text="Log out" PostBackUrl="~/App_Page/Default.aspx"/>
         </div>
         <div id="content">
             <asp:ContentPlaceHolder ID="ContentHolder" runat="server">

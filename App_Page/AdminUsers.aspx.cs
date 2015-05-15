@@ -13,7 +13,8 @@ using Processor;
 public partial class App_Page_AdminUsers : System.Web.UI.Page, ICrossPageSender<UserModel>
 {
     private static IProcessor<List<UserModel>> Processor { get; set; }
-    private UserModel UserModel { get; set; }
+    private static UserModel AdminModel { get; set; }
+    private static List<UserModel> UserModels { get; set; }
 
     static App_Page_AdminUsers()
     {
@@ -24,7 +25,7 @@ public partial class App_Page_AdminUsers : System.Web.UI.Page, ICrossPageSender<
         if (PreviousPage != null)
         {
             ICrossPageSender<UserModel> sourcePage = PreviousPage as ICrossPageSender<UserModel>;
-            UserModel = sourcePage.GetModel();
+            AdminModel = sourcePage.GetModel();
         }
         PopulateUsers();
     }
@@ -32,9 +33,9 @@ public partial class App_Page_AdminUsers : System.Web.UI.Page, ICrossPageSender<
     //methods for simplification logic understanding
     private void PopulateUsers()
     {
-        List<UserModel> userModels = PerformGetAllUsersRequest();
+        PerformGetAllUsersRequest();
 
-        foreach (UserModel player in userModels)
+        foreach (UserModel player in UserModels)
         {
             HtmlGenericControl div = new HtmlGenericControl("div");
             Label names = new Label() { Text = player.ToString() };
@@ -43,10 +44,12 @@ public partial class App_Page_AdminUsers : System.Web.UI.Page, ICrossPageSender<
             Label gender = new Label() { Text = genderString };
             Image avatar = new Image() { ImageUrl = player.AvatarPath };
 
-            Button deleteButton = new Button() { Text = "Удалить", ID = player.Id.ToString(), PostBackUrl = "~/App_Page/AdminUsers.aspx" };
+            Button deleteButton = new Button() { Text = "Удалить", ID = player.Id.ToString() };
             deleteButton.Click += (sender, args) =>
                 {
-                    PerformDeleteUserRequest();
+                    int userId = int.Parse((sender as Button).ID);
+                    PerformDeleteUserRequest(userId);
+                    Server.Transfer("~/App_Page/AdminUsers.aspx", true);
                 };
             HtmlGenericControl br = new HtmlGenericControl("<br>");
 
@@ -64,7 +67,7 @@ public partial class App_Page_AdminUsers : System.Web.UI.Page, ICrossPageSender<
             content.Controls.Add(div);
         }
     }
-    private List<UserModel> PerformGetAllUsersRequest()
+    private void PerformGetAllUsersRequest()
     {
         DatabaseResponse<List<UserModel>> response = new DatabaseRequest<List<UserModel>>()
         {
@@ -72,13 +75,13 @@ public partial class App_Page_AdminUsers : System.Web.UI.Page, ICrossPageSender<
             RequestType = RequestType.Query,
             StoredProcedure = DatabaseConst.SPGetAllUsers
         }.Execute();
-        return response.Result;
+        UserModels = response.Result;
     }
-    private void PerformDeleteUserRequest()
+    private void PerformDeleteUserRequest(int userId)
     {
         Dictionary<string, object> Parameters = new Dictionary<string, object>()
         {
-            {DatabaseConst.ParameterUserId, UserModel.Id}
+            {DatabaseConst.ParameterUserId, userId}
         };
         new DatabaseRequest<object>()
         {
@@ -90,7 +93,7 @@ public partial class App_Page_AdminUsers : System.Web.UI.Page, ICrossPageSender<
 
     UserModel ICrossPageSender<UserModel>.GetModel()
     {
-        return UserModel;
+        return AdminModel;
     }
 
 }

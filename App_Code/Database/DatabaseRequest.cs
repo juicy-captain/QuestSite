@@ -53,22 +53,14 @@ namespace Database
                 }
 
                 connection.Open();
-                try
+                switch (RequestType)
                 {
-                    switch (RequestType)
-                    {
-                        case RequestType.Insert:
-                            command.ExecuteNonQuery();
-                            break;
-                        case RequestType.Query:
-                            databaseResponse.Result = Processor.Process(command.ExecuteReader());
-                            break;
-                    }
-                }
-                catch (Exception)
-                {
-                    //ignored
-                    //primarily for InsertSubscription request, exception will be thrown in case user already subscribed for request
+                    case RequestType.Insert:
+                        command.ExecuteNonQuery();
+                        break;
+                    case RequestType.Query:
+                        databaseResponse.Result = Processor.Process(command.ExecuteReader());
+                        break;
                 }
             }
             return databaseResponse;

@@ -96,7 +96,8 @@ namespace Database
         NotStarted,
         NotSubscribed,
         InProgress,
-        Finished
+        Finished,
+        Observer // someone who isn't rgistered yet
     }
 
 }

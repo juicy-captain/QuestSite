@@ -142,6 +142,7 @@ namespace Processor
     {
         public string Process(SqlDataReader dataReader)
         {
+            dataReader.Read();
             return dataReader.GetString(0);
         }
     }
@@ -150,6 +151,7 @@ namespace Processor
     {
         public int Process(SqlDataReader dataReader)
         {
+            dataReader.Read();
             return dataReader.GetInt32(0);
         }
     }
@@ -160,6 +162,7 @@ namespace Processor
         {
             if (dataReader.HasRows)
             {
+                dataReader.Read();
                 return dataReader.GetInt32(2);
             }
             else

@@ -58,14 +58,17 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
             UserModel = sourcePage.GetModel();
             isUserLoggedIn = true;
 
-            Label userNickNameDeclaration = new Label() { Text = "Вы вошли как: " };
-            HyperLink linkToProfilePage = new HyperLink()
+            if (UserModel != null)
             {
-                Text = "Вы вошли как: " + UserModel.NickName,
-                NavigateUrl = "~/App_Page/Profile.aspx"
-            };
-            header.Controls.Add(userNickNameDeclaration);
-            header.Controls.Add(linkToProfilePage);
+                Label userNickNameDeclaration = new Label() { Text = "Вы вошли как: " };
+                HyperLink linkToProfilePage = new HyperLink()
+                {
+                    Text = "Вы вошли как: " + UserModel.NickName,
+                    NavigateUrl = "~/App_Page/Profile.aspx"
+                };
+                header.Controls.Add(userNickNameDeclaration);
+                header.Controls.Add(linkToProfilePage);
+            }
         }
     }
     private void GetPlyaerInfo()
@@ -118,6 +121,10 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
         string actionButtonPostBackUrl = null;
         switch (subscriptionState)
         {
+            case SubscriptionState.Observer:
+                actionButtonText = "Зарегистрироваться чтобы принять участие";
+                actionButtonPostBackUrl = "~/App_Page/Registration.aspx";
+                break;
             case SubscriptionState.NotSubscribed:
                 actionButtonText = "Принять участие";
                 actionButtonPostBackUrl = "~/App_Page/Profile.aspx";
@@ -135,14 +142,22 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
                 actionButtonPostBackUrl = "~/App_Page/Question.aspx";
                 break;
         }
-        LinkButton actionButton = new LinkButton() { Text = actionButtonText, PostBackUrl = actionButtonPostBackUrl };
+        LinkButton actionButton = new LinkButton() { ID = ((int)subscriptionState).ToString(), Text = actionButtonText, PostBackUrl = actionButtonPostBackUrl };
         actionButton.Click += (sender, args) =>
             {
-                PerformSubscribeForQuestRequest();
+                SubscriptionState state = (SubscriptionState)int.Parse((sender as LinkButton).ID);
+                if (state == SubscriptionState.NotSubscribed)
+                {
+                    PerformSubscribeForQuestRequest();
+                }
+                else if (state == SubscriptionState.Finished)
+                {
+                    //TODO reset last stage to zero
+                }
             };
 
         //if there is no stages in quest but user subscribed, he/she isn't able to start a quest
-        if (subscriptionState == SubscriptionState.NotStarted)
+        if (subscriptionState != SubscriptionState.Observer)
         {
             if (QuestModel.Stages.Count != 0)
             {
@@ -150,7 +165,7 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
             }
         }
 
-        if (subscriptionState != SubscriptionState.NotSubscribed)
+        if (subscriptionState != SubscriptionState.NotSubscribed && subscriptionState != SubscriptionState.Observer)
         {
             LinkButton unsubscribeButton = new LinkButton() { Text = "Отписаться", PostBackUrl = "~/App_Page/Profile.aspx" };
             unsubscribeButton.Click += (sender, args) =>
@@ -208,34 +223,38 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
     }
     private SubscriptionState PerformSubscriptionStateRequest()
     {
-        Dictionary<string, object> Parameters = new Dictionary<string, object>()
+        SubscriptionState subscriptionState = SubscriptionState.Observer;
+        if (UserModel != null)
         {
-            {DatabaseConst.ParameterQuestId, QuestModel.Id},
-            {DatabaseConst.ParameterUserId, UserModel.Id},
-        };
-        DatabaseResponse<int> databaseResponse = new DatabaseRequest<int>()
-        {
-            Parameters = Parameters,
-            Processor = ProcessorSubscriptionState,
-            RequestType = RequestType.Query,
-            StoredProcedure = DatabaseConst.SPCheckSubscription
-        }.Execute();
+            Dictionary<string, object> Parameters = new Dictionary<string, object>()
+            {
+                {DatabaseConst.ParameterQuestId, QuestModel.Id},
+                {DatabaseConst.ParameterUserId, UserModel.Id},
+            };
+            DatabaseResponse<int> databaseResponse = new DatabaseRequest<int>()
+            {
+                Parameters = Parameters,
+                Processor = ProcessorSubscriptionState,
+                RequestType = RequestType.Query,
+                StoredProcedure = DatabaseConst.SPCheckSubscription
+            }.Execute();
 
-        int stageNumber = databaseResponse.Result;
-        SubscriptionState subscriptionState = SubscriptionState.NotSubscribed;
-        if (stageNumber != DatabaseConst.EmptyData)
-        {
-            if (stageNumber == 0)
+            int stageNumber = databaseResponse.Result;
+            subscriptionState = SubscriptionState.NotSubscribed;
+            if (stageNumber != DatabaseConst.EmptyData)
             {
-                subscriptionState = SubscriptionState.NotStarted;
-            }
-            else if (stageNumber == QuestModel.Stages.Count)
-            {
-                subscriptionState = SubscriptionState.Finished;
-            }
-            else
-            {
-                subscriptionState = SubscriptionState.InProgress;
+                if (stageNumber == 0)
+                {
+                    subscriptionState = SubscriptionState.NotStarted;
+                }
+                else if (stageNumber == QuestModel.Stages.Count)
+                {
+                    subscriptionState = SubscriptionState.Finished;
+                }
+                else
+                {
+                    subscriptionState = SubscriptionState.InProgress;
+                }
             }
         }
         return subscriptionState;
@@ -250,7 +269,7 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
         new DatabaseRequest<object>()
         {
             Parameters = Parameters,
-            RequestType = RequestType.Query,
+            RequestType = RequestType.Insert,
             StoredProcedure = DatabaseConst.SPInsertSubscription
         }.Execute();
     }

@@ -33,6 +33,7 @@ public partial class AppPageQuestion : System.Web.UI.Page, ICrossPageSender<User
             QuestModel = (PreviousPage as ICrossPageSender<QuestModel>).GetModel();
 
             PerformGetLastStageRequest();
+            SetQuest();
         }
         else
         {

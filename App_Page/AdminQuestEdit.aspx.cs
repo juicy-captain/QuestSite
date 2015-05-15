@@ -21,7 +21,7 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
     private static QuestModel QuestModel { get; set; }
     private static StageModel SelectedStageModel { get; set; }
     private static List<StageModel> Stages { get; set; }
-    private static bool isNewStage { get; set; }
+    private static bool isNewQuest { get; set; }
     private static IProcessor<List<StageModel>> Processor { get; set; }
 
     static App_Page_AdminQuestEdit()
@@ -37,7 +37,7 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
     protected void ButtonSaveChanges_Click(object sender, EventArgs e)
     {
         CreateUpdatedQuest();
-        if (isNewStage)
+        if (isNewQuest)
         {
             PerformAddQuestRequest();
         }
@@ -88,7 +88,7 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
             complexity = QuestComplexityLevel.AreYoyCrazy;
         }
 
-        int id = ServerConst.DefaultId;
+        int id = ServerConst.FictitiousId;
         if (QuestModel != null)
         {
             id = QuestModel.Id;
@@ -135,10 +135,12 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
                     LevelCrazy.Checked = true;
                     break;
             }
+
+            isNewQuest = false;
         }
         else
         {
-            isNewStage = true;
+            isNewQuest = true;
             ButtonDelete.Visible = false;
             ButtonAddNewStage.Visible = false;
         }
