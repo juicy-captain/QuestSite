@@ -152,7 +152,17 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
                 }
                 else if (state == SubscriptionState.Finished)
                 {
-                    //TODO reset last stage to zero
+                    Dictionary<string, object> Parameters = new Dictionary<string, object>()
+                    {
+                        {DatabaseConst.ParameterQuestId, QuestModel.Id},
+                        {DatabaseConst.ParameterUserId, UserModel.Id},
+                    };
+                    new DatabaseRequest<object>()
+                    {
+                        Parameters = Parameters,
+                        RequestType = RequestType.Insert,
+                        StoredProcedure = DatabaseConst.SPResetUserProgress
+                    }.Execute();
                 }
             };
 

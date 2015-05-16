@@ -87,6 +87,9 @@ namespace Database
         public const string SPInsertSubscription = "InsertSubscription";
         public const string SPInsertUser = "InsertUser";
         public const string SPAuthorizeUser = "AuthorizeUser";
+        public const string SPResetUserProgress = "ResetUserProgress";
+        public const string SPDeleteAllQuests = "DeleteAllQuests";
+        public const string SPDeleteAllUsers = "DeleteAllUsers";
 
         public const int EmptyData = -1;
     }

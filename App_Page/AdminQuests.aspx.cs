@@ -118,4 +118,12 @@ public partial class App_Page_AdminQuests : System.Web.UI.Page, ICrossPageSender
         return SelectedQuestModel;
     }
 
+    protected void ButtonRemoveAll_Click(object sender, EventArgs e)
+    {
+        new DatabaseRequest<object>()
+        {
+            RequestType = RequestType.Insert,
+            StoredProcedure = DatabaseConst.SPDeleteAllQuests
+        }.Execute();
+    }
 }

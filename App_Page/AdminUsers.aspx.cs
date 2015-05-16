@@ -96,4 +96,12 @@ public partial class App_Page_AdminUsers : System.Web.UI.Page, ICrossPageSender<
         return AdminModel;
     }
 
+    protected void ButtonRemoveAll_Click(object sender, EventArgs e)
+    {
+        new DatabaseRequest<object>()
+        {
+            RequestType = RequestType.Insert,
+            StoredProcedure = DatabaseConst.SPDeleteAllUsers
+        }.Execute();
+    }
 }
