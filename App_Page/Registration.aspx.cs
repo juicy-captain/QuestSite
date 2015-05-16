@@ -93,7 +93,7 @@ public partial class AppPageRegistration : System.Web.UI.Page, ICrossPageSender<
         new DatabaseRequest<object>()
         {
             Parameters = Parameters,
-            RequestType = RequestType.Insert,
+            RequestType = RequestType.Alter,
             StoredProcedure = DatabaseConst.SPInsertUser
         }.Execute();
     }

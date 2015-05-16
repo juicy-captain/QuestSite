@@ -221,7 +221,7 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
         new DatabaseRequest<object>()
         {
             Parameters = ParametersAddQuest,
-            RequestType = RequestType.Insert,
+            RequestType = RequestType.Alter,
             StoredProcedure = DatabaseConst.SPInsertQuest
         }.Execute();
     }
@@ -239,7 +239,7 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
         new DatabaseRequest<object>()
         {
             Parameters = Parameters,
-            RequestType = RequestType.Insert,
+            RequestType = RequestType.Alter,
             StoredProcedure = DatabaseConst.SPEditQuest
         }.Execute();
     }
@@ -252,7 +252,7 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
         new DatabaseRequest<object>()
         {
             Parameters = Parameters,
-            RequestType = RequestType.Insert,
+            RequestType = RequestType.Alter,
             StoredProcedure = DatabaseConst.SPDeleteQuest
         }.Execute();
     }

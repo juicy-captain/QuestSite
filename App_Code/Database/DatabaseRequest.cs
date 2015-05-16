@@ -15,7 +15,7 @@ namespace Database
 {
     public enum RequestType
     {
-        Insert,
+        Alter,
         Query
     }
 
@@ -55,7 +55,7 @@ namespace Database
                 connection.Open();
                 switch (RequestType)
                 {
-                    case RequestType.Insert:
+                    case RequestType.Alter:
                         command.ExecuteNonQuery();
                         break;
                     case RequestType.Query:

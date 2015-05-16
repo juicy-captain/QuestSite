@@ -113,7 +113,7 @@ public partial class AppPageProfile : System.Web.UI.Page, ICrossPageSender<UserM
         new DatabaseRequest<object>()
         {
             Parameters = Parameters,
-            RequestType = RequestType.Insert,
+            RequestType = RequestType.Alter,
             StoredProcedure = DatabaseConst.SPDeleteUser
         }.Execute();
     }

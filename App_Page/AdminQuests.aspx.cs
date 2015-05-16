@@ -28,12 +28,20 @@ public partial class App_Page_AdminQuests : System.Web.UI.Page, ICrossPageSender
         {
             ICrossPageSender<UserModel> sourcePage = PreviousPage as ICrossPageSender<UserModel>;
             UserModel = sourcePage.GetModel();
+            PopilateQuests();
         }
-        PopilateQuests();
     }
     protected void ButtonAddNewQuest_Click(object sender, EventArgs e)
     {
         SelectedQuestModel = null;
+    }
+    protected void ButtonRemoveAll_Click(object sender, EventArgs e)
+    {
+        new DatabaseRequest<object>()
+        {
+            RequestType = RequestType.Alter,
+            StoredProcedure = DatabaseConst.SPDeleteAllQuests
+        }.Execute();
     }
 
     private void PopilateQuests()
@@ -118,12 +126,4 @@ public partial class App_Page_AdminQuests : System.Web.UI.Page, ICrossPageSender
         return SelectedQuestModel;
     }
 
-    protected void ButtonRemoveAll_Click(object sender, EventArgs e)
-    {
-        new DatabaseRequest<object>()
-        {
-            RequestType = RequestType.Insert,
-            StoredProcedure = DatabaseConst.SPDeleteAllQuests
-        }.Execute();
-    }
 }

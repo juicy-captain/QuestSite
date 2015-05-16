@@ -160,7 +160,7 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
                     new DatabaseRequest<object>()
                     {
                         Parameters = Parameters,
-                        RequestType = RequestType.Insert,
+                        RequestType = RequestType.Alter,
                         StoredProcedure = DatabaseConst.SPResetUserProgress
                     }.Execute();
                 }
@@ -227,7 +227,7 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
         new DatabaseRequest<object>()
         {
             Parameters = Parameters,
-            RequestType = RequestType.Insert,
+            RequestType = RequestType.Alter,
             StoredProcedure = DatabaseConst.SPDeleteSubscription
         }.Execute();
     }
@@ -279,7 +279,7 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
         new DatabaseRequest<object>()
         {
             Parameters = Parameters,
-            RequestType = RequestType.Insert,
+            RequestType = RequestType.Alter,
             StoredProcedure = DatabaseConst.SPInsertSubscription
         }.Execute();
     }

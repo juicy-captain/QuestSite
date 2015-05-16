@@ -123,7 +123,7 @@ public partial class AppPageQuestion : System.Web.UI.Page, ICrossPageSender<User
         new DatabaseRequest<object>()
         {
             Parameters = Parameters,
-            RequestType = RequestType.Insert,
+            RequestType = RequestType.Alter,
             StoredProcedure = DatabaseConst.SPSetNewLastStage
         }.Execute();
     }

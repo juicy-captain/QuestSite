@@ -26,8 +26,16 @@ public partial class App_Page_AdminUsers : System.Web.UI.Page, ICrossPageSender<
         {
             ICrossPageSender<UserModel> sourcePage = PreviousPage as ICrossPageSender<UserModel>;
             AdminModel = sourcePage.GetModel();
+            PopulateUsers();
         }
-        PopulateUsers();
+    }
+    protected void ButtonRemoveAll_Click(object sender, EventArgs e)
+    {
+        new DatabaseRequest<object>()
+        {
+            RequestType = RequestType.Alter,
+            StoredProcedure = DatabaseConst.SPDeleteAllUsers
+        }.Execute();
     }
 
     //methods for simplification logic understanding
@@ -86,7 +94,7 @@ public partial class App_Page_AdminUsers : System.Web.UI.Page, ICrossPageSender<
         new DatabaseRequest<object>()
         {
             Parameters = Parameters,
-            RequestType = RequestType.Insert,
+            RequestType = RequestType.Alter,
             StoredProcedure = DatabaseConst.SPDeleteUser
         }.Execute();
     }
@@ -96,12 +104,4 @@ public partial class App_Page_AdminUsers : System.Web.UI.Page, ICrossPageSender<
         return AdminModel;
     }
 
-    protected void ButtonRemoveAll_Click(object sender, EventArgs e)
-    {
-        new DatabaseRequest<object>()
-        {
-            RequestType = RequestType.Insert,
-            StoredProcedure = DatabaseConst.SPDeleteAllUsers
-        }.Execute();
-    }
 }

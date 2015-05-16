@@ -91,7 +91,7 @@ public partial class App_Page_AdminStageEdit : System.Web.UI.Page, ICrossPageSen
         new DatabaseRequest<object>()
         {
             Parameters = Parameters,
-            RequestType = RequestType.Insert,
+            RequestType = RequestType.Alter,
             StoredProcedure = DatabaseConst.SPInsertStage
         }.Execute();
     }
@@ -110,7 +110,7 @@ public partial class App_Page_AdminStageEdit : System.Web.UI.Page, ICrossPageSen
         new DatabaseRequest<object>()
         {
             Parameters = Parameters,
-            RequestType = RequestType.Insert,
+            RequestType = RequestType.Alter,
             StoredProcedure = DatabaseConst.SPEditStage
         }.Execute();
     }
@@ -124,7 +124,7 @@ public partial class App_Page_AdminStageEdit : System.Web.UI.Page, ICrossPageSen
         new DatabaseRequest<object>()
         {
             Parameters = Parameters,
-            RequestType = RequestType.Insert,
+            RequestType = RequestType.Alter,
             StoredProcedure = DatabaseConst.SPDeleteStage
         }.Execute();
     }
