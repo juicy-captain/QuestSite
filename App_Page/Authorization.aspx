@@ -23,7 +23,7 @@
                 <br />
                 <asp:CheckBox ID="CheckBoxAdministrator" runat="server" Text="Администратор" />
                 <br />
-                <asp:Button ID="ButtonAuthorization" runat="server" Text="Вход" OnClick="ButtonAuthorization_Click" />
+                <%--<asp:Button ID="ButtonAuthorization" runat="server" Text="Вход" OnClick="ButtonAuthorization_Click" />--%>
             </div>
             <div id="notRegisteredArea">
                 <asp:Label ID="LabelNotRegistered" runat="server" Text="Вы не зарегестроровались" Visible="false"></asp:Label>

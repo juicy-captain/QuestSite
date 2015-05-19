@@ -69,17 +69,17 @@ public partial class AppPageProfile : System.Web.UI.Page, ICrossPageSender<UserM
                 linkToDetails.Attributes.Add("onclick", "linkToDetails_Click");
 
                 linkToDetails.Click += (sender, args) =>
+                {
+                    int selectedQuestId = int.Parse((sender as LinkButton).ID);
+                    foreach (QuestModel questModel in QuestModels)
                     {
-                        int selectedQuestId = int.Parse((sender as LinkButton).ID);
-                        foreach (QuestModel questModel in QuestModels)
+                        if (questModel.Id == selectedQuestId)
                         {
-                            if (questModel.Id == selectedQuestId)
-                            {
-                                SelectedQuestModel = questModel;
-                                break;
-                            }
+                            SelectedQuestModel = questModel;
+                            break;
                         }
-                    };
+                    }
+                };
                 listItem.Controls.Add(linkToDetails);
                 QuestsList.Controls.Add(listItem);
             }
@@ -91,7 +91,7 @@ public partial class AppPageProfile : System.Web.UI.Page, ICrossPageSender<UserM
     }
     private void PerformGetUserSubscriptionsRequest()
     {
-        Dictionary<string,object> Parameters = new Dictionary<string,object>()
+        Dictionary<string, object> Parameters = new Dictionary<string, object>()
         {
             {DatabaseConst.ParameterUserId, UserModel.Id}
         };
