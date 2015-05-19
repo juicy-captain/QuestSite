@@ -73,27 +73,6 @@ namespace Model
             ComplexityLevel = (QuestComplexityLevel)selectCommad.Parameters[DatabaseConst.ParameterComplexityLevel].Value;
         }
 
-        public static List<QuestModel> ProcessBatch(SqlDataReader dataReader)
-        {
-            List<QuestModel> questModels = new List<QuestModel>();
-            if (dataReader.HasRows)
-            {
-                while (dataReader.Read())
-                {
-                    int id = dataReader.GetInt32(0);
-                    string name = dataReader.GetString(1);
-                    string description = dataReader.GetString(2);
-                    long startDate = dataReader.GetInt64(3);
-                    long expirationDate = dataReader.GetInt64(4);
-                    //Opened = (string)selectCommad.Parameters[PARAMETER_AVATAR_PATH].Value;
-                    QuestComplexityLevel complexityLevel = (QuestComplexityLevel)dataReader.GetInt32(6);
-
-                    //TODO replace null eand false
-                    questModels.Add(new QuestModel(id, name, description, startDate, expirationDate, false, null, complexityLevel, null));
-                }
-            }
-            return questModels;
-        }
     }
 
 }

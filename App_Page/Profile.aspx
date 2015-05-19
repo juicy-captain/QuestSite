@@ -564,7 +564,7 @@
 <%-- <div id="header" runat="server">
         </div>
         <div id="content">
-            <asp:Button ID="ButtonDeleteProfile" runat="server" Text="Удалить профиль" PostBackUrl="~/App_Page/Default.aspx" OnClick="ButtonDeleteProfile_Click"/>
+            <asp:Button ID="ButtonDeleteProfile" runat="server" Text="Удалить профиль" OnClick="ButtonDeleteProfile_Click"/>
             <br />
             <asp:Button ID="ButtonLogout" runat="server" Text="Log out" PostBackUrl="~/App_Page/Default.aspx" OnClick="ButtonLogout_Click"/>
             <br />

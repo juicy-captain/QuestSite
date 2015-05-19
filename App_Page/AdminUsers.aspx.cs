@@ -9,43 +9,55 @@ using System.Web.UI.HtmlControls;
 using Model;
 using Database;
 using Interface;
+using Processor;
 public partial class App_Page_AdminUsers : System.Web.UI.Page, ICrossPageSender<UserModel>
 {
-    private UserModel UserModel { get; set; }
+    private static IProcessor<List<UserModel>> Processor { get; set; }
+    private static UserModel AdminModel { get; set; }
+    private static List<UserModel> UserModels { get; set; }
+
+    static App_Page_AdminUsers()
+    {
+        Processor = new UserBatchProcessor();
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         if (PreviousPage != null)
         {
             ICrossPageSender<UserModel> sourcePage = PreviousPage as ICrossPageSender<UserModel>;
-            UserModel = sourcePage.GetModel();
+            AdminModel = sourcePage.GetModel();
+            PopulateUsers();
         }
-        PopulateUsers();
+    }
+    protected void ButtonRemoveAll_Click(object sender, EventArgs e)
+    {
+        new DatabaseRequest<object>()
+        {
+            RequestType = RequestType.Alter,
+            StoredProcedure = DatabaseConst.SPDeleteAllUsers
+        }.Execute();
     }
 
-    void PopulateUsers()
+    //methods for simplification logic understanding
+    private void PopulateUsers()
     {
-        DatabaseResponse<List<UserModel>> databaseResponse = new DatabaseRequest<List<UserModel>>()
-        {
-            RequestType = RequestType.GetAllUsers
-        }.Execute();
+        PerformGetAllUsersRequest();
 
-        foreach (UserModel player in databaseResponse.Result)
+        foreach (UserModel player in UserModels)
         {
             HtmlGenericControl div = new HtmlGenericControl("div");
             Label names = new Label() { Text = player.ToString() };
             Label bithDate = new Label() { Text = String.Format("{0:dd.MM.yyyy}", new DateTime(player.BirthDate)) };
-            string genderString = "Пол: " + (player.Gender == UserModel.Sex.Male ? "муж" : "мен") + ".";
+            string genderString = "Пол: " + (player.Gender == Sex.Male ? "муж" : "мен") + ".";
             Label gender = new Label() { Text = genderString };
             Image avatar = new Image() { ImageUrl = player.AvatarPath };
 
-            Button deleteButton = new Button() { Text = "Удалить", ID = player.Id.ToString(), PostBackUrl = "~/App_Page/AdminUsers.aspx" };
+            Button deleteButton = new Button() { Text = "Удалить", ID = player.Id.ToString() };
             deleteButton.Click += (sender, args) =>
                 {
-                    new DatabaseRequest<object>()
-                    {
-                        RequestType = RequestType.DeleteUser,
-                        PlayerId = int.Parse((sender as Button).ID)
-                    }.Execute();
+                    int userId = int.Parse((sender as Button).ID);
+                    PerformDeleteUserRequest(userId);
+                    Server.Transfer("~/App_Page/AdminUsers.aspx", true);
                 };
             HtmlGenericControl br = new HtmlGenericControl("<br>");
 
@@ -63,10 +75,33 @@ public partial class App_Page_AdminUsers : System.Web.UI.Page, ICrossPageSender<
             content.Controls.Add(div);
         }
     }
+    private void PerformGetAllUsersRequest()
+    {
+        DatabaseResponse<List<UserModel>> response = new DatabaseRequest<List<UserModel>>()
+        {
+            Processor = Processor,
+            RequestType = RequestType.Query,
+            StoredProcedure = DatabaseConst.SPGetAllUsers
+        }.Execute();
+        UserModels = response.Result;
+    }
+    private void PerformDeleteUserRequest(int userId)
+    {
+        Dictionary<string, object> Parameters = new Dictionary<string, object>()
+        {
+            {DatabaseConst.ParameterUserId, userId}
+        };
+        new DatabaseRequest<object>()
+        {
+            Parameters = Parameters,
+            RequestType = RequestType.Alter,
+            StoredProcedure = DatabaseConst.SPDeleteUser
+        }.Execute();
+    }
 
     UserModel ICrossPageSender<UserModel>.GetModel()
     {
-        return UserModel;
+        return AdminModel;
     }
 
 }

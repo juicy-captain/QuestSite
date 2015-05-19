@@ -13,6 +13,7 @@ namespace Const
         public const string BaseAvatarPath = "../Avatars/";
         public const string DefaultAvatarPath = BaseAvatarPath + "Default.png";
         public static List<string> AvatarFormats = new List<string>() { ".gif", ".png", ".jpeg", ".jpg" };
+        public const int FictitiousId = 0;
     }
 
 }

@@ -9,6 +9,7 @@
 <body>
     <form id="form1" runat="server">
         <div id="header">
+            <asp:Button ID="ButtonToProfile" runat="server" Text="Перейти в профиль" PostBackUrl="~/App_Page/Profile.aspx" />
         </div>
         <div id="content">
             <asp:Label ID="LabelQuestionTitle" runat="server" Text="QuestionTitle"></asp:Label>

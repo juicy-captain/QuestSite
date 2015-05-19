@@ -27,7 +27,7 @@ public partial class App_Page_ProfileEdit : System.Web.UI.Page, ICrossPageSender
             BirthDay.SelectedIndex = new DateTime(UserModel.BirthDate).Day;
             BirthMonth.SelectedIndex = new DateTime(UserModel.BirthDate).Month;
             BirthYear.SelectedIndex = new DateTime(UserModel.BirthDate).Year;
-            if (UserModel.Gender == UserModel.Sex.Male)
+            if (UserModel.Gender == Sex.Male)
             {
                 RadioButtonMale.Checked = true;
             }
@@ -35,6 +35,18 @@ public partial class App_Page_ProfileEdit : System.Web.UI.Page, ICrossPageSender
             {
                 RadioButtonFemale.Checked = true;
             }
+        }
+    }
+    protected void ButtonSaveChanges_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            UserModel = CreatePlayer();
+            PerformProfileUpdateRequest();
+        }
+        catch (FileFormatException)
+        {
+            LabelIncompatibleImageType.Visible = true;
         }
     }
 
@@ -50,7 +62,7 @@ public partial class App_Page_ProfileEdit : System.Web.UI.Page, ICrossPageSender
         int year = int.Parse(BirthYear.SelectedValue);
         long birthDate = new DateTime(year, month, day).Ticks;
 
-        UserModel.Sex gender = RadioButtonMale.Checked ? UserModel.Sex.Male : UserModel.Sex.Female;
+        Sex gender = RadioButtonMale.Checked ? Sex.Male : Sex.Female;
 
         string avatarPath = SaveAvatar();
 
@@ -60,7 +72,6 @@ public partial class App_Page_ProfileEdit : System.Web.UI.Page, ICrossPageSender
         };
         return editedUserModel;
     }
-
     private string SaveAvatar()
     {
         if (AvatarUpload.HasFile)
@@ -82,24 +93,27 @@ public partial class App_Page_ProfileEdit : System.Web.UI.Page, ICrossPageSender
             return ServerConst.DefaultAvatarPath;
         }
     }
-
-    protected void ButtonSaveChanges_Click(object sender, EventArgs e)
+    private void PerformProfileUpdateRequest()
     {
-        try
+        Dictionary<string, object> Parameters = new Dictionary<string, object>()
         {
-            UserModel = CreatePlayer();
-            new DatabaseRequest<Object>()
-            {
-                RequestType = RequestType.UpdateProfile,
-                UserModel = UserModel
-            }.Execute();
-            Server.Transfer("~/App_Page/Profile.aspx", true);
-        }
-        catch (FileFormatException)
+            {DatabaseConst.ParameterId, UserModel.Id},
+            {DatabaseConst.ParameterNickName, UserModel.NickName},
+            {DatabaseConst.ParameterFirstName, UserModel.FirstName},
+            {DatabaseConst.ParameterSecondName, UserModel.SecondName},
+            {DatabaseConst.ParameterPassword, UserModel.Password},
+            {DatabaseConst.ParameterBirthDate, UserModel.BirthDate},
+            {DatabaseConst.ParameterAvatarPath, UserModel.AvatarPath},
+            {DatabaseConst.ParameterGender, (int)UserModel.Gender},
+        };
+        new DatabaseRequest<object>()
         {
-            LabelIncompatibleImageType.Visible = true;
-        }
+            Parameters = Parameters,
+            RequestType = RequestType.Alter,
+            StoredProcedure = DatabaseConst.SPEditUser
+        }.Execute();
     }
+
 
     UserModel ICrossPageSender<UserModel>.GetModel()
     {

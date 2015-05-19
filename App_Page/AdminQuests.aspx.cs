@@ -9,29 +9,44 @@ using System.Web.UI.HtmlControls;
 using Database;
 using Model;
 using Interface;
+using Processor;
 
 public partial class App_Page_AdminQuests : System.Web.UI.Page, ICrossPageSender<UserModel>, ICrossPageSender<QuestModel>
 {
     private static UserModel UserModel { get; set; }
     private static List<QuestModel> QuestModels { get; set; }
     private static QuestModel SelectedQuestModel { get; set; }
+    private static IProcessor<List<QuestModel>> Processor { get; set; }
+
+    static App_Page_AdminQuests()
+    {
+        Processor = new QuestBatchProcessor();
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         if (PreviousPage != null)
         {
             ICrossPageSender<UserModel> sourcePage = PreviousPage as ICrossPageSender<UserModel>;
             UserModel = sourcePage.GetModel();
+            PopilateQuests();
         }
-        PopilateQuests();
+    }
+    protected void ButtonAddNewQuest_Click(object sender, EventArgs e)
+    {
+        SelectedQuestModel = null;
+    }
+    protected void ButtonRemoveAll_Click(object sender, EventArgs e)
+    {
+        new DatabaseRequest<object>()
+        {
+            RequestType = RequestType.Alter,
+            StoredProcedure = DatabaseConst.SPDeleteAllQuests
+        }.Execute();
     }
 
-    void PopilateQuests()
+    private void PopilateQuests()
     {
-        DatabaseResponse<List<QuestModel>> databaseResponse = new DatabaseRequest<List<QuestModel>>()
-        {
-            RequestType = RequestType.GetAllQuests
-        }.Execute();
-        QuestModels = databaseResponse.Result;
+        PerformGetAllQuestsRequest();
 
         foreach (QuestModel quest in QuestModels)
         {
@@ -91,15 +106,24 @@ public partial class App_Page_AdminQuests : System.Web.UI.Page, ICrossPageSender
             content.Controls.Add(listItem);
         }
     }
-
+    private void PerformGetAllQuestsRequest()
+    {
+        DatabaseResponse<List<QuestModel>> databaseResponse = new DatabaseRequest<List<QuestModel>>()
+        {
+            Processor = Processor,
+            RequestType = RequestType.Query,
+            StoredProcedure = DatabaseConst.SPGetAllQuests
+        }.Execute();
+        QuestModels = databaseResponse.Result;
+    }
 
     UserModel ICrossPageSender<UserModel>.GetModel()
     {
         return UserModel;
     }
-
     QuestModel ICrossPageSender<QuestModel>.GetModel()
     {
         return SelectedQuestModel;
     }
+
 }

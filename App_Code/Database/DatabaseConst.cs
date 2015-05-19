@@ -52,13 +52,46 @@ namespace Database
         public const string ParameterComplexityLevel = "@complexity_level";
 
         //StageModel
-        public const string ParameterRelatedQuestId = "@questId";
-        public const string ParameterStageOrdinal = "@stage_ordinal";
+        public const string ParameterStageRelatedQuestId = "@related_quest";
+        public const string ParameterStageTitle = "@title";
+        public const string ParameterStageQuestion = "@question";
+        public const string ParameterStageImage = "@image_path";
+        public const string ParameterStageAnswer = "@answer";
+        public const string ParameterStageOrdinal = "@ordinal";
+        public const string ParameterStageOrdinalPrevious = "@ordinal_previous";
 
         //Subscription
-        public const string ParameterQuestId = ParameterRelatedQuestId;
+        public const string ParameterQuestId = "@questId";
         public const string ParameterUserId = "@userId";
         public const string ParameterLastStage = "@last_stage";
+
+        //Stored Procedures
+        public const string SPGetAllUsers = "GetAllUsers";
+        public const string SPGetAllQuests = "GetAllQuests";
+        public const string SPGetQuestStages = "GetQuestStages";
+        public const string SPGetUserSubscriptions = "GetUserSubscriptions";
+        public const string SPGetQuestSubscribers = "GetQuestSubscribers";
+        public const string SPInsertQuest = "InsertQuest";
+        public const string SPInsertStage = "InsertStage";
+        public const string SPEditStage = "EditStage";
+        public const string SPDeleteStage = "DeleteStage";
+        public const string SPEditQuest = "EditQuest";
+        public const string SPDeleteQuest = "DeleteQuest";
+        public const string SPDeleteSubscription = "DeleteSubscription";
+        public const string SPEditUser = "EditUser";
+        public const string SPDeleteUser = "DeleteUser";
+        public const string SPSetNewLastStage = "SetNewLastStage";
+        public const string SPGetAnswer = "GetAnswer";
+        public const string SPGetLastStage = "GetLastStage";
+        public const string SPCheckSubscription = "CheckSubscription";
+        public const string SPInsertSubscription = "InsertSubscription";
+        public const string SPInsertUser = "InsertUser";
+        public const string SPAuthorizeUser = "AuthorizeUser";
+        public const string SPResetUserProgress = "ResetUserProgress";
+        public const string SPDeleteAllQuests = "DeleteAllQuests";
+        public const string SPDeleteAllUsers = "DeleteAllUsers";
+
+        public const int EmptyData = -1;
     }
 
     public enum SubscriptionState
@@ -66,7 +99,8 @@ namespace Database
         NotStarted,
         NotSubscribed,
         InProgress,
-        Finished
+        Finished,
+        Observer // someone who isn't rgistered yet
     }
 
 }

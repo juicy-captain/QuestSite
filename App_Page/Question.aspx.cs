@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using Model;
 using Database;
 using Interface;
+using Processor;
 
 public partial class AppPageQuestion : System.Web.UI.Page, ICrossPageSender<UserModel>, ICrossPageSender<QuestModel>
 {
@@ -16,6 +17,14 @@ public partial class AppPageQuestion : System.Web.UI.Page, ICrossPageSender<User
     private static StageModel StageModel { get; set; }
     private static int LastStage { get; set; }
     private static bool isPreviousAnswerRight { get; set; }
+    private static IProcessor<string> AnswerProcessor { get; set; }
+    private static IProcessor<int> LastStageProcessor { get; set; }
+
+    static AppPageQuestion()
+    {
+        AnswerProcessor = new GetAnswerProcessor();
+        LastStageProcessor = new GetLastStageOrdinalProcessor();
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         if (PreviousPage != null && PreviousPage is ICrossPageSender<UserModel> && PreviousPage is ICrossPageSender<QuestModel>)
@@ -23,13 +32,7 @@ public partial class AppPageQuestion : System.Web.UI.Page, ICrossPageSender<User
             UserModel = (PreviousPage as ICrossPageSender<UserModel>).GetModel();
             QuestModel = (PreviousPage as ICrossPageSender<QuestModel>).GetModel();
 
-            DatabaseResponse<int> lastStageResponse = new DatabaseRequest<int>()
-            {
-                RequestType = RequestType.GetLastStage,
-                PlayerId = UserModel.Id,
-                QuestId = QuestModel.Id
-            }.Execute();
-            LastStage = lastStageResponse.Result;
+            PerformGetLastStageRequest();
             SetQuest();
         }
         else
@@ -49,25 +52,11 @@ public partial class AppPageQuestion : System.Web.UI.Page, ICrossPageSender<User
     {
         if (!isPreviousAnswerRight)
         {
-            DatabaseResponse<bool> answerResponse = new DatabaseRequest<bool>()
-            {
-                RequestType = RequestType.CheckAnswer,
-                StageOrdinal = StageModel.Ordinal,
-                QuestId = QuestModel.Id,
-                Answer = TextBoxPlayerAnswer.Text
-            }.Execute();
-
-            isPreviousAnswerRight = answerResponse.Result;
+            isPreviousAnswerRight = PerformCheckAnswerRequest();
 
             if (isPreviousAnswerRight)
             {
-                new DatabaseRequest<int>()
-                {
-                    RequestType = RequestType.СonfirmRightAnswer,
-                    StageOrdinal = StageModel.Ordinal,
-                    QuestId = QuestModel.Id,
-                    PlayerId = UserModel.Id
-                }.Execute();
+                PerformСonfirmRightAnswerRequest();
                 LastStage++;
                 ControlsAfterRightAnswer();
             }
@@ -97,7 +86,6 @@ public partial class AppPageQuestion : System.Web.UI.Page, ICrossPageSender<User
         }
 
     }
-
     void ControlsBeforeNewQuestion()
     {
         TextBoxPlayerAnswer.Text = String.Empty;
@@ -109,7 +97,6 @@ public partial class AppPageQuestion : System.Web.UI.Page, ICrossPageSender<User
         LabelWrongAnswer.Visible = false;
         ButtonNextStep.Visible = false;
     }
-
     void ControlsQuestEnd()
     {
         LabelQuestionTitle.Visible = false;
@@ -120,12 +107,58 @@ public partial class AppPageQuestion : System.Web.UI.Page, ICrossPageSender<User
         LabelWrongAnswer.Visible = false;
         ButtonQuestionEnd.Visible = true;
     }
-
     void SetQuest()
     {
         StageModel = QuestModel.Stages[LastStage];
         LabelQuestionTitle.Text = StageModel.Title;
         LabelQuestionBody.Text = StageModel.Question;
+    }
+    private void PerformСonfirmRightAnswerRequest()
+    {
+        Dictionary<string, object> Parameters = new Dictionary<string, object>()
+        {
+            {DatabaseConst.ParameterQuestId, QuestModel.Id},
+            {DatabaseConst.ParameterUserId, UserModel.Id},
+        };
+        new DatabaseRequest<object>()
+        {
+            Parameters = Parameters,
+            RequestType = RequestType.Alter,
+            StoredProcedure = DatabaseConst.SPSetNewLastStage
+        }.Execute();
+    }
+    private bool PerformCheckAnswerRequest()
+    {
+        //Is user's answer rignt?
+        Dictionary<string, object> Parameters = new Dictionary<string, object>()
+        {
+            {DatabaseConst.ParameterQuestId, QuestModel.Id},
+            {DatabaseConst.ParameterStageOrdinal, StageModel.Ordinal},
+        };
+        DatabaseResponse<string> databaseResponse = new DatabaseRequest<string>()
+        {
+            Parameters = Parameters,
+            Processor = AnswerProcessor,
+            RequestType = RequestType.Query,
+            StoredProcedure = DatabaseConst.SPGetAnswer
+        }.Execute();
+        return databaseResponse.Result.Equals(TextBoxPlayerAnswer.Text);
+    }
+    private void PerformGetLastStageRequest()
+    {
+        Dictionary<string, object> Parameters = new Dictionary<string, object>()
+        {
+            {DatabaseConst.ParameterQuestId, QuestModel.Id},
+            {DatabaseConst.ParameterUserId, UserModel.Id},
+        };
+        DatabaseResponse<int> lastStageResponse = new DatabaseRequest<int>()
+        {
+            Parameters = Parameters,
+            Processor = LastStageProcessor,
+            RequestType = RequestType.Query,
+            StoredProcedure = DatabaseConst.SPGetLastStage
+        }.Execute();
+        LastStage = lastStageResponse.Result;
     }
 
     UserModel ICrossPageSender<UserModel>.GetModel()
