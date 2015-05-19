@@ -115,13 +115,13 @@
 						</div>
 						<fieldset>
 							<div class="form-group">
-								<input type="text" class="form-control" name="full_name" placeholder="Full Name">
+								<input type="text" class="form-control" name="Nick" placeholder="Nick Name">
 							</div>
 							<div class="form-group">
-								<input type="text" class="form-control" name="address" placeholder="Address">
+								<input type="text" class="form-control" name="FirstName" placeholder="FirstName">
 							</div>
 							<div class="form-group">
-								<input type="text" class="form-control" name="city" placeholder="City">
+								<input type="text" class="form-control" name="SecondName" placeholder="SecondName">
 							</div>
 							<div class="form-group">
 								<div>
@@ -138,11 +138,77 @@
 							<p>
 								Enter your account details below:
 							</p>
-							<div class="form-group">
+
+                            <!--email-->
+							<%--<div class="form-group">
 								<span class="input-icon">
 									<input type="email" class="form-control" name="email" placeholder="Email">
 									<i class="fa fa-envelope"></i> </span>
-							</div>
+							</div>--%>
+                            <!--Date bitrth -->
+                            <div class="form-group connected-group">
+														<label class="control-label">
+															Date of Birth <span class="symbol required"></span>
+														</label>
+														<div class="row">
+															<div class="col-md-3">
+																<select name="dd" id="dd" class="form-control" >
+																	<option value="">DD</option>
+																	<option value="01">1</option>
+																	<option value="02">2</option>
+																	<option value="03">3</option>
+																	<option value="04">4</option>
+																	<option value="05">5</option>
+																	<option value="06">6</option>
+																	<option value="07">7</option>
+																	<option value="08">8</option>
+																	<option value="09">9</option>
+																	<option value="10">10</option>
+																	<option value="11">11</option>
+																	<option value="12">12</option>
+																	<option value="13">13</option>
+																	<option value="14">14</option>
+																	<option value="15">15</option>
+																	<option value="16">16</option>
+																	<option value="17">17</option>
+																	<option value="18">18</option>
+																	<option value="19">19</option>
+																	<option value="20">20</option>
+																	<option value="21">21</option>
+																	<option value="22">22</option>
+																	<option value="23">23</option>
+																	<option value="24">24</option>
+																	<option value="25">25</option>
+																	<option value="26">26</option>
+																	<option value="27">27</option>
+																	<option value="28">28</option>
+																	<option value="29">29</option>
+																	<option value="30">30</option>
+																	<option value="31">31</option>
+																</select>
+															</div>
+															<div class="col-md-3">
+																<select name="mm" id="mm" class="form-control" >
+																	<option value="">MM</option>
+																	<option value="01">1</option>
+																	<option value="02">2</option>
+																	<option value="03">3</option>
+																	<option value="04">4</option>
+																	<option value="05">5</option>
+																	<option value="06">6</option>
+																	<option value="07">7</option>
+																	<option value="08">8</option>
+																	<option value="09">9</option>
+																	<option value="10">10</option>
+																	<option value="11">11</option>
+																	<option value="12">12</option>
+																</select>
+															</div>
+															<div class="col-md-3">
+																<input type="text" placeholder="YYYY" id="yyyy" name="yyyy" class="form-control">
+															</div>
+														</div>
+													</div>
 							<div class="form-group">
 								<span class="input-icon">
 									<input type="password" class="form-control" id="password" name="password" placeholder="Password">
@@ -174,7 +240,7 @@
 					</form>
 					<!-- start: COPYRIGHT -->
 					<div class="copyright">
-						2014 &copy; Rapido by cliptheme.
+						2015 &copy; QuestHunter by King.
 					</div>
 					<!-- end: COPYRIGHT -->
 				</div>
