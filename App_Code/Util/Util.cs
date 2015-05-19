@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
+using System.Web.UI.WebControls;
 
 namespace Util
 {
@@ -27,6 +28,19 @@ namespace Util
             return dataReader.IsDBNull(i) ? -1 : dataReader.GetInt32(i);
         }
 
+        public static string GetString(SqlCommand sqlCommand, string field)
+        {
+            return Convert.IsDBNull(sqlCommand.Parameters[field].Value) ? null : (string)sqlCommand.Parameters[field].Value;
+        }
+
+    }
+
+    public static class FileUtil
+    {
+        public static string GetFileExtension(FileUpload fileUpload)
+        {
+            return System.IO.Path.GetExtension(fileUpload.FileName).ToLower();
+        }
     }
 
 }

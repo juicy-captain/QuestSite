@@ -11,11 +11,11 @@ using Database;
 using Util;
 using Interface;
 
-public partial class AppPageQuests : System.Web.UI.Page, ICrossPageSender<QuestModel>, ICrossPageSender<PlayerModel>
+public partial class AppPageQuests : System.Web.UI.Page, ICrossPageSender<QuestModel>, ICrossPageSender<UserModel>
 {
     private QuestModel SelectedQuestModel { get; set; }
     private List<QuestModel> QuestModels { get; set; }
-    private static PlayerModel PlayerModel { get; set; }
+    private static UserModel UserModel { get; set; }
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -24,7 +24,7 @@ public partial class AppPageQuests : System.Web.UI.Page, ICrossPageSender<QuestM
             RequestType = Database.RequestType.GetAllQuests
         }.Execute();
 
-        PopulateQuestList(QuestModels = databaseResponse.ResponseModel);
+        PopulateQuestList(QuestModels = databaseResponse.Result);
         GetPlayerProfile();
     }
 
@@ -34,13 +34,13 @@ public partial class AppPageQuests : System.Web.UI.Page, ICrossPageSender<QuestM
         {
             HtmlGenericControl listItem = new HtmlGenericControl("li");
 
-            LinkButton linkToDetails = new LinkButton() { Text = quest.Name, PostBackUrl = "~/App_Page/QuestDetails.aspx" };
+            LinkButton linkToDetails = new LinkButton() { Text = quest.Name, PostBackUrl = "~/App_Page/QuestDetails.aspx" ,ID = quest.Id.ToString() };
             linkToDetails.Click += (sender, args) =>
                 {
-                    string selectedQuestName = (sender as LinkButton).Text;
+                    int selectedQuestId = int.Parse((sender as LinkButton).ID);
                     foreach (QuestModel questModel in QuestModels)
                     {
-                        if (questModel.Name.Equals(selectedQuestName))
+                        if (questModel.Id == selectedQuestId)
                         {
                             SelectedQuestModel = questModel;
                             break;
@@ -61,15 +61,15 @@ public partial class AppPageQuests : System.Web.UI.Page, ICrossPageSender<QuestM
 
     private void GetPlayerProfile()
     {
-        if (PreviousPage != null && PreviousPage is ICrossPageSender<PlayerModel>)
+        if (PreviousPage != null && PreviousPage is ICrossPageSender<UserModel>)
         {
-            ICrossPageSender<PlayerModel> sourcePage = PreviousPage as ICrossPageSender<PlayerModel>;
-            PlayerModel = sourcePage.GetModel();
+            ICrossPageSender<UserModel> sourcePage = PreviousPage as ICrossPageSender<UserModel>;
+            UserModel = sourcePage.GetModel();
 
             Label userNickNameDeclaration = new Label() { Text = "Вы вошли как: " };
             HyperLink linkToProfilePage = new HyperLink()
             {
-                Text = "Вы вошли как: " + PlayerModel.NickName,
+                Text = "Вы вошли как: " + UserModel.NickName,
                 NavigateUrl = "~/App_Page/Profile.aspx"
             };
             header.Controls.Add(userNickNameDeclaration);
@@ -82,8 +82,8 @@ public partial class AppPageQuests : System.Web.UI.Page, ICrossPageSender<QuestM
         return SelectedQuestModel;
     }
 
-    PlayerModel ICrossPageSender<PlayerModel>.GetModel()
+    UserModel ICrossPageSender<UserModel>.GetModel()
     {
-        return PlayerModel;
+        return UserModel;
     }
 }

@@ -1,0 +1,26 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="AdminPage.master.cs" Inherits="App_Page_AdminPage" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Панель администратора</title>
+    <link href="../App_Style/RegistrationStyle.css" rel="stylesheet" type="text/css" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div id="header">
+            <asp:Button ID="ButtonUsers" runat="server" Text="Пользователи" PostBackUrl="~/App_Page/AdminUsers.aspx" />
+            <asp:Button ID="ButtonQuests" runat="server" Text="Квесты" PostBackUrl="~/App_Page/AdminQuests.aspx"/>
+        </div>
+        <div id="content">
+            <asp:ContentPlaceHolder ID="ContentHolder" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+        <div id="footer">
+        </div>
+    </form>
+</body>
+</html>

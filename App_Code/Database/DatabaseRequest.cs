@@ -14,23 +14,28 @@ namespace Database
 {
     public enum RequestType
     {
-        RegisterPlayer,
-        AuthorizePlayer,
+        RegisterUser,
+        AuthorizeUser,
         GetAllQuests,
         GetStages,
-        SubscribePlayerForQuest,
-        GetPlayerSubscriptions,
+        SubscribeUserForQuest,
+        GetUserSubscriptions,
         GetQuestSubscribers,
         CheckSubscription,
         GetLastStage,
         CheckAnswer,
-        СonfirmRightAnswer
+        СonfirmRightAnswer,
+        DeleteUser,
+        UpdateProfile,
+        GetAllUsers,
+        UnsubscribeUserForQuest,
+        DeleteQuest,
+        EditQuest
     }
 
     public class DatabaseResponse<ResponseType>
     {
-        public ResponseType ResponseModel { get; set; }
-        public ResponseType ValueResult { get; set; }
+        public ResponseType Result { get; set; }
         public DatabaseResponse() { }
     }
 
@@ -42,11 +47,14 @@ namespace Database
         public RequestType RequestType { get; set; }
         public string NickName { get; set; }
         public string Password { get; set; }
-        public PlayerModel PlayerModel { get; set; }
+        public UserModel UserModel { get; set; }
+        public UserModel EditedUserModel { get; set; }
         public int PlayerId { get; set; }
         public int QuestId { get; set; }
         public int StageOrdinal { get; set; }
         public string Answer { get; set; }
+        public int NumberOfStages { get; set; }
+        public QuestModel QuestModel { get; set; }
 
         public DatabaseRequest() { }
 
@@ -58,11 +66,11 @@ namespace Database
                 connection.Open();
                 switch (RequestType)
                 {
-                    case RequestType.AuthorizePlayer:
+                    case RequestType.AuthorizeUser:
                         databaseResponse = DatabaseMethod.Authorize(connection, NickName, Password) as DatabaseResponse<ResponseType>;
                         break;
-                    case RequestType.RegisterPlayer:
-                        DatabaseMethod.Register(connection, PlayerModel);
+                    case RequestType.RegisterUser:
+                        DatabaseMethod.Register(connection, UserModel);
                         break;
                     case RequestType.GetAllQuests:
                         databaseResponse = DatabaseMethod.GetAllQuests(connection) as DatabaseResponse<ResponseType>;
@@ -70,17 +78,17 @@ namespace Database
                     case RequestType.GetStages:
                         databaseResponse = DatabaseMethod.GetStages(connection, QuestId) as DatabaseResponse<ResponseType>;
                         break;
-                    case RequestType.SubscribePlayerForQuest:
+                    case RequestType.SubscribeUserForQuest:
                         DatabaseMethod.Subscribe(connection, QuestId, PlayerId);
                         break;
-                    case RequestType.GetPlayerSubscriptions:
-                        databaseResponse = DatabaseMethod.GetPlayerSubscriptions(connection, PlayerId) as DatabaseResponse<ResponseType>;
+                    case RequestType.GetUserSubscriptions:
+                        databaseResponse = DatabaseMethod.GetUserSubscriptions(connection, PlayerId) as DatabaseResponse<ResponseType>;
                         break;
                     case RequestType.GetQuestSubscribers:
                         databaseResponse = DatabaseMethod.GetQuestSubscribers(connection, QuestId) as DatabaseResponse<ResponseType>;
                         break;
                     case RequestType.CheckSubscription:
-                        databaseResponse = DatabaseMethod.CheckSubscription(connection, QuestId, PlayerId) as DatabaseResponse<ResponseType>;
+                        databaseResponse = DatabaseMethod.CheckSubscription(connection, QuestId, PlayerId, NumberOfStages) as DatabaseResponse<ResponseType>;
                         break;
                     case RequestType.GetLastStage:
                         databaseResponse = DatabaseMethod.GetLastStage(connection, QuestId, PlayerId) as DatabaseResponse<ResponseType>;
@@ -90,6 +98,24 @@ namespace Database
                         break;
                     case RequestType.СonfirmRightAnswer:
                         DatabaseMethod.СonfirmRightAnswer(connection, QuestId, PlayerId);
+                        break;
+                    case RequestType.DeleteUser:
+                        DatabaseMethod.DeleteUser(connection, PlayerId);
+                        break;
+                    case RequestType.UpdateProfile:
+                        DatabaseMethod.EditProfile(connection, UserModel);
+                        break;
+                    case RequestType.GetAllUsers:
+                        databaseResponse = DatabaseMethod.GetAllUsers(connection) as DatabaseResponse<ResponseType>;
+                        break;
+                    case RequestType.UnsubscribeUserForQuest:
+                        DatabaseMethod.Unsubscribe(connection, QuestId, PlayerId);
+                        break;
+                    case RequestType.DeleteQuest:
+                        DatabaseMethod.DeleteQuest(connection, QuestId);
+                        break;
+                    case RequestType.EditQuest:
+                        DatabaseMethod.EditQuest(connection, QuestModel);
                         break;
                 }
             }

@@ -30,13 +30,13 @@ namespace Model
         public long StartDate { get; private set; }
         public long ExpirationDate { get; private set; }
         public bool Opened { get; private set; }
-        public List<PlayerModel> RegisteredCompetotors { get; private set; }
+        public List<UserModel> RegisteredCompetotors { get; private set; }
         public QuestComplexityLevel ComplexityLevel { get; private set; }
-        public List<StageModel> Stages { get; private set; }
+        public List<StageModel> Stages { get; set; }
         public int LastStage { get; set; }
 
         public QuestModel(int id, string name, string description, long startDate, long expirationDate, bool opened,
-            List<PlayerModel> registeredCompetotors, QuestComplexityLevel complexityLevel, List<StageModel> stages)
+            List<UserModel> registeredCompetotors, QuestComplexityLevel complexityLevel, List<StageModel> stages)
         {
             Id = id;
             Name = name;
@@ -49,6 +49,17 @@ namespace Model
             RegisteredCompetotors = registeredCompetotors;
             ComplexityLevel = complexityLevel;
             Stages = stages;
+        }
+
+        public QuestModel(int id, string name, string description, long startDate, long expirationDate, QuestComplexityLevel complexityLevel)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+            StartDate = startDate;
+            ExpirationDate = expirationDate;
+            ExpirationDate = expirationDate;
+            ComplexityLevel = complexityLevel;
         }
 
         public QuestModel(SqlCommand selectCommad)

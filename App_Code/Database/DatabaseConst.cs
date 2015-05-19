@@ -34,7 +34,7 @@ namespace Database
         //Common model
         public const string ParameterId = "@Id";
 
-        //PlayerModel
+        //UserModel
         public const string ParameterNickName = "@nick_name";
         public const string ParameterFirstName = "@first_name";
         public const string ParameterSecondName = "@second_name";
@@ -59,6 +59,14 @@ namespace Database
         public const string ParameterQuestId = ParameterRelatedQuestId;
         public const string ParameterUserId = "@userId";
         public const string ParameterLastStage = "@last_stage";
+    }
+
+    public enum SubscriptionState
+    {
+        NotStarted,
+        NotSubscribed,
+        InProgress,
+        Finished
     }
 
 }
