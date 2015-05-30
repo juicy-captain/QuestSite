@@ -26,8 +26,8 @@ public partial class App_Page_AdminUsers : System.Web.UI.Page, ICrossPageSender<
         {
             ICrossPageSender<UserModel> sourcePage = PreviousPage as ICrossPageSender<UserModel>;
             AdminModel = sourcePage.GetModel();
-            PopulateUsers();
         }
+        PopulateUsers();
     }
     protected void ButtonRemoveAll_Click(object sender, EventArgs e)
     {

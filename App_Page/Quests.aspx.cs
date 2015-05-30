@@ -68,10 +68,10 @@ public partial class AppPageQuests : System.Web.UI.Page, ICrossPageSender<QuestM
             UserModel = sourcePage.GetModel();
 
             Label userNickNameDeclaration = new Label() { Text = "Вы вошли как: " };
-            HyperLink linkToProfilePage = new HyperLink()
+            LinkButton linkToProfilePage = new LinkButton()
             {
                 Text = "Вы вошли как: " + UserModel.NickName,
-                NavigateUrl = "~/App_Page/Profile.aspx"
+                PostBackUrl = "~/App_Page/Profile.aspx"
             };
             header.Controls.Add(userNickNameDeclaration);
             header.Controls.Add(linkToProfilePage);
