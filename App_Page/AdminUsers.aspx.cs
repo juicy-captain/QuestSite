@@ -50,7 +50,7 @@ public partial class App_Page_AdminUsers : System.Web.UI.Page, ICrossPageSender<
             Label bithDate = new Label() { Text = String.Format("{0:dd.MM.yyyy}", new DateTime(player.BirthDate)) };
             string genderString = "Пол: " + (player.Gender == Sex.Male ? "муж" : "мен") + ".";
             Label gender = new Label() { Text = genderString };
-            Image avatar = new Image() { ImageUrl = player.AvatarPath };
+            Image avatar = new Image() { ImageUrl = player.AvatarPath, Width = 100, Height = 100 };
 
             Button deleteButton = new Button() { Text = "Удалить", ID = player.Id.ToString() };
             deleteButton.Click += (sender, args) =>
