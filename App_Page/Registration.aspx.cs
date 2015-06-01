@@ -24,7 +24,7 @@ public partial class AppPageRegistration : System.Web.UI.Page, ICrossPageSender<
 
     }
 
-    protected void RegistrationWizard_FinishButtonClick(object sender, WizardNavigationEventArgs e)
+    protected void RegistrationWizard_FinishButtonClick(object sender, EventArgs eventArgs)
     {
         try
         {
@@ -40,17 +40,17 @@ public partial class AppPageRegistration : System.Web.UI.Page, ICrossPageSender<
 
     private UserModel CreatePlayer()
     {
-        string nickName = (RegistrationWizard.WizardSteps[0].FindControl("TextBoxNickName") as TextBox).Text;
-        string firstName = (RegistrationWizard.WizardSteps[0].FindControl("TextBoxFirstName") as TextBox).Text;
-        string secondName = (RegistrationWizard.WizardSteps[0].FindControl("TextBoxSecondName") as TextBox).Text;
-        string password = (RegistrationWizard.WizardSteps[0].FindControl("TextBoxPassword") as TextBox).Text;
+        string nickName = (FindControl("TextBoxNickName") as TextBox).Text;
+        string firstName = (FindControl("TextBoxFirstName") as TextBox).Text;
+        string secondName = (FindControl("TextBoxSecondName") as TextBox).Text;
+        string password = (FindControl("TextBoxPassword") as TextBox).Text;
 
-        int day = int.Parse((RegistrationWizard.WizardSteps[1].FindControl("BirthDay") as DropDownList).SelectedValue);
-        int month = int.Parse((RegistrationWizard.WizardSteps[1].FindControl("BirthMonth") as DropDownList).SelectedValue);
-        int year = int.Parse((RegistrationWizard.WizardSteps[1].FindControl("BirthYear") as DropDownList).SelectedValue);
+        int day = int.Parse((FindControl("BirthDay") as DropDownList).SelectedValue);
+        int month = int.Parse((FindControl("BirthMonth") as DropDownList).SelectedValue);
+        int year = int.Parse((FindControl("BirthYear") as DropDownList).SelectedValue);
         long birthDate = new DateTime(year, month, day).Ticks;
 
-        Sex gender = (RegistrationWizard.WizardSteps[1].FindControl("RadioButtonMale") as RadioButton).Checked ? Sex.Male : Sex.Female;
+        Sex gender = (FindControl("RadioButtonMale") as RadioButton).Checked ? Sex.Male : Sex.Female;
 
         string avatarPath = SaveAvatar();
 

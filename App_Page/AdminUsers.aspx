@@ -4,4 +4,8 @@
     <div id="content" runat="server">
                 <asp:Button ID="ButtonRemoveAll" runat="server" Text="Удалить всех пользователей" PostBackUrl="~/App_Page/AdminUsers.aspx" OnClick="ButtonRemoveAll_Click"/>
     </div>
+    
+    
+    
+
 </asp:Content>

@@ -13,17 +13,17 @@ using Model;
 using Database;
 using Util;
 using Interface;
-//using Processor;
+using Processor;
 
 public partial class AppPageAuthorization : System.Web.UI.Page, ICrossPageSender<UserModel>
 {
     private UserModel UserModel { get; set; }
     private static IProcessor<UserModel> Processor { get; set; }
 
-    //static AppPageAuthorization()
-    //{
-    //    Processor = new UserAuthProcessor();
-    //}
+    static AppPageAuthorization()
+    {
+        Processor = new UserAuthProcessor();
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -49,12 +49,12 @@ public partial class AppPageAuthorization : System.Web.UI.Page, ICrossPageSender
             LabelNotRegistered.Visible = true;
             ButtonGoToRegistration.Visible = true;
 
-            LabelUserName.Visible = false;
-            LabelPassword.Visible = false;
+            //LabelUserName.Visible = false;
+            //LabelPassword.Visible = false;
             TextBoxUserName.Visible = false;
             TextBoxPassword.Visible = false;
             CheckBoxAdministrator.Visible = false;
-            //ButtonAuthorization.Visible = false;
+            ButtonAuthorization.Visible = false;
         }
     }
 

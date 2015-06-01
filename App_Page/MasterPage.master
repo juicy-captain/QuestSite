@@ -46,7 +46,8 @@
 						</ul>
 					</li>
 					<li><a href="contact.html">Contact</a></li>
-					<li class="active"><a class="btn" href="Login.aspx">LOGIN</a></li>
+					 <li class="active"><a class="btn" href="Authorization.aspx">SIGN IN</a></li>
+                        <li class="active"><a class="btn" href="Registration.aspx">SIGN UP</a></li>
 					
 				</ul>
 			</div><!--/.nav-collapse -->

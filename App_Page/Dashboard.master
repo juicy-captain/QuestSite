@@ -20,9 +20,9 @@
     <link rel="stylesheet" href="../App_Style/assets/plugins/owl-carousel/owl-carousel/owl.transitions.css">
     <link rel="stylesheet" href="../App_Style/assets/plugins/summernote/dist/summernote.css">
     <link rel="stylesheet" href="../App_Style/assets/plugins/fullcalendar/fullcalendar/fullcalendar.css">--%>
-    <%--<link rel="stylesheet" href="../App_Style/assets/plugins/toastr/toastr.min.css">--%>
-    <link rel="stylesheet" href="../App_Style/assets/plugins/bootstrap-select/bootstrap-select.min.css">
+    <%--<link rel="stylesheet" href="../App_Style/assets/plugins/toastr/toastr.min.css">--%> 
     <%--<link rel="stylesheet" href="../App_Style/assets/plugins/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css">--%>
+   <link rel="stylesheet" href="../App_Style/assets/plugins/bootstrap-select/bootstrap-select.min.css">
     <link rel="stylesheet" href="../App_Style/assets/plugins/DataTables/media/css/DT_bootstrap.css">
     <link rel="stylesheet" href="../App_Style/assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.css">
     <link rel="stylesheet" href="../App_Style/assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css">

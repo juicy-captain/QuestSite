@@ -5,8 +5,9 @@
         <div id="questInfo">
             <asp:Button ID="ButtonSaveChanges" runat="server" Text="Сохранить" OnClick="ButtonSaveChanges_Click" PostBackUrl="~/App_Page/AdminQuests.aspx" />
             <asp:Button ID="ButtonDelete" runat="server" Text="Удалить" PostBackUrl="~/App_Page/AdminQuests.aspx" OnClick="ButtonDelete_Click" />
-            <asp:Button ID="ButtonAddNewStage" runat="server" Text="Добавиьт новый этап" PostBackUrl="~/App_Page/AdminStageEdit.aspx" OnClick="ButtonAddNewStage_Click"/>
+            <asp:Button ID="ButtonAddNewStage" runat="server" Text="Добавиьт новый этап" PostBackUrl="~/App_Page/AdminStageEdit.aspx" OnClick="ButtonAddNewStage_Click" />
             <div id="descriptionArea" class="descriptionArea">
+
                 <asp:Label ID="LabelName" runat="server" Text="Название:"></asp:Label>
                 <br />
                 <asp:Label ID="LabelDescription" runat="server" Text="Описание:"></asp:Label>
@@ -54,8 +55,22 @@
                 <asp:RadioButton ID="LevelMedium" runat="server" GroupName="LevelGroup" Text="Medium" />
                 <asp:RadioButton ID="LevelHard" runat="server" GroupName="LevelGroup" Text="Hard" />
                 <asp:RadioButton ID="LevelCrazy" runat="server" GroupName="LevelGroup" Text="Crazy" />
+                &nbsp;
             </div>
+            &nbsp;
+             <div>
+                 &nbsp;
+             </div>
+            <div>
+                &nbsp;
+            </div>
+
         </div>
-        <ul id="stagesList" runat="server"/>
+        &nbsp;
+        <ul id="stagesList" runat="server" />
+        &nbsp;
+         &nbsp;
     </div>
+    &nbsp;
+   
 </asp:Content>

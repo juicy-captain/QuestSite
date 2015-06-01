@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Activities.Expressions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -26,8 +27,8 @@ public partial class App_Page_AdminUsers : System.Web.UI.Page, ICrossPageSender<
         {
             ICrossPageSender<UserModel> sourcePage = PreviousPage as ICrossPageSender<UserModel>;
             AdminModel = sourcePage.GetModel();
-            PopulateUsers();
         }
+        PopulateUsers();
     }
     protected void ButtonRemoveAll_Click(object sender, EventArgs e)
     {
@@ -51,27 +52,36 @@ public partial class App_Page_AdminUsers : System.Web.UI.Page, ICrossPageSender<
             string genderString = "Пол: " + (player.Gender == Sex.Male ? "муж" : "мен") + ".";
             Label gender = new Label() { Text = genderString };
             Image avatar = new Image() { ImageUrl = player.AvatarPath };
-
-            Button deleteButton = new Button() { Text = "Удалить", ID = player.Id.ToString() };
+            avatar.Width=new Unit("200");
+          
+            
+            Button deleteButton = new Button() { Text = "Удалить", ID = player.Id.ToString()  };
             deleteButton.Click += (sender, args) =>
                 {
                     int userId = int.Parse((sender as Button).ID);
                     PerformDeleteUserRequest(userId);
                     Server.Transfer("~/App_Page/AdminUsers.aspx", true);
                 };
-            HtmlGenericControl br = new HtmlGenericControl("<br>");
+            deleteButton.CssClass = "add";
+            //HtmlGenericControl br = new HtmlGenericControl("<br>");
 
             //TODO remove this crappy code before course project vindication
+            div.Controls.Add(new HtmlGenericControl("br"));
             div.Controls.Add(names);
-            div.Controls.Add(br);
+            div.Controls.Add(new HtmlGenericControl("br"));
             div.Controls.Add(bithDate);
-            div.Controls.Add(br);
+            div.Controls.Add(new HtmlGenericControl("br"));
+            //div.Controls.Add(br);
+            //div.Controls.Add(br);
             div.Controls.Add(gender);
-            div.Controls.Add(br);
+            div.Controls.Add(new HtmlGenericControl("br"));
+            //div.Controls.Add(br);
             div.Controls.Add(avatar);
-            div.Controls.Add(br);
+            //div.Controls.Add(br);
+          
             div.Controls.Add(deleteButton);
-            div.Controls.Add(br);
+            div.Controls.Add(new HtmlGenericControl("br"));
+            //div.Controls.Add(br);
             content.Controls.Add(div);
         }
     }
