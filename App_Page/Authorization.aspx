@@ -26,7 +26,7 @@
     <link href="../App_Style/css/CustomStyleSheet.css" rel="stylesheet" media="screen" />
     <link rel="shortcut icon" href="../App_Style/images/gt_favicon.png">
 
-    <%--   <link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">--%>
+       <link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
     <link href="../App_Style/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../App_Style/css/font-awesome.min.css" rel="stylesheet" />
     <link href="../App_Style/css/bootstrap-theme.css" rel="stylesheet" />
@@ -96,19 +96,19 @@
 
                                 <form>
                                     <div class="top-margin">
-                                        <label>Username/Email <span class="text-danger">*</span></label>
+                                        <label>Username <span class="text-danger">*</span></label>
                                         <br />
-                                        <asp:TextBox ID="TextBoxUserName" runat="server"></asp:TextBox>
+                                        <asp:TextBox ID="TextBoxUserName" runat="server" CssClass="form-control"></asp:TextBox>
                                         <%--<input type="text" class="form-control">--%>
                                     </div>
                                     <div class="top-margin">
                                         <label>Password <span class="text-danger">*</span></label>
                                         <br />
-                                        <asp:TextBox ID="TextBoxPassword" runat="server"></asp:TextBox>
+                                        <asp:TextBox ID="TextBoxPassword" runat="server" CssClass="form-control"></asp:TextBox>
                                         <%--	<input type="password" class="form-control">--%>
                                     </div>
                                     <br />
-                                    <asp:CheckBox ID="CheckBoxAdministrator" runat="server" Text="Администратор" />
+                                    <asp:CheckBox ID="CheckBoxAdministrator" runat="server" Text="Администратор" CssClass="checkbox" />
                                     <br />
                                     <hr>
 
@@ -117,7 +117,7 @@
                                        <%--     <b><a href="">Forgot password?</a></b>--%>
                                         </div>
                                         <div class="col-lg-4 text-right">
-                                             <asp:Button ID="ButtonAuthorization" runat="server" Text="Вход" OnClick="ButtonAuthorization_Click" />
+                                             <asp:Button ID="ButtonAuthorization" runat="server" Text="Вход" OnClick="ButtonAuthorization_Click" CssClass="btn btn-action"/>
                                           <%--  <button class="btn btn-action" type="submit">Sign in</button>--%>
                                         </div>
                                     </div>
@@ -132,7 +132,7 @@
 
                                     <asp:Label ID="LabelNotRegistered" runat="server" Text="Вы не зарегестроровались" Visible="false"></asp:Label>
                                     <br />
-                                    <asp:Button ID="ButtonGoToRegistration" runat="server" Text="Зарегистрироваться" PostBackUrl="~/App_Page/Registration.aspx" Visible="false" />
+                                    <asp:Button ID="ButtonGoToRegistration" runat="server" Text="Зарегистрироваться" PostBackUrl="~/App_Page/Registration.aspx" Visible="false" CssClass="btn btn-action"/>
 
                                    <br />
                

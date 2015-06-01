@@ -86,22 +86,27 @@
                                 <div class="top-margin">
                                     <label>Nickname</label>
                                     <br/>
-                                   <asp:TextBox ID="TextBoxNickName" runat="server" ></asp:TextBox>
+                                   <asp:TextBox ID="TextBoxNickName" runat="server" CssClass="form-control"></asp:TextBox>
               
                                 </div>
                                 <div class="top-margin">
                                     <label>First Name</label><br />
- <asp:TextBox ID="TextBoxFirstName" runat="server"></asp:TextBox>
+ <asp:TextBox ID="TextBoxFirstName" runat="server" CssClass="form-control"></asp:TextBox>
                                     <%--<input type="text" class="form-control" id="firstname">--%>
                                 </div>
                                 <div class="top-margin">
                                     <label>Last Name</label>
                                       <br />
-                                    <asp:TextBox ID="TextBoxSecondName" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="TextBoxSecondName" runat="server" CssClass="form-control"></asp:TextBox>
                    
                                     <%--<input type="text" class="form-control" id="lastname">--%>
                                 </div>
-
+                                  <div class="top-margin">
+                                    <label>Password <span class="text-danger">*</span></label>
+                                        <br/>
+                                          <asp:TextBox ID="TextBoxPassword" runat="server" CssClass="form-control"></asp:TextBox>
+                                    <%--<input type="text" class="form-control" id="lastname">--%>
+                                </div>
                              <%--   <div class="top-margin">
                                     <label>Birthdate<span class="text-danger">*</span></label>
                                     <br>
@@ -253,19 +258,21 @@
 									<input type="text" class="form-control">
 								</div>
                                 -->
-                                <div class="row top-margin">
+                             <%--   <div class="row top-margin">
                                     <div class="col-sm-6">
                                         <label>Password <span class="text-danger">*</span></label>
                                         <br/>
-                                          <asp:TextBox ID="TextBoxPassword" runat="server"></asp:TextBox>
+                                          <asp:TextBox ID="TextBoxPassword" runat="server" CssClass="form-control"></asp:TextBox>
                                         <%--<input type="text" class="form-control" id="password">--%>
-                                    </div>
+                                   
                                     <%--<div class="col-sm-6">
 										<label>Confirm Password <span class="text-danger">*</span></label>
 										<input type="text" class="form-control">
 									</div>--%>
-                                </div>
-
+                      <label>Avatar<span class="text-danger">*</span></label>         
+ <asp:FileUpload ID="AvatarUpload" runat="server" CssClass="fa-files-o" />
+                            <asp:Label ID="LabelIncompatibleImageType" runat="server" Text="Несовместимый формат изображения" Visible="false"></asp:Label>
+                            
                                 <div class="row ">
                                     <div class="col-lg-8">
                                         <label class="checkbox">
@@ -275,19 +282,16 @@
                                     </div>
                                     <div class="col-lg-4 text-right">
                                          <asp:Button ID="Button4"
-                    Text="ready"
-                    CommandName="UnknownName"
-                    CommandArgument="UnknownArgument"
-                    OnClick="RegistrationWizard_FinishButtonClick"
-                    runat="server" />
+                    Text="Sign UP"
+                  OnClick="RegistrationWizard_FinishButtonClick"
+                    runat="server"
+                                             CssClass="btn btn-action" />
                                         <%--<button class="btn btn-action" type="submit">Register</button>--%>
                                     </div>
                                 </div>
                             </form>
                             
-                            <asp:FileUpload ID="AvatarUpload" runat="server" />
-                            <asp:Label ID="LabelIncompatibleImageType" runat="server" Text="Несовместимый формат изображения" Visible="false"></asp:Label>
-                            
+                           
 
                         </div>
                     </div>

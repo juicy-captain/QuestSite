@@ -73,7 +73,7 @@
                             <i class="fa fa-bars"></i>
                         </a>
                         <!-- start: LOGO -->
-                        <a class="navbar-brand" href="Dashboard.aspx">QuizHunter
+                      <asp:LinkButton runat="server" Text="QuizHunter" PostBackUrl="Profile.aspx" CssClass="navbar-brand">QuizHunter</asp:LinkButton>
                         </a>
                         <!-- end: LOGO -->
                     </div>
@@ -93,8 +93,10 @@
                         <!-- start: MAIN NAVIGATION MENU -->
                         <ul class="main-navigation-menu">
                             <li class="active open">
+                                
+                                <asp:LinkButton runat="server" Text="Профиль" PostBackUrl="Profile.aspx" CssClass="title"><i class="fa fa-home"></i>Профиль</asp:LinkButton>
 
-                                <a href="Profile.aspx"><i class="fa fa-home"></i><span class="title">Dashboard </span></a>
+                                <%--<a href="Profile.aspx"><i class="fa fa-home"></i><span class="title">Dashboard </span></a>--%>
                             </li>
 
                             <%-- <li>
@@ -110,7 +112,8 @@
                 <div class="slide-tools">
 
                     <div class="col-xs-6 text-right no-padding">
-                        <%--<asp:Button class="btn btn-sm btn-danger  " ID="ButtonLogout" runat="server" Text="Log out" PostBackUrl="~/App_Page/Default.aspx" OnClick="ButtonLogout_Click" />--%>
+                        <asp:LinkButton runat="server"  ID="ButtonLogout" Text="Выйти" PostBackUrl="~/App_Page/Default.aspx" OnClick="ButtonLogout_Click" ></asp:LinkButton>
+                      
 
                     </div>
                 </div>
@@ -157,7 +160,7 @@
                         <div class="toolbar row">
                             <div class="col-sm-6 hidden-xs">
                                 <div class="page-header">
-                                    <h1>Dashboard <small>overview &amp; stats </small></h1>
+                                    <h1>Детали квеста</h1>
                                 </div>
                             </div>
 
@@ -169,10 +172,11 @@
                             <div class="col-md-12">
                                 <ol class="breadcrumb">
                                     <li>
-                                        <a href="#">Dashboard
-                                        </a>
+                                       
+                                <asp:LinkButton runat="server" Text="Профиль" PostBackUrl="Profile.aspx" CssClass="title"><i class="fa fa-home"></i>Профиль</asp:LinkButton>
+
                                     </li>
-                                    <li class="active">User Profile
+                                    <li class="active">Детали квеста
                                     </li>
                                 </ol>
                             </div>

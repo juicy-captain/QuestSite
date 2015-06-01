@@ -58,7 +58,7 @@
                             <i class="fa fa-bars"></i>
                         </a>
                         <!-- start: LOGO -->
-                        <a class="navbar-brand" href="Dashboard.aspx">QuizHunter
+                      <asp:LinkButton runat="server" Text="QuizHunter" PostBackUrl="Profile.aspx" CssClass="navbar-brand">QuizHunter</asp:LinkButton>
                         </a>
                         <!-- end: LOGO -->
                     </div>

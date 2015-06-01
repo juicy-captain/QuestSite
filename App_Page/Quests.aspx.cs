@@ -67,14 +67,14 @@ public partial class AppPageQuests : System.Web.UI.Page, ICrossPageSender<QuestM
             ICrossPageSender<UserModel> sourcePage = PreviousPage as ICrossPageSender<UserModel>;
             UserModel = sourcePage.GetModel();
 
-            Label userNickNameDeclaration = new Label() { Text = "Вы вошли как: " };
+           Label userNickNameDeclaration = new Label() { Text = "Вы вошли как: " };
             LinkButton linkToProfilePage = new LinkButton()
             {
                 Text = "Вы вошли как: " + UserModel.NickName,
                 PostBackUrl = "~/App_Page/Profile.aspx"
             };
-            header.Controls.Add(userNickNameDeclaration);
-            header.Controls.Add(linkToProfilePage);
+            //header.Controls.Add(userNickNameDeclaration);
+            //header.Controls.Add(linkToProfilePage);
         }
     }
     private void PerformGetAllQuestsRequest()
@@ -97,4 +97,12 @@ public partial class AppPageQuests : System.Web.UI.Page, ICrossPageSender<QuestM
     {
         return UserModel;
     }
+
+
+protected void ButtonLogout_Click(object sender, EventArgs e)
+    {
+        UserModel = null;
+    }
+
+
 }

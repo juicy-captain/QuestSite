@@ -61,8 +61,8 @@
                             <i class="fa fa-bars"></i>
                         </a>
                         <!-- start: LOGO -->
-                        <a class="navbar-brand" href="Dashboard.aspx">QuizHunter
-                        </a>
+                      <asp:LinkButton runat="server" Text="QuizHunter" PostBackUrl="Profile.aspx" CssClass="navbar-brand">QuizHunter</asp:LinkButton>
+                        
                         <!-- end: LOGO -->
                     </div>
 
@@ -81,8 +81,9 @@
                         <!-- start: MAIN NAVIGATION MENU -->
                         <ul class="main-navigation-menu">
                             <li class="active open">
+                                 <asp:LinkButton runat="server" Text="Профиль" PostBackUrl="Profile.aspx" CssClass="title"><i class="fa fa-home"></i>Профиль</asp:LinkButton>
 
-                                <a href="Profile.aspx"><i class="fa fa-home"></i><span class="title">Dashboard </span></a>
+                                <%--<a href="Profile.aspx"><i class="fa fa-home"></i><span class="title">Dashboard </span></a>--%>
                             </li>
 
                             <%-- <li>
@@ -98,7 +99,8 @@
                 <div class="slide-tools">
 
                     <div class="col-xs-6 text-right no-padding">
-                        <asp:Button class="btn btn-sm btn-danger  " ID="ButtonLogout" runat="server" Text="Log out" PostBackUrl="~/App_Page/Default.aspx" OnClick="ButtonLogout_Click" />
+                        <asp:LinkButton runat="server"  ID="ButtonLogout" Text="Выйти" PostBackUrl="~/App_Page/Default.aspx" OnClick="ButtonLogout_Click" ></asp:LinkButton>
+                      
 
                     </div>
                 </div>
@@ -145,7 +147,7 @@
                         <div class="toolbar row">
                             <div class="col-sm-6 hidden-xs">
                                 <div class="page-header">
-                                    <h1>Dashboard <small>overview &amp; stats </small></h1>
+                                    <h1>Профиль <small>Обзор и статистика </small></h1>
                                 </div>
                             </div>
 
@@ -156,11 +158,11 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <ol class="breadcrumb">
-                                    <li>
+                                   <%-- <li>
                                         <a href="#">Dashboard
                                         </a>
-                                    </li>
-                                    <li class="active">User Profile
+                                    </li>--%>
+                                    <li class="active">Профиль
                                     </li>
                                 </ol>
                             </div>
@@ -169,7 +171,7 @@
                             <div class="tabbable">
                                 <ul class="nav nav-tabs tab-padding tab-space-3 tab-blue" id="myTab4">
                                     <li class="active">
-                                        <a data-toggle="tab" href="#panel_overview">Overview
+                                        <a data-toggle="tab" href="#panel_overview">Обзор
                                         </a>
                                     </li>
 
@@ -202,8 +204,8 @@
                                                             </div>
                                                         </div>
                                                         <hr>
-                                                        <asp:Button ID="Button1" runat="server" Text="Edit Profile" PostBackUrl="~/App_Page/ProfileEdit.aspx" />
-                                                        <asp:Button ID="ButtonDeleteProfile" runat="server" Text="Delete Profile" OnClick="ButtonDeleteProfile_Click" />
+                                                        <asp:Button ID="Button1" runat="server" Text="Редактировать" PostBackUrl="~/App_Page/ProfileEdit.aspx" CssClass="btn-action" />
+                                                        <asp:Button ID="ButtonDeleteProfile" runat="server" Text="Удалить профиль" OnClick="ButtonDeleteProfile_Click" CssClass="btn-danger" />
                                                         <hr>
                                                     </div>
 
@@ -242,7 +244,7 @@
                                                     <div id="content">
                                                         
                                                         
-                                                        <asp:Button runat="server" ID="QuestsLink" runat="server" PostBackUrl="~/App_Page/Quests.aspx" Text="Просмотреть доступные квесты"/>
+                                                        <asp:Button runat="server" ID="QuestsLink" runat="server" CssClass="btn btn-green" PostBackUrl="~/App_Page/Quests.aspx" Text="Просмотреть доступные квесты"/>
                                                         <%--<asp:LinkButton ID="QuestsLink" runat="server" PostBackUrl="~/App_Page/Quests.aspx">Просмотреть доступные квесты</asp:LinkButton>--%>
 
                                                         <div id="subscriptions">

@@ -63,8 +63,8 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
                 Label userNickNameDeclaration = new Label() { Text = "Вы вошли как: " };
                 HyperLink linkToProfilePage = new HyperLink()
                 {
-                    Text = "Вы вошли как: " + UserModel.NickName,
-                    NavigateUrl = "~/App_Page/Profile.aspx"
+                    //Text = "Вы вошли как: " + UserModel.NickName,
+                    //NavigateUrl = "~/App_Page/Profile.aspx"
                 };
                 header.Controls.Add(userNickNameDeclaration);
                 header.Controls.Add(linkToProfilePage);
@@ -292,6 +292,11 @@ public partial class App_Page_QuestDetails : System.Web.UI.Page, ICrossPageSende
     QuestModel ICrossPageSender<QuestModel>.GetModel()
     {
         return QuestModel;
+    }
+
+    protected void ButtonLogout_Click(object sender, EventArgs e)
+    {
+        UserModel = null;
     }
 
 }
