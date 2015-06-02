@@ -270,7 +270,7 @@
 										<input type="text" class="form-control">
 									</div>--%>
                       <label>Avatar<span class="text-danger">*</span></label>         
- <asp:FileUpload ID="AvatarUpload" runat="server" CssClass="fa-files-o" />
+ <asp:FileUpload ID="AvatarUpload" runat="server" />
                             <asp:Label ID="LabelIncompatibleImageType" runat="server" Text="Несовместимый формат изображения" Visible="false"></asp:Label>
                             
                                 <div class="row ">

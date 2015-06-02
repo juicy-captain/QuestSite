@@ -59,7 +59,7 @@
                         </a>
                         <!-- start: LOGO -->
                       <asp:LinkButton runat="server" Text="QuizHunter" PostBackUrl="Profile.aspx" CssClass="navbar-brand">QuizHunter</asp:LinkButton>
-                        </a>
+                      
                         <!-- end: LOGO -->
                     </div>
 
@@ -142,7 +142,7 @@
                         <div class="toolbar row">
                             <div class="col-sm-6 hidden-xs">
                                 <div class="page-header">
-                                    <h1>Dashboard <small>overview &amp; stats </small></h1>
+                                    <h1>Вопрос</h1>
                                 </div>
                             </div>
 
@@ -154,10 +154,10 @@
                             <div class="col-md-12">
                                 <ol class="breadcrumb">
                                     <li>
-                                        <a href="#">Dashboard
-                                        </a>
+                                        <asp:LinkButton runat="server" Text="Профиль" PostBackUrl="Profile.aspx" CssClass="title"><i class="fa fa-home"></i>Профиль</asp:LinkButton>
+
                                     </li>
-                                    <li class="active">User Profile
+                                    <li class="active">Вопрос квеста
                                     </li>
                                 </ol>
                             </div>
@@ -166,7 +166,7 @@
                             <div class="tabbable">
                                 <ul class="nav nav-tabs tab-padding tab-space-3 tab-blue" id="myTab4">
                                     <li class="active">
-                                        <a data-toggle="tab" href="#panel_overview">Overview
+                                        <a data-toggle="tab" href="#panel_overview">Вопрос
                                         </a>
                                     </li>
 

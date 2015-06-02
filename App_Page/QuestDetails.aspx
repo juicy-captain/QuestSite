@@ -74,7 +74,7 @@
                         </a>
                         <!-- start: LOGO -->
                       <asp:LinkButton runat="server" Text="QuizHunter" PostBackUrl="Profile.aspx" CssClass="navbar-brand">QuizHunter</asp:LinkButton>
-                        </a>
+                       
                         <!-- end: LOGO -->
                     </div>
 
@@ -185,7 +185,7 @@
                             <div class="tabbable">
                                 <ul class="nav nav-tabs tab-padding tab-space-3 tab-blue" id="myTab4">
                                     <li class="active">
-                                        <a data-toggle="tab" href="#panel_overview">Overview
+                                        <a data-toggle="tab" href="#panel_overview">Детали квеста
                                         </a>
                                     </li>
 
