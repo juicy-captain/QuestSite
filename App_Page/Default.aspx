@@ -1,17 +1,13 @@
 ﻿<%@ Page Title="Main" Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="AppPageDefault" MasterPageFile="MasterPage.master"  %>
 
 <asp:Content runat="server" ContentPlaceHolderID="head">
-   
-       
-            
+           
             <!-- Header -->
             <header id="head">
                 <div class="container">
                     <div class="row">
                         <h1 class="lead">МИР ТРУД КУРСАЧ</h1>
-                        <p class="tagline">some text <a href="">Link</a></p>
-                      
-                    </div>
+                      </div>
                 </div>
             </header>
             <!-- /Header -->

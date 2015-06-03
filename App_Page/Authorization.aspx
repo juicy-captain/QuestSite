@@ -5,11 +5,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Вход</title>
-    <link href="../App_Style/RegistrationStyle.css" rel="stylesheet" type="text/css" />
+    
     <link href="../App_Style/css/CustomStyleSheet.css" rel="stylesheet" media="screen" />
     <link rel="shortcut icon" href="../App_Style/images/gt_favicon.png">
-
-   
     <link href="../App_Style/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../App_Style/css/font-awesome.min.css" rel="stylesheet" />
     <link href="../App_Style/css/bootstrap-theme.css" rel="stylesheet" />

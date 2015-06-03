@@ -176,21 +176,19 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
                         }
                     };
 
-                HtmlGenericControl br = new HtmlGenericControl("<br>");
+           
 
                 //TODO remove this crappy code before course project vindication
                 listItem.Controls.Add(title);
-                listItem.Controls.Add(br);
+                listItem.Controls.Add(new HtmlGenericControl("br"));
                 listItem.Controls.Add(question);
-                listItem.Controls.Add(br);
+                listItem.Controls.Add(new HtmlGenericControl("br"));
                 listItem.Controls.Add(answer);
-                listItem.Controls.Add(br);
+                listItem.Controls.Add(new HtmlGenericControl("br"));
                 listItem.Controls.Add(ordinal);
-                listItem.Controls.Add(br);
+                listItem.Controls.Add(new HtmlGenericControl("br"));
                 listItem.Controls.Add(editButton);
-                listItem.Controls.Add(br);
-                //listItem.Controls.Add(editButton);
-                listItem.Controls.Add(br);
+                listItem.Controls.Add(new HtmlGenericControl("br"));
                 stagesList.Controls.Add(listItem);
             }
         }
