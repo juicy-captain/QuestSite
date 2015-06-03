@@ -10,37 +10,39 @@ using Model;
 using Database;
 using Util;
 using Interface;
+using Processor;
 
-public partial class AppPageQuests : System.Web.UI.Page, ICrossPageSender<QuestModel>, ICrossPageSender<PlayerModel>
+public partial class AppPageQuests : System.Web.UI.Page, ICrossPageSender<QuestModel>, ICrossPageSender<UserModel>
 {
     private QuestModel SelectedQuestModel { get; set; }
     private List<QuestModel> QuestModels { get; set; }
-    private static PlayerModel PlayerModel { get; set; }
+    private static UserModel UserModel { get; set; }
+    private static IProcessor<List<QuestModel>> Processor { get; set; }
 
+    static AppPageQuests()
+    {
+        Processor = new QuestBatchProcessor();
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
-        DatabaseResponse<List<QuestModel>> databaseResponse = new DatabaseRequest<List<QuestModel>>()
-        {
-            RequestType = Database.RequestType.GetAllQuests
-        }.Execute();
-
-        PopulateQuestList(QuestModels = databaseResponse.ResponseModel);
+        PerformGetAllQuestsRequest();
+        PopulateQuestList();
         GetPlayerProfile();
     }
 
-    private void PopulateQuestList(List<QuestModel> questModels)
+    private void PopulateQuestList()
     {
-        foreach (QuestModel quest in questModels)
+        foreach (QuestModel quest in QuestModels)
         {
             HtmlGenericControl listItem = new HtmlGenericControl("li");
 
-            LinkButton linkToDetails = new LinkButton() { Text = quest.Name, PostBackUrl = "~/App_Page/QuestDetails.aspx" };
+            LinkButton linkToDetails = new LinkButton() { Text = quest.Name, PostBackUrl = "~/App_Page/QuestDetails.aspx" ,ID = quest.Id.ToString() };
             linkToDetails.Click += (sender, args) =>
                 {
-                    string selectedQuestName = (sender as LinkButton).Text;
+                    int selectedQuestId = int.Parse((sender as LinkButton).ID);
                     foreach (QuestModel questModel in QuestModels)
                     {
-                        if (questModel.Name.Equals(selectedQuestName))
+                        if (questModel.Id == selectedQuestId)
                         {
                             SelectedQuestModel = questModel;
                             break;
@@ -58,23 +60,32 @@ public partial class AppPageQuests : System.Web.UI.Page, ICrossPageSender<QuestM
             QuestsList.Controls.Add(listItem);
         }
     }
-
     private void GetPlayerProfile()
     {
-        if (PreviousPage != null && PreviousPage is ICrossPageSender<PlayerModel>)
+        if (PreviousPage != null && PreviousPage is ICrossPageSender<UserModel>)
         {
-            ICrossPageSender<PlayerModel> sourcePage = PreviousPage as ICrossPageSender<PlayerModel>;
-            PlayerModel = sourcePage.GetModel();
+            ICrossPageSender<UserModel> sourcePage = PreviousPage as ICrossPageSender<UserModel>;
+            UserModel = sourcePage.GetModel();
 
-            Label userNickNameDeclaration = new Label() { Text = "Вы вошли как: " };
-            HyperLink linkToProfilePage = new HyperLink()
+           Label userNickNameDeclaration = new Label() { Text = "Вы вошли как: " };
+            LinkButton linkToProfilePage = new LinkButton()
             {
-                Text = "Вы вошли как: " + PlayerModel.NickName,
-                NavigateUrl = "~/App_Page/Profile.aspx"
+                Text = "Вы вошли как: " + UserModel.NickName,
+                PostBackUrl = "~/App_Page/Profile.aspx"
             };
-            header.Controls.Add(userNickNameDeclaration);
-            header.Controls.Add(linkToProfilePage);
+            //header.Controls.Add(userNickNameDeclaration);
+            //header.Controls.Add(linkToProfilePage);
         }
+    }
+    private void PerformGetAllQuestsRequest()
+    {
+        DatabaseResponse<List<QuestModel>> databaseResponse = new DatabaseRequest<List<QuestModel>>()
+        {
+            Processor = Processor,
+            RequestType = RequestType.Query,
+            StoredProcedure = DatabaseConst.SPGetAllQuests
+        }.Execute();
+        QuestModels = databaseResponse.Result;
     }
 
     QuestModel ICrossPageSender<QuestModel>.GetModel()
@@ -82,8 +93,16 @@ public partial class AppPageQuests : System.Web.UI.Page, ICrossPageSender<QuestM
         return SelectedQuestModel;
     }
 
-    PlayerModel ICrossPageSender<PlayerModel>.GetModel()
+    UserModel ICrossPageSender<UserModel>.GetModel()
     {
-        return PlayerModel;
+        return UserModel;
     }
+
+
+protected void ButtonLogout_Click(object sender, EventArgs e)
+    {
+        UserModel = null;
+    }
+
+
 }

@@ -1,63 +1,13 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="AppPageDefault" %>
+﻿<%@ Page Title="Главная" Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="AppPageDefault" MasterPageFile="MasterPage.master"  %>
 
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title>Main</title>
-
-    <link rel="shortcut icon" href="../App_Style/images/gt_favicon.png">
-    <link href="../App_Style/css/CustomStyleSheet.css" rel="stylesheet" media="screen" />
-    <%--   <link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">--%>
-    <link href="../App_Style/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="../App_Style/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="../App_Style/css/bootstrap-theme.css" rel="stylesheet" />
-    <link href="../App_Style/css/main.css" rel="stylesheet" />
-
-    <script src="../App_Style/js/html5shiv.js"></script>
-    <script src="../App_Style/js/respond.min.js"></script>
-
-</head>
-<body>
-    <form id="form1" runat="server">
-        <body class="home">
-            <!-- Fixed navbar -->
-            <div class="navbar navbar-inverse navbar-fixed-top headroom">
-                <div class="container">
-                    <div class="navbar-header">
-                        <!-- Button for smallest screens -->
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-                        <a class="navbar-brand" href="index.html">QuestHunter</a>
-                    </div>
-                    <div class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav pull-right">
-                            <li class="active"><a href="#">Home</a></li>
-                            <li><a href="about.html">About</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">More Pages <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="sidebar-left.html">Left Sidebar</a></li>
-                                    <li class="active"><a href="sidebar-right.html">Right Sidebar</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="contact.html">Contact</a></li>
-                            <li><a class="btn" href="signin.html">SIGN IN</a></li>
-                            <li><a class="btn" href="signup.html">SIGN UP</a></li>
-                        </ul>
-                    </div>
-                    <!--/.nav-collapse -->
-                </div>
-            </div>
-            <!-- /.navbar -->
-
+<asp:Content runat="server" ContentPlaceHolderID="head">
+           
             <!-- Header -->
             <header id="head">
                 <div class="container">
                     <div class="row">
-                        <h1 class="lead">AWESOME TEXT HERE</h1>
-                        <p class="tagline">some text <a href="">Link</a></p>
-                        <p><a class="btn btn-default btn-lg" role="button">BUTTON</a> <a class="btn btn-action btn-lg" role="button">BUTTON</a></p>
-                    </div>
+                        <h1 class="lead">МИР ТРУД КУРСАЧ</h1>
+                      </div>
                 </div>
             </header>
             <!-- /Header -->
@@ -66,10 +16,10 @@
             <div class="container text-center">
                 <br>
                 <br>
-                <h2 class="thin">The best place to tell people why they are here</h2>
-                <p class="text-muted">
-                    Lorem ipsum dolor sit amet, sit minim fuisset detracto at, mea id hinc illum:<br>
-                    Lorem ipsum dolor sit amet.
+                <h2 class="thin">Разработан с любовью</h2>
+                <p class="text">
+                    Мы использовали ASP.NET, SQL, Microsoft SQL Server, Bootstrap, JavaScript<br>
+                   Надеемся, Вам понравится.
                 </p>
             </div>
             <!-- /Intro-->
@@ -78,39 +28,51 @@
             <div class="jumbotron top-space">
                 <div class="container">
 
-                    <h3 class="text-center thin">Why we?</h3>
+                    <h3 class="text-center thin">Почему мы лучшие?</h3>
 
                     <div class="row">
                         <div class="col-md-3 col-sm-6 highlight">
                             <div class="h-caption">
-                                <h4><i class="fa fa-cogs fa-5"></i>one</h4>
+                                <h4><i class="fa fa-cogs fa-5"></i>ASP.NET</h4>
                             </div>
                             <div class="h-body text-center">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque aliquid adipisci aspernatur. Soluta quisquam dignissimos earum quasi voluptate. Amet, dignissimos, tenetur vitae dolor quam iusto assumenda hic reprehenderit?</p>
+                                <p>
+                                    Надежность и стабильность. <br/>
+                                    Высокая производительность и скорость работы. <br/>
+                                    Скорость разработки на высшем уровне. <br/>
+                                </p>
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6 highlight">
                             <div class="h-caption">
-                                <h4><i class="fa fa-flash fa-5"></i>two</h4>
+                                <h4><i class="fa fa-flash fa-5"></i>Microsoft SQL Server</h4>
                             </div>
                             <div class="h-body text-center">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores, commodi, sequi quis ad fugit omnis cumque a libero error nesciunt molestiae repellat quos perferendis numquam quibusdam rerum repellendus laboriosam reprehenderit! </p>
+                                <p>
+                                    Стабильно. <br/>
+                                    Надёжно. <br/>
+                                    Производительно. <br/>
+                                </p>
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6 highlight">
                             <div class="h-caption">
-                                <h4><i class="fa fa-heart fa-5"></i>three</h4>
+                                <h4><i class="fa fa-heart fa-5"></i>Bootstrap</h4>
                             </div>
                             <div class="h-body text-center">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, vitae, perferendis, perspiciatis nobis voluptate quod illum soluta minima ipsam ratione quia numquam eveniet eum reprehenderit dolorem dicta nesciunt corporis?</p>
+                                <p>
+                                    Bootstrap легко и эффективно масштабирует ваш проект с одной базой кода, от телефонов и планшетов до настольных компьютеров.
+                                </p>
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6 highlight">
                             <div class="h-caption">
-                                <h4><i class="fa fa-smile-o fa-5"></i>four</h4>
+                                <h4><i class="fa fa-smile-o fa-5"></i>JavaScript</h4>
                             </div>
                             <div class="h-body text-center">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, excepturi, maiores, dolorem quasi reprehenderit illo accusamus nulla minima repudiandae quas ducimus reiciendis odio sequi atque temporibus facere corporis eos expedita? </p>
+                                <p>
+                                     Javascript не требуется компилировать, он подключается к HTML-странице и работает "как есть".
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -123,166 +85,48 @@
             <!-- container -->
             <div class="container">
 
-                <h2 class="text-center top-space">Maybe some info</h2>
+                <h2 class="text-center top-space">Немного информации</h2>
                 <br>
 
                 <div class="row">
                     <div class="col-sm-6">
-                        <h3>First</h3>
+                        <h3>lambda в массы!</h3>
                         <p>
-                            Lorem ipsum dolor sit amet, ne sit nobis melius aperiri. Eum veniam nemore et, quo ea possit appetere officiis. Sit equidem fierent in, impetus debitis temporibus nam in. Ceteros molestie omittantur vel ei, per et tation ocurreret eloquentiam. Vim saperet placerat delicatissimi at.
-Eu mei graeci patrioque, ius ad primis quaestio similique, mentitum legendos te vix. Per alia perpetua adversarium ne, his minim molestiae gubergren at, sed an accusam referrentur. Mucius audire scripta quo te, velit quidam ancillae eos ut. Ferri deleniti in has. Sit ei ferri praesent posidonium.
-                        </p>
+                            При реализации проекта, а именно при написании динамически формируемых страниц активно использовался механизм lambda-выражения. Lambda-выражение наиболее прямо заменяет анонимный метод, представляет собой блок кода, заключенный в фигурные скобки это — прямая замена анонимных методов. Лямбда-выражения предоставляют еще более сокращенный способ объявлять анонимный метод и не требуют ни кода в фигурных скобках, ни оператора return.
+                         </p>
                     </div>
                     <div class="col-sm-6">
-                        <h3>Second</h3>
+                        <h3>Microsoft SQL Server</h3>
                         <p>
-                            Lorem ipsum dolor sit amet, ne sit nobis melius aperiri. Eum veniam nemore et, quo ea possit appetere officiis. Sit equidem fierent in, impetus debitis temporibus nam in. Ceteros molestie omittantur vel ei, per et tation ocurreret eloquentiam. Vim saperet placerat delicatissimi at.
-Eu mei graeci patrioque, ius ad primis quaestio similique, mentitum legendos te vix. Per alia perpetua adversarium ne, his minim molestiae gubergren at, sed an accusam referrentur. Mucius audire scripta quo te, velit quidam ancillae eos ut. Ferri deleniti in has. Sit ei ferri praesent posidonium.
-                        </p>
+                           При написании работы невозможно было обойти необходимость использования реляционной базы данных для хранения информации о пользователях, квестах, этапах и подписках.
+При выборе базы данных стоял выбор между базой данных Microsoft SQL Server и Oracle MySQL. Выбор был сделан в пользу решения компании Microsoft, которое является встроенным в среду разработки Microsoft Visual Studio Ultimate решением.
+
+                         </p>
                     </div>
                 </div>
                 <!-- /row -->
 
                 <div class="row">
                     <div class="col-sm-6">
-                        <h3>Third</h3>
+                        <h3>Util классы</h3>
                         <p>
-                            Lorem ipsum dolor sit amet, ne sit nobis melius aperiri. Eum veniam nemore et, quo ea possit appetere officiis. Sit equidem fierent in, impetus debitis temporibus nam in. Ceteros molestie omittantur vel ei, per et tation ocurreret eloquentiam. Vim saperet placerat delicatissimi at.
-Eu mei graeci patrioque, ius ad primis quaestio similique, mentitum legendos te vix. Per alia perpetua adversarium ne, his minim molestiae gubergren at, sed an accusam referrentur. Mucius audire scripta quo te, velit quidam ancillae eos ut. Ferri deleniti in has. Sit ei ferri praesent posidonium.
+                            Util-классы применяются для выполнения часто используемых процедур, что делает код чище, упрощает его визуальное восприятие, даёт программисту возможность уделять внимание не мелочам а сконцентрироваться непосредственно над реализацией поставленной задачи. 
                         </p>
                     </div>
                     <div class="col-sm-6">
-                        <h3>Fourth</h3>
+                        <h3>Преодолевая трудности</h3>
                         <p>
-                            Lorem ipsum dolor sit amet, ne sit nobis melius aperiri. Eum veniam nemore et, quo ea possit appetere officiis. Sit equidem fierent in, impetus debitis temporibus nam in. Ceteros molestie omittantur vel ei, per et tation ocurreret eloquentiam. Vim saperet placerat delicatissimi at.
-Eu mei graeci patrioque, ius ad primis quaestio similique, mentitum legendos te vix. Per alia perpetua adversarium ne, his minim molestiae gubergren at, sed an accusam referrentur. Mucius audire scripta quo te, velit quidam ancillae eos ut. Ferri deleniti in has. Sit ei ferri praesent posidonium.
+                            При реализации курсвой работы, команда столкнулась с довольно распространённой проблемой в программировании на ASP.NET: отсутствием отклика динамически добавленных элементов управления. Проблема проявлялсь в момент отправки страницы на сервер, в случае, когда пользователь воздействовал на динамически добавленный элемент управления (нажимал на кнопку, например). Сервер принимал страницу, и ряд блоков с проверкой if не давал элементам управления вновь добавиться на странцу, вследствие чего не происходил вызов соответствующих событий нажатия на кнопку. Проблема была решена лишь за счёт продолжительного тестирования кода и упорной работы.
                         </p>
                     </div>
                 </div>
                 <!-- /row -->
 
-                <div class="jumbotron top-space">
-                    <h4>
-                        Lorem ipsum dolor sit amet, ne sit nobis melius aperiri. Eum veniam nemore et, quo ea possit appetere officiis. Sit equidem fierent in, impetus debitis temporibus nam in. Ceteros molestie omittantur vel ei, per et tation ocurreret eloquentiam. Vim saperet placerat delicatissimi at.
-                        </h4>
-                    <p class="text-right"><a class="btn btn-primary btn-large">Button »</a></p>
-                </div>
+               
 
             </div>
             <!-- /container -->
 
-            <!-- Social links. @TODO: replace by link/instructions -->
-            <section id="social">
-                <div class="container">
-                    <div class="wrapper clearfix">
-                        <!-- AddThis Button BEGIN -->
-                        <div class="addthis_toolbox addthis_default_style">
-                            <%--<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
-				<a class="addthis_button_tweet"></a>
-				<a class="addthis_button_linkedin_counter"></a>
-				<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>--%>
-                        </div>
-                        <!-- AddThis Button END -->
-                    </div>
-                </div>
-            </section>
-            <!-- /social links -->
+           </asp:Content>
 
 
-            <footer id="footer" class="top-space">
-
-                <div class="footer1">
-                    <div class="container">
-                        <div class="row">
-
-                            <div class="col-md-3 widget">
-                                <h3 class="widget-title">Contact</h3>
-                                <div class="widget-body">
-                                    <p>
-                                        +375291111111<br>
-                                        <a href="mailto:#">some.email@somewhere.com</a><br>
-                                        <br>
-                                        adress
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3 widget">
-                                <h3 class="widget-title">Follow us</h3>
-                                <div class="widget-body">
-                                    <p class="follow-me-icons">
-                                        <a href=""><i class="fa fa-twitter fa-2"></i></a>
-                                        <a href=""><i class="fa fa-dribbble fa-2"></i></a>
-                                        <a href=""><i class="fa fa-github fa-2"></i></a>
-                                        <a href=""><i class="fa fa-facebook fa-2"></i></a>
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 widget">
-                                <h3 class="widget-title">Maybe some text</h3>
-                                <div class="widget-body">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, dolores, quibusdam architecto voluptatem amet fugiat nesciunt placeat provident cumque accusamus itaque voluptate modi quidem dolore optio velit hic iusto vero praesentium repellat commodi ad id expedita cupiditate repellendus possimus unde?</p>
-                                    <p>Eius consequatur nihil quibusdam! Laborum, rerum, quis, inventore ipsa autem repellat provident assumenda labore soluta minima alias temporibus facere distinctio quas adipisci nam sunt explicabo officia tenetur at ea quos doloribus dolorum voluptate reprehenderit architecto sint libero illo et hic.</p>
-                                </div>
-                            </div>
-
-                        </div>
-                        <!-- /row of widgets -->
-                    </div>
-                </div>
-
-                <div class="footer2">
-                    <div class="container">
-                        <div class="row">
-
-                            <div class="col-md-6 widget">
-                                <div class="widget-body">
-                                    <p class="simplenav">
-                                        <a href="#">Home</a> | 
-								<a href="about.html">About</a> |
-								<a href="contact.html">Contact</a> |
-								<b><a href="signup.html">Sign up</a></b>
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 widget">
-                                <div class="widget-body">
-                                    <p class="text-right">
-                                        Copyright &copy; 2015, King. Designed by King
-                                    </p>
-                                </div>
-                            </div>
-
-                        </div>
-                        <!-- /row of widgets -->
-                    </div>
-                </div>
-
-            </footer>
-
-
-
-
-
-
-            <script src="../App_Style/js/jquery-2.1.3.min.js"></script>
-            <script src="../App_Style/js/bootstrap.min.js"></script>
-            <script src="../App_Style/js/headroom.min.js"></script>
-            <script src="../App_Style/js/jQuery.headroom.min.js"></script>
-            <script src="../App_Style/js/template.js"></script>
-    </form>
-</body>
-</html>
-
-<%-- <div id="header">
-            <asp:HyperLink ID="RegistrationLink" runat="server" NavigateUrl="~/App_Page/Registration.aspx">Регистрация</asp:HyperLink>
-            <asp:HyperLink ID="AuthorizationLink" runat="server" NavigateUrl="~/App_Page/Authorization.aspx">Вход</asp:HyperLink>
-            <asp:HyperLink ID="QuestsLink" runat="server" NavigateUrl="~/App_Page/Quests.aspx">Просмотреть доступные квесты</asp:HyperLink>
-        </div>
-        <div id="content">
-        </div>
-        <div id="footer">
-        </div>--%>

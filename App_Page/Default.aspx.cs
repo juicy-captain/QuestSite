@@ -8,9 +8,9 @@ using System.Web.UI.WebControls;
 using Model;
 using Interface;
 
-public partial class AppPageDefault : System.Web.UI.Page, ICrossPageSender<PlayerModel>
+public partial class AppPageDefault : System.Web.UI.Page, ICrossPageSender<UserModel>
 {
-    private PlayerModel PlayerModel { get; set; }
+    private UserModel UserModel { get; set; }
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -18,8 +18,8 @@ public partial class AppPageDefault : System.Web.UI.Page, ICrossPageSender<Playe
     }
 
 
-    PlayerModel ICrossPageSender<PlayerModel>.GetModel()
+    UserModel ICrossPageSender<UserModel>.GetModel()
     {
-        return PlayerModel;
+        return UserModel;
     }
 }
