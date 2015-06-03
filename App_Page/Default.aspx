@@ -19,7 +19,7 @@
                 <h2 class="thin">Разработан с любовью</h2>
                 <p class="text">
                     Мы использовали ASP.NET, SQL, Microsoft SQL Server, Bootstrap, JavaScript<br>
-                   Надеемся Вам понравится.
+                   Надеемся, Вам понравится.
                 </p>
             </div>
             <!-- /Intro-->

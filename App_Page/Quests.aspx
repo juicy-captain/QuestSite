@@ -12,9 +12,6 @@
     <link rel="stylesheet" href="../App_Style/assets/plugins/perfect-scrollbar/src/perfect-scrollbar.css">
     <link rel="stylesheet" href="../App_Style/assets/plugins/animate.css/animate.min.css">
     <link rel="stylesheet" href="../App_Style/assets/plugins/bootstrap-select/bootstrap-select.min.css">
-    <link rel="stylesheet" href="../App_Style/assets/plugins/DataTables/media/css/DT_bootstrap.css">
-    <link rel="stylesheet" href="../App_Style/assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.css">
-    <link rel="stylesheet" href="../App_Style/assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css">
     <link rel="stylesheet" href="../App_Style/assets/plugins/nvd3/nv.d3.min.css">
     <link rel="stylesheet" href="../App_Style/assets/css/styles.css">
     <link rel="stylesheet" href="../App_Style/assets/css/styles-responsive.css">
@@ -106,7 +103,7 @@
                         <div class="col-sm-12">
                             <div class="tabbable">
                                 <ul class="nav nav-tabs" id="myTab4">
-                                    <li class="active">  <a data-toggle="tab" href="#panel_overview">Список квестов </a>    </li>
+                                    <li class="active"><a data-toggle="tab" href="#panel_overview">Список квестов </a></li>
                                 </ul>
                                 <div class="tab-content">
                                     <div id="panel_overview" class="tab-pane fade in active">
@@ -132,47 +129,21 @@
         <script src="../App_Style/assets/plugins/jquery-ui/jquery-ui-1.10.2.custom.min.js"></script>
         <script src="../App_Style/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
         <script src="../App_Style/assets/plugins/blockUI/jquery.blockUI.js"></script>
-        <script src="../App_Style/assets/plugins/iCheck/jquery.icheck.min.js"></script>
-        <script src="../App_Style/assets/plugins/moment/min/moment.min.js"></script>
+        <script src="../App_Style/assets/plugins/iCheck/jquery.icheck.min.js"></script> 
         <script src="../App_Style/assets/plugins/perfect-scrollbar/src/jquery.mousewheel.js"></script>
         <script src="../App_Style/assets/plugins/perfect-scrollbar/src/perfect-scrollbar.js"></script>
-        <script src="../App_Style/assets/plugins/bootbox/bootbox.min.js"></script>
-        <script src="../App_Style/assets/plugins/jquery.scrollTo/jquery.scrollTo.min.js"></script>
         <script src="../App_Style/assets/plugins/ScrollToFixed/jquery-scrolltofixed-min.js"></script>
         <script src="../App_Style/assets/plugins/jquery.appear/jquery.appear.js"></script>
         <script src="../App_Style/assets/plugins/jquery-cookie/jquery.cookie.js"></script>
         <script src="../App_Style/assets/plugins/velocity/jquery.velocity.min.js"></script>
-        <%--<script src="../App_Style/assets/plugins/TouchSwipe/jquery.touchSwipe.min.js"></script>--%>
         <!-- end: MAIN JAVASCRIPTS -->
         <!-- start: JAVASCRIPTS REQUIRED FOR SUBVIEW CONTENTS -->
-        <%--<script src="../App_Style/assets/plugins/owl-carousel/owl-carousel/owl.carousel.js"></script>--%>
-        <script src="../App_Style/assets/plugins/jquery-mockjax/jquery.mockjax.js"></script>
-        <%--<script src="../App_Style/assets/plugins/toastr/toastr.js"></script>--%>
-        <script src="../App_Style/assets/plugins/bootstrap-modal/js/bootstrap-modal.js"></script>
-        <script src="../App_Style/assets/plugins/bootstrap-modal/js/bootstrap-modalmanager.js"></script>
-        <%--<script src="../App_Style/assets/plugins/fullcalendar/fullcalendar/fullcalendar.min.js"></script>--%>
         <script src="../App_Style/assets/plugins/bootstrap-switch/dist/js/bootstrap-switch.min.js"></script>
         <script src="../App_Style/assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
-        <script src="../App_Style/assets/plugins/jquery-validation/dist/jquery.validate.min.js"></script>
-        <script src="../App_Style/assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
-        <script src="../App_Style/assets/plugins/DataTables/media/js/jquery.dataTables.min.js"></script>
-        <script src="../App_Style/assets/plugins/DataTables/media/js/DT_bootstrap.js"></script>
-        <%--<script src="../App_Style/assets/plugins/truncate/jquery.truncate.js"></script>--%>
-        <script src="../App_Style/assets/plugins/summernote/dist/summernote.min.js"></script>
-        <script src="../App_Style/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
-        <script src="../App_Style/assets/js/subview.js"></script>
-        <script src="../App_Style/assets/js/subview-examples.js"></script>
         <!-- end: JAVASCRIPTS REQUIRED FOR SUBVIEW CONTENTS -->
         <!-- start: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
-        <script src="../App_Style/assets/plugins/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
         <script src="../App_Style/assets/plugins/nvd3/lib/d3.v3.js"></script>
         <script src="../App_Style/assets/plugins/nvd3/nv.d3.min.js"></script>
-        <%-- <script src="../App_Style/assets/plugins/nvd3/src/models/historicalBar.js"></script>
-        <script src="../App_Style/assets/plugins/nvd3/src/models/historicalBarChart.js"></script>--%>
-        <%-- <script src="../App_Style/assets/plugins/nvd3/src/models/stackedArea.js"></script>
-        <script src="../App_Style/assets/plugins/nvd3/src/models/stackedAreaChart.js"></script>--%>
-        <script src="../App_Style/assets/plugins/jquery.sparkline/jquery.sparkline.js"></script>
-        <%--<script src="../App_Style/assets/plugins/easy-pie-chart/dist/jquery.easypiechart.min.js"></script>--%>
         <script src="../App_Style/assets/js/index.js"></script>
         <!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
         <!-- start: CORE JAVASCRIPTS  -->
