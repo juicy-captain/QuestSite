@@ -8,8 +8,6 @@
     <link href="../App_Style/RegistrationStyle.css" rel="stylesheet" type="text/css" />
     <link href="../App_Style/css/CustomStyleSheet.css" rel="stylesheet" media="screen" />
     <link rel="shortcut icon" href="../App_Style/images/gt_favicon.png">
-
-    <%--   <link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">--%>
     <link href="../App_Style/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../App_Style/css/font-awesome.min.css" rel="stylesheet" />
     <link href="../App_Style/css/bootstrap-theme.css" rel="stylesheet" />
@@ -20,94 +18,79 @@
 </head>
 <body>
     <form id="form1" runat="server">
-      
 
-            <!-- Fixed navbar -->
-            <div class="navbar navbar-inverse navbar-fixed-top headroom">
-                <div class="container">
-                    <div class="navbar-header">
-                        <!-- Button for smallest screens -->
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-                        <a class="navbar-brand" href="Default.aspx">QuestHunter</a>
-                    </div>
-                    <div class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav pull-right">
-                            <li><a href="Default.aspx">Home</a></li>
-                            <li><a href="about.html">About</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">More Pages <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="sidebar-left.html">Left Sidebar</a></li>
-                                    <li><a href="sidebar-right.html">Right Sidebar</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="contact.html">Contact</a></li>
-                             <li class="active"><a class="btn" href="Authorization.aspx">SIGN IN</a></li>
-                        <li class="active"><a class="btn" href="Registration.aspx">SIGN UP</a></li>
 
-                        </ul>
-                    </div>
-                    <!--/.nav-collapse -->
+        <!-- Fixed navbar -->
+        <div class="navbar navbar-inverse navbar-fixed-top headroom">
+            <div class="container">
+                <div class="navbar-header">
+                    <!-- Button for smallest screens -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+                    <a class="navbar-brand" href="Default.aspx">QuestHunter</a>
                 </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav pull-right">
+                        <li><a href="Default.aspx">Главная</a></li>
+                        <li class="active"><a class="btn" href="Authorization.aspx">Вход</a></li>
+                        <li class="active"><a class="btn" href="Registration.aspx">Регистрация</a></li>
+
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
             </div>
-            <!-- /.navbar -->
-            <header id="head" class="secondary"></header>
+        </div>
+        <!-- /.navbar -->
+        <header id="head" class="secondary"></header>
 
-             <!-- container -->
-    <div class="container" >
+        <!-- container -->
+        <div class="container">
 
-        <ol class="breadcrumb">
-            <li><a href="Default.aspx">Home</a></li>
-            <li class="active">Registration</li>
-        </ol>
+            <ol class="breadcrumb">
+                <li><a href="Default.aspx">Главная</a></li>
+                <li class="active">Регистрация</li>
+            </ol>
 
-        <div class="row">
+            <div class="row">
 
-            <!-- Article main content -->
-            <article class="col-xs-12 maincontent">
-                <header class="page-header">
-                    <h1 class="page-title">Registration</h1>
-                </header>
+                <!-- Article main content -->
+                <article class="col-xs-12 maincontent">
+                    <header class="page-header">
+                        <h1 class="page-title">Регистрация</h1>
+                    </header>
 
-                <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <h3 class="thin text-center">Register a new account</h3>
-                            <p class="text-center text-muted">Lorem ipsum dolor sit amet, <a href="SignIn.aspx">Login</a> adipisicing elit. Quo nulla quibusdam cum doloremque incidunt nemo sunt a tenetur omnis odio. </p>
-                            <hr>
-                            
-                           
-                    
-                   
-                  
-                            
+                    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <h3 class="thin text-center">Регистрация нового аккаунта</h3>
+                                <p class="text-center text-muted"><a href="Authorization.aspx">Войдите,</a> если Вы зарегестрированы </p>
+                                <hr>
 
-                            <form>
-                                <div class="top-margin">
-                                    <label>Nickname</label>
-                                    <br/>
-                                   <asp:TextBox ID="TextBoxNickName" runat="server" CssClass="form-control"></asp:TextBox>
-              
-                                </div>
-                                <div class="top-margin">
-                                    <label>First Name</label><br />
- <asp:TextBox ID="TextBoxFirstName" runat="server" CssClass="form-control"></asp:TextBox>
-                                    <%--<input type="text" class="form-control" id="firstname">--%>
-                                </div>
-                                <div class="top-margin">
-                                    <label>Last Name</label>
-                                      <br />
-                                    <asp:TextBox ID="TextBoxSecondName" runat="server" CssClass="form-control"></asp:TextBox>
-                   
-                                    <%--<input type="text" class="form-control" id="lastname">--%>
-                                </div>
-                                  <div class="top-margin">
-                                    <label>Password <span class="text-danger">*</span></label>
-                                        <br/>
-                                          <asp:TextBox ID="TextBoxPassword" runat="server" CssClass="form-control"></asp:TextBox>
-                                    <%--<input type="text" class="form-control" id="lastname">--%>
-                                </div>
-                             <%--   <div class="top-margin">
+                                <form>
+                                    <div class="top-margin">
+                                        <label>Имя пользователя</label>
+                                        <br />
+                                        <asp:TextBox ID="TextBoxNickName" runat="server" CssClass="form-control"></asp:TextBox>
+
+                                    </div>
+                                    <div class="top-margin">
+                                        <label>Имя</label><br />
+                                        <asp:TextBox ID="TextBoxFirstName" runat="server" CssClass="form-control"></asp:TextBox>
+                                      
+                                    </div>
+                                    <div class="top-margin">
+                                        <label>Фамилия</label>
+                                        <br />
+                                        <asp:TextBox ID="TextBoxSecondName" runat="server" CssClass="form-control"></asp:TextBox>
+
+                                     
+                                    </div>
+                                    <div class="top-margin">
+                                        <label>Пароль<span class="text-danger">*</span></label>
+                                        <br />
+                                        <asp:TextBox ID="TextBoxPassword" runat="server" CssClass="form-control"></asp:TextBox>
+                                        <%--<input type="text" class="form-control" id="lastname">--%>
+                                    </div>
+                                    <%--   <div class="top-margin">
                                     <label>Birthdate<span class="text-danger">*</span></label>
                                     <br>
                                     <select class="selectpicker " id="day">
@@ -215,102 +198,103 @@
 
                                     </select>
                                 </div>--%>
-                                
-                                <br/>
-                                
 
-                                 <asp:DropDownList ID="BirthDay" runat="server">
-                        <asp:ListItem>День</asp:ListItem>
-                        <asp:ListItem>1</asp:ListItem>
-                        <asp:ListItem Value="2"></asp:ListItem>
-                    </asp:DropDownList>
-                    <asp:DropDownList ID="BirthMonth" runat="server">
-                        <asp:ListItem Selected="True">Месяц</asp:ListItem>
-                        <asp:ListItem>1</asp:ListItem>
-                    </asp:DropDownList>
-                    <asp:DropDownList ID="BirthYear" runat="server">
-                        <asp:ListItem Value="1">Год</asp:ListItem>
-                        <asp:ListItem>1995</asp:ListItem>
-                    </asp:DropDownList>
-                                
-                                <br />
-                
-                   
-                    
-                                
+                                    <br />
 
-                                <div class="top-margin">
-                                    <label>Gender<span class="text-danger">*</span></label>
-                                    <br>
-                                    <label class="radio-inline">
+
+                                    <asp:DropDownList ID="BirthDay" runat="server">
+                                        <asp:ListItem>День</asp:ListItem>
+                                        <asp:ListItem>1</asp:ListItem>
+                                        <asp:ListItem Value="2"></asp:ListItem>
+                                    </asp:DropDownList>
+                                    <asp:DropDownList ID="BirthMonth" runat="server">
+                                        <asp:ListItem Selected="True">Месяц</asp:ListItem>
+                                        <asp:ListItem>1</asp:ListItem>
+                                    </asp:DropDownList>
+                                    <asp:DropDownList ID="BirthYear" runat="server">
+                                        <asp:ListItem Value="1">Год</asp:ListItem>
+                                        <asp:ListItem>1995</asp:ListItem>
+                                    </asp:DropDownList>
+
+                                    <br />
+
+
+
+
+
+                                    <div class="top-margin">
+                                        <label>Gender<span class="text-danger">*</span></label>
+                                        <br>
+                                        <label class="radio-inline">
                                             <asp:RadioButton ID="RadioButtonMale" runat="server" GroupName="GenderGroup" Text="Мужской" />
-                                        <%--<input type="radio" name="optradio">Male--%>
-                                    </label><br />
-                                    <label class="radio-inline">
-                                         <asp:RadioButton ID="RadioButtonFemale" runat="server" GroupName="GenderGroup" Text="Женский" />
-                                        <%--<input type="radio" name="optradio">Female--%>
-                                    </label>
-                                </div>
+                                            <%--<input type="radio" name="optradio">Male--%>
+                                        </label>
+                                        <br />
+                                        <label class="radio-inline">
+                                            <asp:RadioButton ID="RadioButtonFemale" runat="server" GroupName="GenderGroup" Text="Женский" />
+                                            <%--<input type="radio" name="optradio">Female--%>
+                                        </label>
+                                    </div>
 
-                                <!-- EMAIL
+                                    <!-- EMAIL
 								<div class="top-margin">
 									<label>Email Address <span class="text-danger">*</span></label>
 									<input type="text" class="form-control">
 								</div>
                                 -->
-                             <%--   <div class="row top-margin">
+                                    <%--   <div class="row top-margin">
                                     <div class="col-sm-6">
                                         <label>Password <span class="text-danger">*</span></label>
                                         <br/>
                                           <asp:TextBox ID="TextBoxPassword" runat="server" CssClass="form-control"></asp:TextBox>
                                         <%--<input type="text" class="form-control" id="password">--%>
-                                   
+
                                     <%--<div class="col-sm-6">
 										<label>Confirm Password <span class="text-danger">*</span></label>
 										<input type="text" class="form-control">
 									</div>--%>
-                      <label>Avatar<span class="text-danger">*</span></label>         
- <asp:FileUpload ID="AvatarUpload" runat="server" />
-                            <asp:Label ID="LabelIncompatibleImageType" runat="server" Text="Несовместимый формат изображения" Visible="false"></asp:Label>
-                            
-                                <div class="row ">
-                                    <div class="col-lg-8">
-                                        <label class="checkbox">
-                                            <input type="checkbox">
-                                            I've read the <a href="">Terms and Conditions</a>
-                                        </label>
-                                    </div>
-                                    <div class="col-lg-4 text-right">
-                                         <asp:Button ID="Button4"
-                    Text="Sign UP"
-                  OnClick="RegistrationWizard_FinishButtonClick"
-                    runat="server"
-                                             CssClass="btn btn-action" />
-                                        <%--<button class="btn btn-action" type="submit">Register</button>--%>
-                                    </div>
-                                </div>
-                            </form>
-                            
-                           
+                                    <label>Avatar<span class="text-danger">*</span></label>
+                                    <asp:FileUpload ID="AvatarUpload" runat="server" />
+                                    <asp:Label ID="LabelIncompatibleImageType" runat="server" Text="Несовместимый формат изображения" Visible="false"></asp:Label>
 
+                                    <div class="row ">
+                                        <div class="col-lg-8">
+                                            <label class="checkbox">
+                                                <input type="checkbox">
+                                                I've read the <a href="">Terms and Conditions</a>
+                                            </label>
+                                        </div>
+                                        <div class="col-lg-4 text-right">
+                                            <asp:Button ID="Button4"
+                                                Text="Sign UP"
+                                                OnClick="RegistrationWizard_FinishButtonClick"
+                                                runat="server"
+                                                CssClass="btn btn-action" />
+                                            <%--<button class="btn btn-action" type="submit">Register</button>--%>
+                                        </div>
+                                    </div>
+                                </form>
+
+
+
+                            </div>
                         </div>
+
                     </div>
 
-                </div>
+                </article>
+                <!-- /Article -->
 
-            </article>
-            <!-- /Article -->
-
+            </div>
         </div>
-    </div>
-    <!-- /container -->
+        <!-- /container -->
 
 
 
 
 
 
-          <%--  <form>
+        <%--  <form>
                 <div id="generalDescriptionArea" class="descriptionArea">
 
                     <br />
@@ -361,8 +345,8 @@
 
 
             </form>--%>
-            
-            
+
+
 
 
 

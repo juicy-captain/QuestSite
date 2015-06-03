@@ -7,8 +7,8 @@
           
             <asp:Button ID="ButtonDelete" runat="server" Text="Удалить" PostBackUrl="~/App_Page/AdminQuests.aspx" OnClick="ButtonDelete_Click" />
             <asp:Button ID="ButtonAddNewStage" runat="server" Text="Добавить новый этап" PostBackUrl="~/App_Page/AdminStageEdit.aspx" OnClick="ButtonAddNewStage_Click" />
-            <%--<asp:Button ID="ButtonSaveChanges" runat="server" Text="Сохранить" OnClick="ButtonSaveChanges_Click" PostBackUrl="~/App_Page/AdminQuests.aspx" />--%>
-            <asp:LinkButton runat="server" OnClick="ButtonSaveChanges_Click" PostBackUrl="~/App_Page/AdminQuests.aspx" Text="Save" ></asp:LinkButton>
+            <asp:Button ID="ButtonSaveChanges" runat="server" Text="Сохранить" OnClick="ButtonSaveChanges_Click" PostBackUrl="~/App_Page/AdminQuests.aspx" />
+            <%--<asp:LinkButton runat="server" OnClick="ButtonSaveChanges_Click" PostBackUrl="~/App_Page/AdminQuests.aspx" Text="Save" ></asp:LinkButton>--%>
 
             <div> &nbsp;</div>
             <table>

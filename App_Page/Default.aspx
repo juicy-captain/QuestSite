@@ -8,9 +8,9 @@
             <header id="head">
                 <div class="container">
                     <div class="row">
-                        <h1 class="lead">AWESOME TEXT HERE</h1>
+                        <h1 class="lead">МИР ТРУД КУРСАЧ</h1>
                         <p class="tagline">some text <a href="">Link</a></p>
-                        <p><a class="btn btn-default btn-lg" role="button">BUTTON</a> <a class="btn btn-action btn-lg" role="button">BUTTON</a></p>
+                      
                     </div>
                 </div>
             </header>
@@ -20,10 +20,10 @@
             <div class="container text-center">
                 <br>
                 <br>
-                <h2 class="thin">The best place to tell people why they are here</h2>
-                <p class="text-muted">
-                    Lorem ipsum dolor sit amet, sit minim fuisset detracto at, mea id hinc illum:<br>
-                    Lorem ipsum dolor sit amet.
+                <h2 class="thin">Разработан с любовью</h2>
+                <p class="text">
+                    Мы использовали ASP.NET, SQL, Microsoft SQL Server, Bootstrap, JavaScript<br>
+                   Надеемся Вам понравится.
                 </p>
             </div>
             <!-- /Intro-->
@@ -32,39 +32,51 @@
             <div class="jumbotron top-space">
                 <div class="container">
 
-                    <h3 class="text-center thin">Why we?</h3>
+                    <h3 class="text-center thin">Почему мы лучшие?</h3>
 
                     <div class="row">
                         <div class="col-md-3 col-sm-6 highlight">
                             <div class="h-caption">
-                                <h4><i class="fa fa-cogs fa-5"></i>one</h4>
+                                <h4><i class="fa fa-cogs fa-5"></i>ASP.NET</h4>
                             </div>
                             <div class="h-body text-center">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque aliquid adipisci aspernatur. Soluta quisquam dignissimos earum quasi voluptate. Amet, dignissimos, tenetur vitae dolor quam iusto assumenda hic reprehenderit?</p>
+                                <p>
+                                    Надежность и стабильность. <br/>
+                                    Высокая производительность и скорость работы. <br/>
+                                    Скорость разработки на высшем уровне. <br/>
+                                </p>
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6 highlight">
                             <div class="h-caption">
-                                <h4><i class="fa fa-flash fa-5"></i>two</h4>
+                                <h4><i class="fa fa-flash fa-5"></i>Microsoft SQL Server</h4>
                             </div>
                             <div class="h-body text-center">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores, commodi, sequi quis ad fugit omnis cumque a libero error nesciunt molestiae repellat quos perferendis numquam quibusdam rerum repellendus laboriosam reprehenderit! </p>
+                                <p>
+                                    Стабильно. <br/>
+                                    Надёжно. <br/>
+                                    Производительно. <br/>
+                                </p>
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6 highlight">
                             <div class="h-caption">
-                                <h4><i class="fa fa-heart fa-5"></i>three</h4>
+                                <h4><i class="fa fa-heart fa-5"></i>Bootstrap</h4>
                             </div>
                             <div class="h-body text-center">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, vitae, perferendis, perspiciatis nobis voluptate quod illum soluta minima ipsam ratione quia numquam eveniet eum reprehenderit dolorem dicta nesciunt corporis?</p>
+                                <p>
+                                    Bootstrap легко и эффективно масштабирует ваш проект с одной базой кода, от телефонов и планшетов до настольных компьютеров.
+                                </p>
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6 highlight">
                             <div class="h-caption">
-                                <h4><i class="fa fa-smile-o fa-5"></i>four</h4>
+                                <h4><i class="fa fa-smile-o fa-5"></i>JavaScript</h4>
                             </div>
                             <div class="h-body text-center">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, excepturi, maiores, dolorem quasi reprehenderit illo accusamus nulla minima repudiandae quas ducimus reiciendis odio sequi atque temporibus facere corporis eos expedita? </p>
+                                <p>
+                                     Javascript не требуется компилировать, он подключается к HTML-странице и работает "как есть".
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -77,82 +89,48 @@
             <!-- container -->
             <div class="container">
 
-                <h2 class="text-center top-space">Maybe some info</h2>
+                <h2 class="text-center top-space">Немного информации</h2>
                 <br>
 
                 <div class="row">
                     <div class="col-sm-6">
-                        <h3>First</h3>
+                        <h3>lambda в массы!</h3>
                         <p>
-                            Lorem ipsum dolor sit amet, ne sit nobis melius aperiri. Eum veniam nemore et, quo ea possit appetere officiis. Sit equidem fierent in, impetus debitis temporibus nam in. Ceteros molestie omittantur vel ei, per et tation ocurreret eloquentiam. Vim saperet placerat delicatissimi at.
-Eu mei graeci patrioque, ius ad primis quaestio similique, mentitum legendos te vix. Per alia perpetua adversarium ne, his minim molestiae gubergren at, sed an accusam referrentur. Mucius audire scripta quo te, velit quidam ancillae eos ut. Ferri deleniti in has. Sit ei ferri praesent posidonium.
-                        </p>
+                            При реализации проекта, а именно при написании динамически формируемых страниц активно использовался механизм lambda-выражения. Lambda-выражение наиболее прямо заменяет анонимный метод, представляет собой блок кода, заключенный в фигурные скобки это — прямая замена анонимных методов. Лямбда-выражения предоставляют еще более сокращенный способ объявлять анонимный метод и не требуют ни кода в фигурных скобках, ни оператора return.
+                         </p>
                     </div>
                     <div class="col-sm-6">
-                        <h3>Second</h3>
+                        <h3>Microsoft SQL Server</h3>
                         <p>
-                            Lorem ipsum dolor sit amet, ne sit nobis melius aperiri. Eum veniam nemore et, quo ea possit appetere officiis. Sit equidem fierent in, impetus debitis temporibus nam in. Ceteros molestie omittantur vel ei, per et tation ocurreret eloquentiam. Vim saperet placerat delicatissimi at.
-Eu mei graeci patrioque, ius ad primis quaestio similique, mentitum legendos te vix. Per alia perpetua adversarium ne, his minim molestiae gubergren at, sed an accusam referrentur. Mucius audire scripta quo te, velit quidam ancillae eos ut. Ferri deleniti in has. Sit ei ferri praesent posidonium.
-                        </p>
+                           При написании работы невозможно было обойти необходимость использования реляционной базы данных для хранения информации о пользователях, квестах, этапах и подписках.
+При выборе базы данных стоял выбор между базой данных Microsoft SQL Server и Oracle MySQL. Выбор был сделан в пользу решения компании Microsoft, которое является встроенным в среду разработки Microsoft Visual Studio Ultimate решением.
+
+                         </p>
                     </div>
                 </div>
                 <!-- /row -->
 
                 <div class="row">
                     <div class="col-sm-6">
-                        <h3>Third</h3>
+                        <h3>Util классы</h3>
                         <p>
-                            Lorem ipsum dolor sit amet, ne sit nobis melius aperiri. Eum veniam nemore et, quo ea possit appetere officiis. Sit equidem fierent in, impetus debitis temporibus nam in. Ceteros molestie omittantur vel ei, per et tation ocurreret eloquentiam. Vim saperet placerat delicatissimi at.
-Eu mei graeci patrioque, ius ad primis quaestio similique, mentitum legendos te vix. Per alia perpetua adversarium ne, his minim molestiae gubergren at, sed an accusam referrentur. Mucius audire scripta quo te, velit quidam ancillae eos ut. Ferri deleniti in has. Sit ei ferri praesent posidonium.
+                            Util-классы применяются для выполнения часто используемых процедур, что делает код чище, упрощает его визуальное восприятие, даёт программисту возможность уделять внимание не мелочам а сконцентрироваться непосредственно над реализацией поставленной задачи. 
                         </p>
                     </div>
                     <div class="col-sm-6">
-                        <h3>Fourth</h3>
+                        <h3>Преодолевая трудности</h3>
                         <p>
-                            Lorem ipsum dolor sit amet, ne sit nobis melius aperiri. Eum veniam nemore et, quo ea possit appetere officiis. Sit equidem fierent in, impetus debitis temporibus nam in. Ceteros molestie omittantur vel ei, per et tation ocurreret eloquentiam. Vim saperet placerat delicatissimi at.
-Eu mei graeci patrioque, ius ad primis quaestio similique, mentitum legendos te vix. Per alia perpetua adversarium ne, his minim molestiae gubergren at, sed an accusam referrentur. Mucius audire scripta quo te, velit quidam ancillae eos ut. Ferri deleniti in has. Sit ei ferri praesent posidonium.
+                            При реализации курсвой работы, команда столкнулась с довольно распространённой проблемой в программировании на ASP.NET: отсутствием отклика динамически добавленных элементов управления. Проблема проявлялсь в момент отправки страницы на сервер, в случае, когда пользователь воздействовал на динамически добавленный элемент управления (нажимал на кнопку, например). Сервер принимал страницу, и ряд блоков с проверкой if не давал элементам управления вновь добавиться на странцу, вследствие чего не происходил вызов соответствующих событий нажатия на кнопку. Проблема была решена лишь за счёт продолжительного тестирования кода и упорной работы.
                         </p>
                     </div>
                 </div>
                 <!-- /row -->
 
-                <div class="jumbotron top-space">
-                    <h4>
-                        Lorem ipsum dolor sit amet, ne sit nobis melius aperiri. Eum veniam nemore et, quo ea possit appetere officiis. Sit equidem fierent in, impetus debitis temporibus nam in. Ceteros molestie omittantur vel ei, per et tation ocurreret eloquentiam. Vim saperet placerat delicatissimi at.
-                        </h4>
-                    <p class="text-right"><a class="btn btn-primary btn-large">Button »</a></p>
-                </div>
+               
 
             </div>
             <!-- /container -->
 
-            <!-- Social links. @TODO: replace by link/instructions -->
-            <section id="social">
-                <div class="container">
-                    <div class="wrapper clearfix">
-                        <!-- AddThis Button BEGIN -->
-                        <div class="addthis_toolbox addthis_default_style">
-                            <%--<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
-				<a class="addthis_button_tweet"></a>
-				<a class="addthis_button_linkedin_counter"></a>
-				<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>--%>
-                        </div>
-                        <!-- AddThis Button END -->
-                    </div>
-                </div>
-            </section>
-            <!-- /social links -->
+           </asp:Content>
 
 
-         
-            </asp:Content>
-
-<%-- <div id="header">
-            <asp:HyperLink ID="RegistrationLink" runat="server" NavigateUrl="~/App_Page/Registration.aspx">Регистрация</asp:HyperLink>
-            <asp:HyperLink ID="AuthorizationLink" runat="server" NavigateUrl="~/App_Page/Authorization.aspx">Вход</asp:HyperLink>
-            <asp:HyperLink ID="QuestsLink" runat="server" NavigateUrl="~/App_Page/Quests.aspx">Просмотреть доступные квесты</asp:HyperLink>
-        </div>
-        <div id="content">
-        </div>
-        <div id="footer">
-        </div>--%>
