@@ -12,7 +12,7 @@
     <link href="../App_Style/css/font-awesome.min.css" rel="stylesheet" />
     <link href="../App_Style/css/bootstrap-theme.css" rel="stylesheet" />
     <link href="../App_Style/css/main.css" rel="stylesheet" />
-
+    <link rel="shortcut icon" href="../App_Style/favicon.ico" />
     <script src="../App_Style/js/html5shiv.js"></script>
     <script src="../App_Style/js/respond.min.js"></script>
 </head>

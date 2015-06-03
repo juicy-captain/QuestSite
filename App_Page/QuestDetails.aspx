@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="../App_Style/assets/css/plugins.css">
     <link rel="stylesheet" href="../App_Style/assets/css/themes/theme-default.css" type="text/css" id="skin_color">
     <link href="../App_Style/assets/css/print.css" rel="stylesheet" type="text/css" media="print" />
-    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="shortcut icon" href="../App_Style/favicon.ico" />
 </head>
 <body>
     <form id="form1" runat="server">
