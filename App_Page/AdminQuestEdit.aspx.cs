@@ -146,7 +146,7 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
             }
         }
 
-
+        
 
     }
     private void PopulateStagesInfo()
@@ -164,33 +164,33 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
                 Label ordinal = new Label() { Text = "Порядковый номер: " + stage.Ordinal };
                 Button editButton = new Button() { Text = "Редактировать", ID = stage.Ordinal.ToString(), PostBackUrl = "~/App_Page/AdminStageEdit.aspx" };
                 editButton.Click += (sender, args) =>
-                {
-                    int selectedStageOrdinal = int.Parse((sender as Button).ID);
-                    foreach (StageModel stageModel in QuestModel.Stages)
                     {
-                        if (stageModel.Ordinal == selectedStageOrdinal)
+                        int selectedStageOrdinal = int.Parse((sender as Button).ID);
+                        foreach (StageModel stageModel in QuestModel.Stages)
                         {
-                            SelectedStageModel = stageModel;
-                            break;
+                            if (stageModel.Ordinal == selectedStageOrdinal)
+                            {
+                                SelectedStageModel = stageModel;
+                                break;
+                            }
                         }
-                    }
-                };
+                    };
 
-               
+                HtmlGenericControl br = new HtmlGenericControl("<br>");
 
                 //TODO remove this crappy code before course project vindication
                 listItem.Controls.Add(title);
-                listItem.Controls.Add(new HtmlGenericControl("br"));
+                listItem.Controls.Add(br);
                 listItem.Controls.Add(question);
-                listItem.Controls.Add(new HtmlGenericControl("br"));
+                listItem.Controls.Add(br);
                 listItem.Controls.Add(answer);
-                listItem.Controls.Add(new HtmlGenericControl("br"));
+                listItem.Controls.Add(br);
                 listItem.Controls.Add(ordinal);
-                listItem.Controls.Add(new HtmlGenericControl("br"));
+                listItem.Controls.Add(br);
                 listItem.Controls.Add(editButton);
-                listItem.Controls.Add(new HtmlGenericControl("br"));
+                listItem.Controls.Add(br);
                 //listItem.Controls.Add(editButton);
-                listItem.Controls.Add(new HtmlGenericControl("br"));
+                listItem.Controls.Add(br);
                 stagesList.Controls.Add(listItem);
             }
         }
