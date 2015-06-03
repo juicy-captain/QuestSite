@@ -103,48 +103,47 @@ public partial class App_Page_AdminQuestEdit : System.Web.UI.Page,
             QuestModel = sourcePageQuest.GetModel();
             ICrossPageSender<UserModel> sourcePageUser = PreviousPage as ICrossPageSender<UserModel>;
             UserModel = sourcePageUser.GetModel();
-        }
 
-        if (QuestModel != null)
-        {
-            TextBoxName.Text = QuestModel.Name;
-            TextBoxDescription.Text = QuestModel.Description;
-
-            DateTime startDate = new DateTime(QuestModel.StartDate);
-            StartDay.SelectedIndex = startDate.Day;
-            StartMonth.SelectedIndex = startDate.Month;
-            StartYear.SelectedIndex = startDate.Year;
-
-            DateTime expirationDate = new DateTime(QuestModel.ExpirationDate);
-            ExpirationDay.SelectedIndex = expirationDate.Day;
-            ExpirationMonth.SelectedIndex = expirationDate.Month;
-            ExpirationYear.SelectedIndex = expirationDate.Year;
-
-            switch (QuestModel.ComplexityLevel)
+            if (QuestModel != null)
             {
-                case QuestComplexityLevel.Easy:
-                    LevelEasy.Checked = true;
-                    break;
-                case QuestComplexityLevel.Medium:
-                    LevelMedium.Checked = true;
-                    break;
-                case QuestComplexityLevel.Hard:
-                    LevelHard.Checked = true;
-                    break;
-                case QuestComplexityLevel.AreYoyCrazy:
-                    LevelCrazy.Checked = true;
-                    break;
+                TextBoxName.Text = QuestModel.Name;
+                TextBoxDescription.Text = QuestModel.Description;
+
+                DateTime startDate = new DateTime(QuestModel.StartDate);
+                StartDay.SelectedIndex = startDate.Day;
+                StartMonth.SelectedIndex = startDate.Month;
+                StartYear.SelectedIndex = startDate.Year;
+
+                DateTime expirationDate = new DateTime(QuestModel.ExpirationDate);
+                ExpirationDay.SelectedIndex = expirationDate.Day;
+                ExpirationMonth.SelectedIndex = expirationDate.Month;
+                ExpirationYear.SelectedIndex = expirationDate.Year;
+
+                switch (QuestModel.ComplexityLevel)
+                {
+                    case QuestComplexityLevel.Easy:
+                        LevelEasy.Checked = true;
+                        break;
+                    case QuestComplexityLevel.Medium:
+                        LevelMedium.Checked = true;
+                        break;
+                    case QuestComplexityLevel.Hard:
+                        LevelHard.Checked = true;
+                        break;
+                    case QuestComplexityLevel.AreYoyCrazy:
+                        LevelCrazy.Checked = true;
+                        break;
+                }
+
+                isNewQuest = false;
             }
-
-            isNewQuest = false;
+            else
+            {
+                isNewQuest = true;
+                ButtonDelete.Visible = false;
+                ButtonAddNewStage.Visible = false;
+            }
         }
-        else
-        {
-            isNewQuest = true;
-            ButtonDelete.Visible = false;
-            ButtonAddNewStage.Visible = false;
-        }
-
     }
     private void PopulateStagesInfo()
     {
